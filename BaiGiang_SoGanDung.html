@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Số Gần Đúng và Sai Số – Toán 10</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+  MathJax = {
+    tex: { inlineMath:[['$','$']], displayMath:[['$$','$$']] },
+    options:{ skipHtmlTags:['script','noscript','style','textarea'] }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ══ VARIABLES ══ */
+:root{
+  --p:#0d7c66; --p-dk:#065a4a; --p-lt:#1aab8e; --p-pale:#e8f5f1;
+  --sec:#f59e0b; --sec-lt:#fde68a; --sec-dk:#b45309;
+  --acc:#e74c3c; --acc-lt:#fee2e2;
+  --blue:#2563eb; --blue-lt:#eff6ff;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --bg:#f0f7f4; --card:#fff; --border:#d1e9e1;
+  --txt:#1e3a2f; --muted:#5a7a6e;
+  --shadow:0 2px 16px rgba(13,124,102,.10);
+  --shadow-lg:0 8px 32px rgba(13,124,102,.18);
+  --r:16px; --r-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;overflow-x:hidden}
+
+/* ══ HEADER ══ */
+header{
+  background:linear-gradient(135deg,var(--p-dk) 0%,var(--p) 55%,var(--p-lt) 100%);
+  color:#fff;padding:56px 20px 72px;text-align:center;position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.06) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 20%,rgba(255,255,255,.04) 0%,transparent 50%);
+}
+.hdr-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);
+  padding:5px 18px;border-radius:100px;font-size:12px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;
+}
+header h1{
+  font-family:'Merriweather',serif;
+  font-size:clamp(1.55rem,4.5vw,2.9rem);font-weight:700;line-height:1.25;margin-bottom:10px;
+}
+header p{font-size:.95rem;opacity:.82;max-width:560px;margin:0 auto 20px}
+.hdr-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hdr-tag{background:rgba(255,255,255,.18);padding:4px 14px;border-radius:100px;font-size:12px;font-weight:700}
+
+/* ══ STICKY NAV ══ */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:var(--card);border-bottom:2px solid var(--border);
+  box-shadow:0 2px 10px rgba(0,0,0,.07);
+}
+.nav-wrap{
+  max-width:1080px;margin:0 auto;display:flex;overflow-x:auto;
+  padding:0 16px;scrollbar-width:none;
+}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-a{
+  padding:13px 16px;font-size:13px;font-weight:700;color:var(--muted);
+  text-decoration:none;border-bottom:3px solid transparent;
+  white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:6px;
+}
+.nav-a:hover,.nav-a.on{color:var(--p);border-bottom-color:var(--p)}
+
+/* ══ LAYOUT ══ */
+main{max-width:1080px;margin:0 auto;padding:32px 16px 100px}
+.sec{
+  margin-bottom:60px;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .65s ease,transform .65s ease;
+}
+.sec.vis{opacity:1;transform:none}
+.sec-hdr{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.sec-ico{
+  width:50px;height:50px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.ico-or{background:#fff3e0;color:#f57c00}
+.ico-gr{background:#e8f5e9;color:#2e7d32}
+.ico-bl{background:#e3f2fd;color:#1565c0}
+.ico-pu{background:#f3e5f5;color:#6a1b9a}
+.ico-re{background:#fce4ec;color:#c62828}
+.sec-ttl{font-family:'Merriweather',serif;font-size:clamp(1.2rem,2.8vw,1.65rem);font-weight:700}
+.sec-sub{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+
+/* ══ CARD ══ */
+.card{background:var(--card);border-radius:var(--r);padding:28px;box-shadow:var(--shadow);border:1px solid var(--border)}
+@media(max-width:600px){.card{padding:18px}}
+
+/* ══ CONCEPT BOXES ══ */
+.cbox{
+  border-left:5px solid var(--p);
+  background:linear-gradient(to right,rgba(13,124,102,.05),transparent);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+  padding:18px 22px;margin:18px 0;
+}
+.cbox.amber{border-left-color:var(--sec);background:linear-gradient(to right,rgba(245,158,11,.06),transparent)}
+.cbox.red{border-left-color:var(--acc);background:linear-gradient(to right,rgba(231,76,60,.05),transparent)}
+.cbox.blue{border-left-color:var(--blue);background:linear-gradient(to right,rgba(37,99,235,.05),transparent)}
+.cbox-ttl{
+  font-weight:800;font-size:.95rem;margin-bottom:7px;
+  display:flex;align-items:center;gap:8px;color:var(--p);
+}
+.cbox.amber .cbox-ttl{color:var(--sec-dk)}
+.cbox.red .cbox-ttl{color:var(--acc)}
+.cbox.blue .cbox-ttl{color:var(--blue)}
+.cbox p{font-size:.93rem}
+
+/* ══ PROBLEM BOX (Khởi động) ══ */
+.prob{
+  background:linear-gradient(135deg,#fffde7,#fff8e1);
+  border:2px solid var(--sec);border-radius:var(--r);padding:26px;
+  position:relative;overflow:hidden;
+  display: grid; grid-template-columns: 1fr 180px; gap: 20px; align-items: center;
+}
+@media(max-width:600px){.prob{grid-template-columns:1fr;}}
+.prob::after{
+  content:'?';position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  font-size:110px;font-weight:900;color:rgba(245,158,11,.1);line-height:1;pointer-events:none;
+}
+.prob-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--sec);color:#fff;padding:4px 14px;
+  border-radius:100px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:12px;
+}
+.show-ans{
+  margin-top:12px;padding:8px 16px;
+  background:rgba(13,124,102,.08);border:1px solid var(--border);
+  border-radius:var(--r-sm);cursor:pointer;
+  font-size:13px;font-weight:700;color:var(--p);
+  display:inline-flex;align-items:center;gap:7px;
+  transition:all .2s;
+}
+.show-ans:hover{background:rgba(13,124,102,.14)}
+.ans-body{
+  margin-top:12px;padding:14px 18px;
+  background:rgba(13,124,102,.07);border-radius:var(--r-sm);
+  font-size:.88rem;line-height:1.8;display:none;
+}
+
+/* ══ INFO CHIPS ══ */
+.chips{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0}
+.chip{
+  flex:1;min-width:160px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:16px;text-align:center;transition:all .2s;cursor:default;
+}
+.chip:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.chip-ico{font-size:28px;margin-bottom:6px}
+.chip-ttl{font-weight:800;font-size:.88rem;color:var(--p);margin-bottom:3px}
+.chip-dsc{font-size:.78rem;color:var(--muted);line-height:1.45}
+
+/* ══ APPLET ══ */
+.applet-wrap{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
+@media(max-width:720px){.applet-wrap{grid-template-columns:1fr}}
+.cvs-box{background:#fafcfb;border:1px solid var(--border);border-radius:var(--r-sm);aspect-ratio:16/9;overflow:hidden; display: flex; align-items: center; justify-content: center;}
+#appCanvas{display:block;width:100%;height:100%; max-height: 250px;}
+.ctrl-panel{background:#fafcfb;border:1px solid var(--border);border-radius:var(--r-sm);padding:18px}
+.ctrl-panel h4{font-size:.88rem;font-weight:800;color:var(--p);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.ctrl-row{margin-bottom:18px}
+.ctrl-lbl{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:5px}
+.ctrl-val{color:var(--p);font-weight:900}
+input[type=range].sl{
+  -webkit-appearance:none;width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg, var(--p) var(--pp,50%), #dde 50%);
+}
+input[type=range].sl::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background: var(--p); border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.2);cursor:pointer;
+}
+.applet-math{
+    padding: 12px; background: rgba(13,124,102,.05); border-radius: 8px;
+    font-size: 1.1rem; text-align: center; font-weight: bold; color: var(--p);
+    margin-top: 10px;
+}
+
+/* ══ DRAG & DROP ══ */
+.dnd-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:600px){.dnd-grid{grid-template-columns:1fr}}
+.dnd-col h4{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.drag-it{
+  background:var(--card);border:2px solid var(--border);border-radius:var(--r-sm);
+  padding:11px 14px;margin-bottom:9px;cursor:grab;font-size:14px;font-weight:700;
+  transition:all .2s;display:flex;align-items:center;gap:9px;user-select:none; color: var(--p-dk);
+}
+.drag-it:hover{border-color:var(--p);box-shadow:var(--shadow);transform:translateY(-2px)}
+.drag-it.dragging{opacity:.35;cursor:grabbing}
+.drag-it.ok{border-color:#2e7d32;background:#e8f5e9; color: #2e7d32;}
+.drag-it.no{border-color:var(--acc);background:var(--acc-lt); color: var(--acc);}
+.dz{
+  min-height:68px;border:2px dashed var(--border);border-radius:var(--r-sm);
+  padding:14px 12px 9px 12px;margin-bottom:9px;transition:all .2s;
+  position:relative;display:flex;align-items:center; justify-content: center;
+}
+.dz::before{
+  content:attr(data-label);position:absolute;top:-9px;left:10px;
+  background:var(--bg);padding:0 5px;font-size:10px;font-weight:800;color:var(--muted);
+}
+.dz.over{border-color:var(--p);background:rgba(13,124,102,.05)}
+.dz.ok{border-color:#2e7d32;background:#e8f5e9}
+.dz.no{border-color:var(--acc);background:var(--acc-lt)}
+.dz .dz-hint{font-size:14px;color:var(--text);line-height:1.5; font-weight: bold;}
+.btn-row-dnd{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{
+  padding:10px 22px;border-radius:var(--r-sm);border:none;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;
+  transition:all .2s;display:inline-flex;align-items:center;gap:7px;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:var(--p-dk)}
+.btn-s{background:#e2e8f0;color:#475569;border:1px solid #cbd5e1}.btn-s:hover{background:#cbd5e1}
+.dnd-msg{
+  display:none;margin-top:12px;padding:12px 16px;border-radius:var(--r-sm);font-weight:700;font-size:13px;
+}
+.dnd-msg.vis{display:block}
+.dnd-msg.win{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.dnd-msg.part{background:#fff3e0;color:#e65100;border:1px solid #ffcc80}
+
+/* ══ ACCORDION ══ */
+.acc-item{border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:12px;overflow:hidden}
+.acc-hdr{
+  padding:15px 20px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;background:var(--card);font-weight:700;font-size:14px;
+  transition:background .2s;user-select:none;
+}
+.acc-hdr:hover{background:rgba(13,124,102,.04)}
+.acc-arr{transition:transform .3s;color:var(--muted);font-size:12px}
+.acc-hdr.open .acc-arr{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .45s ease;background:#fafcfb}
+.acc-body.open{max-height:2400px}
+.acc-inner{padding:20px 24px;border-top:1px solid var(--border)}
+@media(max-width:600px){.acc-inner{padding:14px}}
+.step{display:flex;gap:13px;margin-bottom:14px;align-items:flex-start}
+.step-n{
+  width:27px;height:27px;border-radius:50%;background:var(--p);color:#fff;
+  font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+}
+
+/* ══ QUIZ ══ */
+.q-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin-bottom:18px;transition:box-shadow .2s;
+}
+.q-card:hover{box-shadow:var(--shadow)}
+.q-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:27px;height:27px;background:var(--p);color:#fff;
+  border-radius:50%;font-size:12px;font-weight:800;margin-right:9px;flex-shrink:0;
+}
+.q-text{font-size:.92rem;font-weight:700;margin-bottom:13px;display:flex;align-items:flex-start;line-height:1.6}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:480px){.q-opts{grid-template-columns:1fr}}
+.q-opt{
+  padding:11px 14px;border:2px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;
+  display:flex;align-items:center;gap:9px;background:var(--card);text-align:left;
+  font-family:'Nunito',sans-serif;
+}
+.q-opt:hover:not(.dis){border-color:var(--p);background:rgba(13,124,102,.05)}
+.q-ltr{
+  width:25px;height:25px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;
+  transition:all .2s;
+}
+.q-opt:hover:not(.dis) .q-ltr{border-color:var(--p);color:var(--p)}
+.q-opt.cor{border-color:#2e7d32;background:#e8f5e9}
+.q-opt.cor .q-ltr{border-color:#2e7d32;background:#2e7d32;color:#fff}
+.q-opt.wrg{border-color:var(--acc);background:var(--acc-lt)}
+.q-opt.wrg .q-ltr{border-color:var(--acc);background:var(--acc);color:#fff}
+.q-opt.dis{cursor:default;pointer-events:none}
+.q-exp{
+  display:none;margin-top:13px;padding:13px 16px;
+  background:linear-gradient(to right,rgba(13,124,102,.06),transparent);
+  border-left:4px solid var(--p);border-radius:0 8px 8px 0;
+  font-size:.87rem;line-height:1.75;
+}
+.q-exp.vis{display:block}
+.exp-ttl{font-weight:800;color:var(--p);display:flex;align-items:center;gap:6px;margin-bottom:5px}
+
+/* ══ SCORE BAR ══ */
+#scorebar{
+  position:fixed;bottom:20px;right:20px;
+  background:linear-gradient(135deg,var(--p-dk),var(--p));
+  color:#fff;padding:13px 20px;border-radius:14px;
+  box-shadow:0 8px 30px rgba(0,0,0,.28);z-index:500;
+  display:flex;align-items:center;gap:13px;min-width:195px;
+  transform:translateY(120px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+#scorebar.up{transform:translateY(0)}
+.sb-ico{font-size:22px}
+.sb-lbl{font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.07em}
+.sb-num{font-size:22px;font-weight:900;font-family:'Merriweather',serif}
+.sb-bar{width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:3px}
+.sb-fill{height:100%;background:var(--sec-lt);border-radius:2px;transition:width .4s ease}
+
+/* MISC */
+.badge{display:inline-block;padding:3px 11px;border-radius:100px;font-size:12px;font-weight:800}
+.badge-p{background:var(--p);color:#fff}
+.badge-b{background:var(--blue);color:#fff}
+.badge-o{background:var(--sec-dk);color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-chip"><i class="fas fa-calculator"></i> Toán 10 · Chân trời sáng tạo</div>
+  <h1>Số Gần Đúng và Sai Số</h1>
+  <p>Bài 1 · Chương Thống kê · Chương trình GDPT 2018</p>
+  <div class="hdr-tags">
+    <span class="hdr-tag"><i class="fas fa-bullseye"></i> Sai số tuyệt đối</span>
+    <span class="hdr-tag"><i class="fas fa-percent"></i> Sai số tương đối</span>
+    <span class="hdr-tag"><i class="fas fa-arrow-rotate-right"></i> Số quy tròn</span>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-wrap">
+    <a href="#s1" class="nav-a"><i class="fas fa-rocket"></i> Khởi động</a>
+    <a href="#s2" class="nav-a"><i class="fas fa-book-open"></i> Lý thuyết</a>
+    <a href="#s3" class="nav-a"><i class="fas fa-sliders"></i> Tương tác</a>
+    <a href="#s4" class="nav-a"><i class="fas fa-puzzle-piece"></i> Kéo – Thả</a>
+    <a href="#s5" class="nav-a"><i class="fas fa-magnifying-glass"></i> Ví dụ</a>
+    <a href="#s6" class="nav-a"><i class="fas fa-pen-to-square"></i> Trắc nghiệm</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="sec" id="s1">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-or"><i class="fas fa-rocket"></i></div>
+    <div><div class="sec-sub">Phần 1</div><div class="sec-ttl">Khởi động</div></div>
+  </div>
+
+  <div class="prob card" style="margin-bottom:22px">
+    <div>
+        <div class="prob-tag"><i class="fas fa-lightbulb"></i> Tình huống thực tế</div>
+        <h3 style="font-size:1.05rem;font-weight:800;margin-bottom:10px;color:#6b4800">Kết quả của ai chính xác hơn?</h3>
+        <p style="font-size:.92rem">Trong thực tế, có nhiều đại lượng mà ta không thể xác định được giá trị chính xác tuyệt đối. Mỗi dụng cụ hay phương pháp đo khác nhau có thể sẽ cho ra các kết quả khác nhau.</p>
+        <p style="font-size:.92rem"><strong>Bài toán:</strong> Vinh và Hoa cùng đo chiều dài trang bìa của một quyển sổ. Vinh đọc kết quả là $21\text{ cm}$. Hoa đọc kết quả là $20,7\text{ cm}$. Theo bạn, kết quả của bạn nào có sai số nhỏ hơn?</p>
+        
+        <button class="show-ans" onclick="toggleAns(this)">
+        <i class="fas fa-eye"></i> Xem đáp án & Gợi ý
+        </button>
+        <div class="ans-body">
+        Kết quả đo của <strong>Hoa ($20,7\text{ cm}$)</strong> chi tiết đến hàng phần mười, cho thấy thước của Hoa có vạch chia nhỏ hơn (đến mm), do đó sai số trong phép đo của Hoa thường sẽ <strong>nhỏ hơn</strong> và độ chính xác cao hơn so với thước của Vinh (chỉ chia đến cm).
+        </div>
+    </div>
+    <svg viewBox="0 0 200 150" width="100%" style="border-radius:8px; box-shadow:var(--shadow)">
+        <rect width="100%" height="100%" fill="#f1f5f9"/>
+        <rect x="30" y="20" width="120" height="90" fill="#0ea5e9" rx="4"/>
+        <rect x="35" y="20" width="115" height="90" fill="#38bdf8" rx="4"/>
+        <line x1="45" y1="20" x2="45" y2="110" stroke="#0284c7" stroke-width="2"/>
+        <rect x="15" y="115" width="160" height="20" fill="#fde047" rx="2" transform="rotate(-5 100 115)"/>
+        <g transform="rotate(-5 100 115)">
+            <line x1="20" y1="115" x2="20" y2="122" stroke="#333" stroke-width="1.5"/>
+            <line x1="40" y1="115" x2="40" y2="122" stroke="#333" stroke-width="1.5"/>
+            <line x1="60" y1="115" x2="60" y2="122" stroke="#333" stroke-width="1.5"/>
+            <line x1="80" y1="115" x2="80" y2="122" stroke="#333" stroke-width="1.5"/>
+            <line x1="100" y1="115" x2="100" y2="122" stroke="#333" stroke-width="1.5"/>
+            <text x="40" y="132" font-size="8" fill="#333" text-anchor="middle">20</text>
+            <text x="60" y="132" font-size="8" fill="#333" text-anchor="middle">21</text>
+        </g>
+    </svg>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><div class="chip-ico">🎯</div><div class="chip-ttl">Sai số tuyệt đối</div><div class="chip-dsc">Khoảng cách giữa số đo được và giá trị thực tế.</div></div>
+    <div class="chip"><div class="chip-ico">⚖️</div><div class="chip-ttl">Sai số tương đối</div><div class="chip-dsc">Tỉ lệ % sai số so với kích thước thật. Giúp đánh giá chất lượng phép đo.</div></div>
+    <div class="chip"><div class="chip-ico">✂️</div><div class="chip-ttl">Quy tròn số</div><div class="chip-dsc">Làm gọn con số dựa trên độ chính xác cho trước.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="s2">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-gr"><i class="fas fa-book-open"></i></div>
+    <div><div class="sec-sub">Phần 2</div><div class="sec-ttl">Lý thuyết trọng tâm</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <h3 style="font-weight:900;font-size:1.05rem;color:var(--p);border-bottom:2px solid var(--border);padding-bottom:9px;margin-bottom:14px">
+      <i class="fas fa-bullseye"></i> &nbsp;1. Sai số tuyệt đối
+    </h3>
+    <p>Nếu $a$ là số gần đúng của số đúng $\overline{a}$ thì $\Delta_{a} = \left| \overline{a} - a \right|$ được gọi là <strong>sai số tuyệt đối</strong> của số gần đúng $a$.</p>
+    <div class="cbox blue">
+      <div class="cbox-ttl"><i class="fas fa-ruler"></i> Độ chính xác</div>
+      <p>Trên thực tế, ta thường không biết số đúng nên không thể tính được chính xác $\Delta_{a}$. Thay vào đó, ta tìm cách khống chế sai số không vượt quá mức $d > 0$ cho trước:</p>
+      $$\Delta_{a} = \left| \overline{a} - a \right| \le d \quad \text{hay} \quad a - d \le \overline{a} \le a + d$$
+      <p style="margin-top:8px">Khi đó, ta nói $a$ là số gần đúng của $\overline{a}$ với <strong>độ chính xác $d$</strong> và viết gọn: $\overline{a} = a \pm d$.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <h3 style="font-weight:900;font-size:1.05rem;color:var(--p);border-bottom:2px solid var(--border);padding-bottom:9px;margin-bottom:14px">
+      <i class="fas fa-percent"></i> &nbsp;2. Sai số tương đối
+    </h3>
+    <p>Để đánh giá sự chính xác của phép đo (phép đo nào "xịn" hơn), người ta dùng sai số tương đối.</p>
+    <div class="cbox">
+      <div class="cbox-ttl"><i class="fas fa-formula"></i> Công thức</div>
+      <p>Sai số tương đối của số gần đúng $a$, kí hiệu là $\delta_{a}$, là tỉ số giữa sai số tuyệt đối $\Delta_{a}$ và $\left| a \right|$:</p>
+      $$\delta_{a} = \dfrac{\Delta_{a}}{\left| a \right|} \le \dfrac{d}{\left| a \right|}$$
+      <p style="margin-top:8px">$\delta_{a}$ càng nhỏ thì chất lượng phép đo đạc càng cao. Thường viết dưới dạng <strong>phần trăm (%)</strong>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-weight:900;font-size:1.05rem;color:var(--p);border-bottom:2px solid var(--border);padding-bottom:9px;margin-bottom:14px">
+      <i class="fas fa-arrow-rotate-right"></i> &nbsp;3. Số quy tròn
+    </h3>
+    <div class="cbox amber">
+      <div class="cbox-ttl"><i class="fas fa-lightbulb"></i> Quy tắc xác định số quy tròn với độ chính xác $d$</div>
+      <div style="margin-top:8px">
+          <p><strong>Bước 1:</strong> Tìm hàng của chữ số khác 0 đầu tiên (từ trái sang) của độ chính xác $d$.</p>
+          <p><strong>Bước 2:</strong> Quy tròn số $a$ ở <strong>hàng gấp 10 lần</strong> hàng tìm được ở Bước 1.</p>
+      </div>
+      <p style="margin-top:8px; font-size:0.85rem; color:var(--muted)"><em>Ví dụ:</em> $d = 50$ (hàng chục lớn nhất khác 0) $\rightarrow$ Quy tròn $a$ đến hàng <strong>trăm</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s3">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-or"><i class="fas fa-sliders"></i></div>
+    <div><div class="sec-sub">Phần 3</div><div class="sec-ttl">Applet: Trực quan hóa Sai số</div></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px"><i class="fas fa-hand-pointer"></i> Kéo các thanh trượt để thay đổi giá trị đo được ($a$) và độ chính xác ($d$). Quan sát khoảng giá trị thực tế của số đúng $\overline{a}$ trên trục số.</p>
+    
+    <div class="applet-wrap">
+      <div class="cvs-box"><canvas id="appCanvas"></canvas></div>
+      <div class="ctrl-panel">
+        <h4><i class="fas fa-sliders"></i> Bảng điều khiển</h4>
+        <div class="ctrl-row">
+            <div class="ctrl-lbl"><span>Giá trị đo ($a$)</span> <span class="ctrl-val" id="valA-disp">20.0</span></div>
+            <input type="range" class="sl" id="slA" min="10" max="30" step="0.5" value="20" oninput="updateApplet()">
+        </div>
+        <div class="ctrl-row">
+            <div class="ctrl-lbl"><span>Độ chính xác ($d$)</span> <span class="ctrl-val" id="valD-disp" style="color:var(--acc)">1.5</span></div>
+            <input type="range" class="sl" id="slD" min="0.1" max="5" step="0.1" value="1.5" oninput="updateApplet()">
+        </div>
+        <hr style="border:0; border-top:1px solid var(--border); margin: 15px 0;">
+        <div class="applet-math" id="appletStats">
+            </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s4">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-bl"><i class="fas fa-puzzle-piece"></i></div>
+    <div><div class="sec-sub">Phần 4</div><div class="sec-ttl">Thử thách Ghép nối</div></div>
+  </div>
+  <div class="card">
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:18px">
+      <i class="fas fa-hand-pointer"></i> Kéo các <strong>khái niệm</strong> bên trái và thả vào <strong>kí hiệu/công thức</strong> tương ứng bên phải.
+    </p>
+    <div class="dnd-grid">
+      <div class="dnd-col">
+        <h4><i class="fas fa-grip-vertical"></i> Khái niệm</h4>
+        <div id="drag-pool">
+          <div class="drag-it" draggable="true" data-id="sstuyetdoi"><i class="fas fa-bullseye" style="color:var(--p)"></i> Sai số tuyệt đối</div>
+          <div class="drag-it" draggable="true" data-id="sstuongdoi"><i class="fas fa-percent" style="color:#2196f3"></i> Sai số tương đối</div>
+          <div class="drag-it" draggable="true" data-id="sodung"><i class="fas fa-check" style="color:#ff9800"></i> Số đúng</div>
+          <div class="drag-it" draggable="true" data-id="dochinhxac"><i class="fas fa-ruler" style="color:#e91e63"></i> Độ chính xác</div>
+        </div>
+      </div>
+      <div class="dnd-col">
+        <h4><i class="fas fa-formula"></i> Công thức / Kí hiệu</h4>
+        <div class="dz" id="dz0" data-ans="sstuongdoi" data-label="Công thức 1" ondragover="dzOver(event)" ondrop="dzDrop(event)" ondragleave="dzLeave(event)">
+          <span class="dz-hint">$$\delta_{a} = \dfrac{\Delta_{a}}{\left| a \right|}$$</span>
+        </div>
+        <div class="dz" id="dz1" data-ans="dochinhxac" data-label="Kí hiệu 2" ondragover="dzOver(event)" ondrop="dzDrop(event)" ondragleave="dzLeave(event)">
+          <span class="dz-hint">$$d$$</span>
+        </div>
+        <div class="dz" id="dz2" data-ans="sstuyetdoi" data-label="Công thức 3" ondragover="dzOver(event)" ondrop="dzDrop(event)" ondragleave="dzLeave(event)">
+          <span class="dz-hint">$$\Delta_{a} = \left| \overline{a} - a \right|$$</span>
+        </div>
+        <div class="dz" id="dz3" data-ans="sodung" data-label="Kí hiệu 4" ondragover="dzOver(event)" ondrop="dzDrop(event)" ondragleave="dzLeave(event)">
+          <span class="dz-hint">$$\overline{a}$$</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row-dnd">
+      <button class="btn btn-p" onclick="checkDnD()"><i class="fas fa-check-circle"></i> Kiểm tra</button>
+      <button class="btn btn-s" onclick="resetDnD()"><i class="fas fa-redo"></i> Làm lại</button>
+    </div>
+    <div class="dnd-msg" id="dnd-msg"></div>
+  </div>
+</section>
+
+<section class="sec" id="s5">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-pu"><i class="fas fa-magnifying-glass"></i></div>
+    <div><div class="sec-sub">Phần 5</div><div class="sec-ttl">Ví dụ phân tích</div></div>
+  </div>
+
+  <div class="acc-item" style="margin-bottom:14px">
+    <div class="acc-hdr" onclick="accToggle(this)">
+      <span><span class="badge badge-p" style="margin-right:9px">Ví dụ 1</span>Ước lượng độ chính xác diện tích</span>
+      <i class="fas fa-chevron-down acc-arr"></i>
+    </div>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <p><strong>Đề bài:</strong> An tính diện tích của hình tròn bán kính $r=4\text{ cm}$ bằng công thức $S = 3,14 \cdot 4^{2} = 50,32\text{ (cm}^2\text{)}$. Biết rằng $3,14 < \pi < 3,15$, hãy ước lượng độ chính xác của $S$.</p>
+        <div style="margin-top:16px">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div><strong>Thiết lập bất đẳng thức:</strong><br>Diện tích đúng $\overline{S}$ của hình tròn thoả mãn: $3,14 \cdot 4^{2} < \overline{S} < 3,15 \cdot 4^2$<br>Hay $50,24 < \overline{S} < 50,4$.</div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div><strong>Ước lượng độ lệch:</strong><br>Trừ $50,32$ (giá trị An tính) vào các vế: $50,24 - 50,32 < \overline{S} - S < 50,4 - 50,32$<br>Suy ra $-0,08 < \overline{S} - S < 0,08$, tức là $\left| \overline{S} - S \right| < 0,08$.</div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div><strong>Kết luận:</strong><br>Kết quả của An có độ chính xác là $0,08$. Nghĩa là: $S = 50,32 \pm 0,08\text{ (cm}^2\text{)}$.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" style="margin-bottom:14px">
+    <div class="acc-hdr" onclick="accToggle(this)">
+      <span><span class="badge badge-b" style="margin-right:9px">Ví dụ 2</span>So sánh phép đo qua Sai số tương đối</span>
+      <i class="fas fa-chevron-down acc-arr"></i>
+    </div>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <p><strong>Đề bài:</strong> Năm 2015, các nhà khoa học ước lượng tuổi vũ trụ là $13799 \pm 21$ (triệu năm). Trọng tài bấm thời gian chạy 100m của vận động viên là $10,3 \pm 0,1$ (giây). Phép đo nào chính xác hơn?</p>
+        <div style="margin-top:16px">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div>Nếu nhìn sai số tuyệt đối ($d$), trọng tài có sai số nhỏ hơn ($0,1 < 21$). Nhưng so sánh như vậy là khập khiễng vì đơn vị và quy mô đo khác nhau.</div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div><strong>Tính sai số tương đối:</strong><br>
+            Tuổi vũ trụ: $\delta_{1} \le \dfrac{21}{13799} \approx 0,0015$<br>
+            Thời gian chạy: $\delta_{2} \le \dfrac{0,1}{10,3} \approx 0,0097$</div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div><strong>Kết luận:</strong><br>Phép đo của các nhà khoa học có sai số tương đối nhỏ hơn ($\delta_1 < \delta_2$), do đó phép đo tuổi vũ trụ <strong>chính xác hơn</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-hdr" onclick="accToggle(this)">
+      <span><span class="badge badge-o" style="margin-right:9px">Ví dụ 3</span>Xác định số quy tròn với độ chính xác cho trước</span>
+      <i class="fas fa-chevron-down acc-arr"></i>
+    </div>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <p><strong>Đề bài:</strong> Cho số gần đúng $a = 1903$ với độ chính xác $d = 50$. Hãy viết số quy tròn của số $a$.</p>
+        <div style="margin-top:16px">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div>Hàng lớn nhất của độ chính xác $d = 50$ là <strong>hàng chục</strong>.</div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div>Theo quy tắc, ta phải quy tròn số $a$ đến hàng gấp 10 lần hàng chục, tức là <strong>hàng trăm</strong>.</div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div>Quy tròn $1903$ đến hàng trăm. Chữ số sau hàng quy tròn là $0 < 5$, nên số quy tròn của $a$ là <strong>$1900$</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s6">
+  <div class="sec-hdr">
+    <div class="sec-ico ico-re"><i class="fas fa-pen-to-square"></i></div>
+    <div><div class="sec-sub">Phần 6</div><div class="sec-ttl">Trắc nghiệm rèn luyện (10 câu)</div></div>
+  </div>
+  <div id="quiz-box"></div>
+</section>
+
+</main>
+
+<div id="scorebar">
+  <div class="sb-ico">🏆</div>
+  <div style="flex:1">
+    <div class="sb-lbl">Điểm trắc nghiệm</div>
+    <div class="sb-num"><span id="sb-c">0</span> / <span id="sb-t">100</span></div>
+    <div class="sb-bar"><div class="sb-fill" id="sb-f" style="width:0%"></div></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════
+   SCROLL REVEAL & NAV
+══════════════════════════════════ */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.07});
+document.querySelectorAll('.sec').forEach(s=>io.observe(s));
+
+const navAs = document.querySelectorAll('.nav-a');
+const sects = document.querySelectorAll('section.sec');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sects.forEach(s=>{ if(scrollY >= s.offsetTop-130) cur=s.id; });
+  navAs.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* ══════════════════════════════════
+   TOGGLE ANSWER & ACCORDION
+══════════════════════════════════ */
+function toggleAns(btn){
+  const b = btn.nextElementSibling;
+  const open = b.style.display==='block';
+  b.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open
+    ? '<i class="fas fa-eye"></i> Xem đáp án & Gợi ý'
+    : '<i class="fas fa-eye-slash"></i> Ẩn đáp án';
+  if(!open && window.MathJax) MathJax.typesetPromise([b]).catch(()=>{});
+}
+
+function accToggle(hdr){
+  hdr.classList.toggle('open');
+  const body = hdr.nextElementSibling;
+  body.classList.toggle('open');
+  if(body.classList.contains('open') && window.MathJax)
+    setTimeout(()=>MathJax.typesetPromise([body]).catch(()=>{}),120);
+}
+
+/* ══════════════════════════════════
+   APPLET CANVAS LOGIC
+══════════════════════════════════ */
+const cvs = document.getElementById('appCanvas');
+const ac = cvs.getContext('2d');
+const slA = document.getElementById('slA');
+const slD = document.getElementById('slD');
+
+function updateSliderStyle(el, min, max, col) {
+    const p = ((el.value - min) / (max - min) * 100) + '%';
+    el.style.setProperty('--pp', p);
+    el.style.background = `linear-gradient(90deg, ${col} var(--pp), #dde 0%)`;
+}
+
+function updateApplet() {
+    const a = parseFloat(slA.value);
+    const d = parseFloat(slD.value);
+    
+    document.getElementById('valA-disp').textContent = a.toFixed(1);
+    document.getElementById('valD-disp').textContent = d.toFixed(1);
+    
+    updateSliderStyle(slA, 10, 30, 'var(--p)');
+    updateSliderStyle(slD, 0.1, 5, 'var(--acc)');
+    
+    drawNumberLine(a, d);
+    updateMathJaxStats(a, d);
+}
+
+function drawNumberLine(a, d) {
+    const wrap = cvs.parentElement;
+    const dpr = window.devicePixelRatio || 1;
+    const W = wrap.clientWidth;
+    const H = wrap.clientHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    cvs.style.width = W + 'px'; cvs.style.height = H + 'px';
+    ac.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ac.clearRect(0, 0, W, H);
+
+    const minVal = a - d;
+    const maxVal = a + d;
+
+    const padX = 40;
+    const y = H / 2 + 10;
+    const viewMin = 5; // Fixed view range [5, 35] to keep scaling consistent
+    const viewMax = 35;
+    
+    const mapX = (val) => padX + ((val - viewMin) / (viewMax - viewMin)) * (W - 2*padX);
+
+    // Draw Main Axis
+    ac.beginPath();
+    ac.moveTo(padX - 10, y);
+    ac.lineTo(W - padX + 10, y);
+    ac.lineWidth = 2;
+    ac.strokeStyle = '#475569';
+    ac.stroke();
+
+    // Draw Error Region
+    const xMin = mapX(minVal);
+    const xMax = mapX(maxVal);
+    ac.fillStyle = 'rgba(231, 76, 60, 0.15)'; // Danger color light
+    ac.fillRect(xMin, y - 20, xMax - xMin, 40);
+
+    // Draw Min/Max bounds
+    ac.beginPath();
+    ac.moveTo(xMin, y - 25); ac.lineTo(xMin, y + 25);
+    ac.moveTo(xMax, y - 25); ac.lineTo(xMax, y + 25);
+    ac.lineWidth = 2;
+    ac.strokeStyle = '#e74c3c';
+    ac.stroke();
+
+    // Draw Center Point (a)
+    const xA = mapX(a);
+    ac.beginPath();
+    ac.arc(xA, y, 6, 0, Math.PI * 2);
+    ac.fillStyle = '#0d7c66'; // Primary color
+    ac.fill();
+
+    // Text labels
+    ac.fillStyle = '#1e3a2f';
+    ac.font = 'bold 13px Nunito';
+    ac.textAlign = 'center';
+    
+    // Bounds text
+    ac.fillText(minVal.toFixed(1), xMin, y + 42);
+    ac.fillText(maxVal.toFixed(1), xMax, y + 42);
+    
+    // Center text
+    ac.fillStyle = '#0d7c66';
+    ac.fillText('a = ' + a.toFixed(1), xA, y - 30);
+}
+
+function updateMathJaxStats(a, d) {
+    const statsDiv = document.getElementById('appletStats');
+    statsDiv.innerHTML = `$$\\overline{a} \\in [${(a-d).toFixed(1)}, ${(a+d).toFixed(1)}] \\quad \\Rightarrow \\quad \\delta_a \\le ${(d/a*100).toFixed(1)}\\%$$`;
+    if(window.MathJax) MathJax.typesetPromise([statsDiv]).catch(()=>{});
+}
+
+const aro = new ResizeObserver(() => updateApplet());
+aro.observe(document.getElementById('appCanvas').parentElement);
+window.addEventListener('load', () => updateApplet());
+
+
+/* ══════════════════════════════════
+   DRAG & DROP
+══════════════════════════════════ */
+let dragId=null;
+const state={}; // dzId -> dragId
+
+document.querySelectorAll('.drag-it').forEach(el=>{
+  el.addEventListener('dragstart',e=>{
+    dragId=el.dataset.id; el.classList.add('dragging');
+    e.dataTransfer.effectAllowed='move';
+  });
+  el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+  el.addEventListener('touchstart',tStart,{passive:true});
+  el.addEventListener('touchmove', tMove, {passive:false});
+  el.addEventListener('touchend',  tEnd);
+});
+
+let tEl=null,tClone=null;
+function tStart(){ tEl=this; dragId=this.dataset.id;
+  tClone=this.cloneNode(true);
+  tClone.style.cssText=`position:fixed;opacity:.7;pointer-events:none;z-index:9999;width:${this.offsetWidth}px`;
+  document.body.appendChild(tClone);
+}
+function tMove(e){ e.preventDefault();
+  const t=e.touches[0];
+  if(tClone){ tClone.style.left=(t.clientX-tClone.offsetWidth/2)+'px'; tClone.style.top=(t.clientY-20)+'px'; }
+  document.querySelectorAll('.dz').forEach(d=>{
+    const r=d.getBoundingClientRect();
+    d.classList.toggle('over', t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom);
+  });
+}
+function tEnd(e){
+  if(tClone){tClone.remove();tClone=null;}
+  const t=e.changedTouches[0];
+  document.querySelectorAll('.dz').forEach(d=>{
+    d.classList.remove('over');
+    const r=d.getBoundingClientRect();
+    if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)
+      doDrop(d,dragId);
+  });
+}
+
+function dzOver(e){ e.preventDefault(); e.currentTarget.classList.add('over'); }
+function dzLeave(e){ e.currentTarget.classList.remove('over'); }
+function dzDrop(e){ e.preventDefault(); e.currentTarget.classList.remove('over'); doDrop(e.currentTarget,dragId); }
+
+function doDrop(dz,id){
+  if(!id) return;
+  Object.keys(state).forEach(k=>{ if(state[k]===id) delete state[k]; });
+  state[dz.id]=id;
+  renderDnD();
+}
+function renderDnD(){
+  document.querySelectorAll('.dz').forEach(dz=>{
+    dz.querySelectorAll('.drag-it.dropped').forEach(el=>el.remove());
+    const id=state[dz.id];
+    if(id){
+      const src=document.querySelector(`[data-id="${id}"]`);
+      if(src){
+        const c=src.cloneNode(true); c.classList.add('dropped');
+        c.style.cssText='margin:0;cursor:default;font-size:13px;pointer-events:none;';
+        c.removeAttribute('draggable'); dz.appendChild(c);
+      }
+    }
+  });
+  document.querySelectorAll('#drag-pool .drag-it').forEach(el=>{
+    el.style.opacity=Object.values(state).includes(el.dataset.id)?'0.3':'1';
+  });
+}
+function checkDnD(){
+  let ok=0;
+  document.querySelectorAll('.dz').forEach(dz=>{
+    dz.classList.remove('ok','no');
+    const placed=state[dz.id];
+    if(!placed) return;
+    if(placed===dz.dataset.ans){dz.classList.add('ok');ok++;}
+    else dz.classList.add('no');
+  });
+  const msg=document.getElementById('dnd-msg');
+  msg.classList.add('vis');
+  if(ok===4){
+    msg.className='dnd-msg vis win';
+    msg.innerHTML='<i class="fas fa-trophy"></i> Tuyệt vời! Bạn ghép đúng cả 4 cặp! 🎉';
+  } else {
+    msg.className='dnd-msg vis part';
+    msg.innerHTML=`<i class="fas fa-circle-info"></i> Đúng ${ok}/4 cặp. Kiểm tra lại các ô màu đỏ!`;
+  }
+}
+function resetDnD(){
+  Object.keys(state).forEach(k=>delete state[k]);
+  document.querySelectorAll('.dz').forEach(d=>{
+    d.classList.remove('ok','no');
+    d.querySelectorAll('.dropped').forEach(el=>el.remove());
+  });
+  document.querySelectorAll('#drag-pool .drag-it').forEach(el=>el.style.opacity='1');
+  const msg=document.getElementById('dnd-msg');
+  msg.className='dnd-msg'; msg.innerHTML='';
+}
+
+/* ══════════════════════════════════
+   QUIZ LOGIC
+══════════════════════════════════ */
+const QS=[
+  {q:"Nếu $a$ là số gần đúng của số đúng $\\overline{a}$, công thức nào sau đây thể hiện sai số tuyệt đối?",
+   opts:["$\\Delta_{a} = \\overline{a} + a$","$\\Delta_{a} = \\left| \\overline{a} - a \\right|$","$\\Delta_{a} = \\overline{a} - a$","$\\Delta_{a} = a - \\overline{a}$"], ans:1,
+   exp:"Sai số tuyệt đối của số gần đúng $a$ là giá trị tuyệt đối của hiệu số giữa số đúng và số gần đúng: $\\Delta_{a} = \\left| \\overline{a} - a \\right|$."},
+  {q:"Cho số gần đúng $a = 6547$ với độ chính xác $d = 100$. Số quy tròn của số $a$ là:",
+   opts:["6500","6540","6550","6600"], ans:0,
+   exp:"Hàng lớn nhất của $d=100$ là hàng chục, nên quy tròn $a$ đến hàng trăm. Chữ số sau hàng quy tròn là $4 < 5$, nên số quy tròn là $6500$."},
+  {q:"Hãy viết số quy tròn của số gần đúng $b$ biết $\\overline{b} = 18,0113 \\pm 0,003$.",
+   opts:["18,0","18,01","18,011","18,0113"], ans:1,
+   exp:"Độ chính xác $d=0,003$ có hàng lớn nhất là phần nghìn, nên quy tròn đến hàng phần trăm. Chữ số sau phần trăm là $1 < 5$, số quy tròn là $18,01$."},
+  {q:"Sai số tương đối của số gần đúng $a$ được tính bằng công thức nào?",
+   opts:["$\\delta_{a} = \\dfrac{\\Delta_{a}}{\\overline{a}}$","$\\delta_{a} = \\dfrac{\\left| a \\right|}{\\Delta_{a}}$","$\\delta_{a} = \\dfrac{\\Delta_{a}}{\\left| a \\right|}$","$\\delta_{a} = \\Delta_{a} \\cdot \\left| a \\right|$"], ans:2,
+   exp:"Sai số tương đối là tỉ số giữa sai số tuyệt đối $\\Delta_{a}$ và $\\left| a \\right|$: $\\delta_{a} = \\dfrac{\\Delta_{a}}{\\left| a \\right|}$."},
+  {q:"Tuổi của vũ trụ ước lượng là $13799 \\pm 21$ triệu năm. Ước lượng sai số tương đối $\\delta_{a}$?",
+   opts:["$\\approx 0,15\\%$","$\\approx 1,5\\%$","$\\approx 0,015\\%$","$\\approx 15\\%$"], ans:0,
+   exp:"Sai số tương đối $\\delta_{a} \\le \\dfrac{21}{13799} \\approx 0,0015 = 0,15\\%$."},
+  {q:"Khi thay số đúng bởi số quy tròn đến một hàng nào đó thì sai số tuyệt đối không vượt quá...",
+   opts:["Một đơn vị của hàng quy tròn","Nửa đơn vị của hàng quy tròn","Phần mười đơn vị","Hai đơn vị"], ans:1,
+   exp:"Sai số tuyệt đối của số quy tròn không vượt quá nửa đơn vị của hàng quy tròn."},
+  {q:"Xác định số gần đúng của $\\overline{a} = 1,71428...$ với độ chính xác $d = 0,002$.",
+   opts:["1,71","1,714","1,7143","1,715"], ans:1,
+   exp:"Hàng của chữ số khác 0 đầu tiên của $d=0,002$ là phần nghìn. Quy tròn $\\overline{a}$ đến phần nghìn ta được $a=1,714$."},
+  {q:"Để đánh giá chất lượng của phép đo đạc (phép đo nào chính xác hơn), ta dựa vào đại lượng nào?",
+   opts:["Sai số tuyệt đối","Độ chính xác","Số gần đúng","Sai số tương đối"], ans:3,
+   exp:"Nếu sai số tương đối $\\delta_{a}$ càng nhỏ thì chất lượng của phép đo đạc hay tính toán càng cao."},
+  {q:"Biết $\\sqrt{3} = 1,7320508...$ Hãy tìm số gần đúng của $\\sqrt{3}$ với độ chính xác $0,003$.",
+   opts:["1,7","1,73","1,732","1,7321"], ans:1,
+   exp:"Hàng của chữ số khác 0 đầu tiên của $d=0,003$ là phần nghìn. Ta quy tròn $\\sqrt{3}$ đến hàng phần trăm, được $1,73$."},
+  {q:"Hình vuông có cạnh $10\\text{ cm}$. Đường chéo là $10\\sqrt{2}$. Biết $1,41 < \\sqrt{2} < 1,42$, độ dài đường chéo đúng $\\overline{x}$ nằm trong khoảng nào?",
+   opts:["$14,1 < \\overline{x} < 14,2$","$14,14 < \\overline{x} < 14,2$","$10 < \\overline{x} < 14,1$","$14 < \\overline{x} < 15$"], ans:0,
+   exp:"Nhân 10 vào các vế của bất đẳng thức $1,41 < \\sqrt{2} < 1,42$, ta được $14,1 < 10\\sqrt{2} < 14,2$."}
+];
+
+let score=0; const done={};
+
+function buildQuiz(){
+  const box=document.getElementById('quiz-box');
+  box.innerHTML=QS.map((q,qi)=>`
+  <div class="q-card" id="qc${qi}">
+    <div class="q-text">
+      <span class="q-badge">${qi+1}</span><span>${q.q}</span>
+    </div>
+    <div class="q-opts">
+      ${q.opts.map((o,oi)=>`
+      <button class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="pick(${qi},${oi})">
+        <span class="q-ltr">${'ABCD'[oi]}</span><span>${o}</span>
+      </button>`).join('')}
+    </div>
+    <div class="q-exp" id="exp${qi}">
+      <div class="exp-ttl"><i class="fas fa-lightbulb"></i> Giải thích</div>
+      <div id="exp-body${qi}">${q.exp}</div>
+    </div>
+  </div>`).join('');
+}
+
+function pick(qi,oi){
+  if(done[qi]!==undefined) return;
+  done[qi]=oi;
+  const q=QS[qi];
+  document.querySelectorAll(`[data-qi="${qi}"]`).forEach((btn,i)=>{
+    btn.classList.add('dis');
+    if(i===q.ans) btn.classList.add('cor');
+    else if(i===oi&&oi!==q.ans) btn.classList.add('wrg');
+  });
+  const exp=document.getElementById('exp'+qi);
+  exp.classList.add('vis');
+  if(oi===q.ans) score+=10; // 10đ mỗi câu
+  updateScorebar();
+  if(window.MathJax) MathJax.typesetPromise([exp]).catch(()=>{});
+}
+
+function updateScorebar(){
+  document.getElementById('sb-c').textContent=score;
+  document.getElementById('sb-f').style.width=(score)+'%'; // max 100
+  document.getElementById('scorebar').classList.add('up');
+}
+
+buildQuiz();
+
+window.addEventListener('load',()=>{
+  setTimeout(()=>{ if(window.MathJax) MathJax.typesetPromise([document.body]).catch(()=>{}); },600);
+});
+</script>
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+<button class="theme-toggle" id="hcToggle" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<button class="to-top" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>

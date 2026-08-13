@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài 1: Mệnh đề — Toán 10 (Kết nối tri thức)</title>
+<meta name="description" content="Bài giảng điện tử tương tác: Mệnh đề, mệnh đề chứa biến, phủ định, kéo theo, đảo, tương đương, ký hiệu với mọi và tồn tại.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  startup: {
+    pageReady: () => MathJax.startup.defaultPageReady().then(() => {
+      document.documentElement.classList.add('mathjax-ready');
+    })
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+:root{
+  --c-primary:#1e5f8e; --c-primary-lt:#e8f2f9; --c-primary-dk:#12496e;
+  --c-accent:#e07a2f;  --c-accent-lt:#fdf1e6;
+  --c-ok:#2e7d5b;      --c-ok-lt:#e6f4ee;
+  --c-warn:#c0392b;    --c-warn-lt:#fdecea;
+  --c-purple:#6b4c9a;  --c-purple-lt:#f0eaf7;
+  --c-ink:#1f2933; --c-ink-soft:#5b6672; --c-line:#dde3e9;
+  --c-bg:#f7f9fb; --c-card:#ffffff;
+  --font-title:'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-body:'Nunito','Segoe UI', system-ui, -apple-system, sans-serif;
+  --r:14px; --sp:clamp(12px,2.5vw,24px);
+  --shadow:0 2px 12px rgba(31,41,51,.08);
+  --shadow-lg:0 6px 24px rgba(31,41,51,.14);
+  --fs-base:clamp(15px,0.95rem + .2vw,17px);
+  --maxw:1080px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:70px}
+body{
+  margin:0; background:var(--c-bg); color:var(--c-ink);
+  font-family:var(--font-body); font-size:var(--fs-base); line-height:1.65;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4{font-family:var(--font-title); line-height:1.3; margin:0 0 .5em}
+h1{font-size:clamp(1.5rem,1.1rem + 2vw,2.3rem)}
+h2{font-size:clamp(1.2rem,1rem + 1.1vw,1.6rem); color:var(--c-primary)}
+h3{font-size:clamp(1.05rem,.95rem + .5vw,1.25rem); color:var(--c-ink)}
+p{margin:0 0 .9em}
+a{color:var(--c-primary)}
+ul,ol{margin:0 0 .9em; padding-left:1.4em}
+li{margin-bottom:.35em}
+code,kbd{font-family:ui-monospace,'Consolas',monospace;font-size:.92em;background:#eef2f6;padding:1px 5px;border-radius:5px}
+
+/* ---------- Tiện ích ---------- */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;z-index:999;background:var(--c-accent);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;font-weight:700}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px;border-radius:4px}
+.ic{width:1em;height:1em;fill:currentColor;vertical-align:-.125em;flex:none}
+
+/* ---------- Header ---------- */
+header.top{
+  background:linear-gradient(135deg,#12496e 0%,#1e5f8e 55%,#2b7fa8 100%);
+  color:#fff; padding:calc(var(--sp)*1.6) var(--sp) calc(var(--sp)*1.3);
+  text-align:center; position:relative; overflow:hidden;
+}
+header.top::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 15% 20%, rgba(255,255,255,.13) 0 3px, transparent 3px),
+  radial-gradient(circle at 78% 65%, rgba(255,255,255,.10) 0 4px, transparent 4px),
+  radial-gradient(circle at 45% 85%, rgba(255,255,255,.08) 0 3px, transparent 3px);
+  background-size:180px 180px,240px 240px,200px 200px;pointer-events:none}
+header.top h1{color:#fff;margin-bottom:.25em;position:relative;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.eyebrow{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;opacity:.9;position:relative}
+.subtitle{opacity:.95;margin:0;position:relative;font-size:1rem}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;position:relative}
+.badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:5px 12px;border-radius:99px;font-size:.82rem;font-weight:700}
+
+/* ---------- Thanh điều hướng ---------- */
+nav.toc{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--c-line); box-shadow:0 1px 6px rgba(0,0,0,.06);
+}
+.toc-inner{max-width:var(--maxw);margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:6px 8px;scrollbar-width:thin}
+.toc-inner a{
+  flex:none;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:99px;
+  text-decoration:none;color:var(--c-ink-soft);font-weight:700;font-size:.85rem;white-space:nowrap;min-height:40px;
+}
+.toc-inner a:hover{background:var(--c-primary-lt);color:var(--c-primary)}
+.toc-inner a.active{background:var(--c-primary);color:#fff}
+
+/* ---------- Bố cục ---------- */
+main{max-width:var(--maxw);margin:0 auto;padding:var(--sp) var(--sp) 60px}
+.card{
+  background:var(--c-card); border-radius:var(--r); box-shadow:var(--shadow);
+  padding:calc(var(--sp)*1.1); margin-bottom:calc(var(--sp)*1.15);
+  border-left:6px solid var(--c-primary);
+  opacity:0; transform:translateY(22px); transition:opacity .5s ease, transform .5s ease;
+}
+.card.in{opacity:1;transform:none}
+.card > h2{display:flex;align-items:center;gap:.5em;margin-top:0}
+.card > h2 .ic{font-size:1.15em;color:inherit}
+.sec-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:1.9em;height:1.9em;border-radius:50%;font-size:.72em;font-family:var(--font-body);
+  background:currentColor;color:#fff;flex:none;
+}
+.sec-num span{color:#fff;font-weight:800}
+.c-accent{border-left-color:var(--c-accent)} .c-accent > h2{color:var(--c-accent)}
+.c-ok{border-left-color:var(--c-ok)}         .c-ok > h2{color:var(--c-ok)}
+.c-purple{border-left-color:var(--c-purple)} .c-purple > h2{color:var(--c-purple)}
+
+/* ---------- Khối nội dung ---------- */
+.grid3{display:grid;gap:14px;grid-template-columns:1fr}
+.grid2{display:grid;gap:14px;grid-template-columns:1fr}
+.app-card{background:var(--c-accent-lt);border:1px solid #f2d9bd;border-radius:12px;padding:14px}
+.app-card h3{color:var(--c-accent);margin-bottom:.35em;font-size:1.02rem;display:flex;gap:.45em;align-items:center}
+.app-card p{margin:0;font-size:.95rem}
+.app-card .num{font-weight:800;color:var(--c-accent)}
+
+.def{background:var(--c-primary-lt);border:1px solid #c8dcea;border-left:5px solid var(--c-primary);border-radius:10px;padding:14px 16px;margin:0 0 16px}
+.def h3{color:var(--c-primary);margin-bottom:.4em;font-size:1.05rem}
+.def:last-child{margin-bottom:0}
+.note{background:#fffaf0;border:1px dashed #e8c88a;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:.95rem}
+.trap{background:var(--c-warn-lt);border:1px solid #f3c4bd;border-left:5px solid var(--c-warn);border-radius:10px;padding:14px 16px;margin-top:18px}
+.trap h3{color:var(--c-warn);margin-bottom:.5em;font-size:1.05rem;display:flex;gap:.45em;align-items:center}
+.trap ol{margin-bottom:0}
+.trap .wrong{color:var(--c-warn);font-weight:700}
+.trap .right{color:var(--c-ok);font-weight:700}
+.problem{background:linear-gradient(135deg,#eef6fb,#f7fbfd);border:1px solid #c8dcea;border-radius:12px;padding:16px;margin-top:16px}
+.problem h3{color:var(--c-primary);font-size:1.05rem}
+
+/* ---------- Bảng ---------- */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:10px;border:1px solid var(--c-line)}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:.94rem;background:#fff}
+th,td{border:1px solid var(--c-line);padding:9px 11px;text-align:center}
+thead th{background:var(--c-primary);color:#fff;font-family:var(--font-title);font-size:.9rem}
+tbody tr:nth-child(even){background:#f7fafc}
+td.lbl{text-align:left;font-weight:700;background:#f2f6f9}
+.tt-T{color:var(--c-ok);font-weight:800}
+.tt-F{color:var(--c-warn);font-weight:800}
+
+/* ---------- Nút ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45em;
+  min-height:44px;padding:10px 18px;border-radius:10px;border:2px solid transparent;
+  font-family:var(--font-body);font-weight:800;font-size:.94rem;cursor:pointer;
+  background:var(--c-primary);color:#fff;transition:transform .12s ease, filter .12s ease;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:#fff;color:var(--c-primary);border-color:var(--c-primary)}
+.btn.accent{background:var(--c-accent)}
+.btn.ok{background:var(--c-ok)}
+.btn.warn{background:var(--c-warn)}
+.btn.sm{min-height:38px;padding:7px 13px;font-size:.86rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+
+/* ---------- Game ---------- */
+.game-pool{display:flex;flex-wrap:wrap;gap:9px;min-height:56px;padding:12px;background:#f4f8fa;border:2px dashed var(--c-line);border-radius:12px;margin-bottom:16px}
+.chip{
+  background:#fff;border:2px solid var(--c-primary);color:var(--c-ink);
+  border-radius:10px;padding:9px 13px;font-size:.9rem;font-weight:600;cursor:grab;
+  min-height:44px;display:flex;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.07);
+  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  max-width:100%;
+}
+.chip:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.chip.sel{border-color:var(--c-accent);background:var(--c-accent-lt);box-shadow:0 0 0 3px rgba(224,122,47,.25)}
+.chip.dragging{opacity:.45}
+.chip.right{border-color:var(--c-ok);background:var(--c-ok-lt)}
+.chip.wrong{border-color:var(--c-warn);background:var(--c-warn-lt)}
+.chip .mk{font-weight:900;margin-right:.4em}
+.drops{display:grid;gap:12px;grid-template-columns:1fr}
+.drop{background:#fff;border:2px dashed var(--c-line);border-radius:12px;padding:12px;min-height:120px}
+.drop.over{border-color:var(--c-accent);background:var(--c-accent-lt)}
+.drop h4{margin:0 0 8px;font-family:var(--font-body);font-weight:800;font-size:.9rem;text-align:center;color:var(--c-ink-soft);text-transform:uppercase;letter-spacing:.03em}
+.drop .items{display:flex;flex-direction:column;gap:8px}
+.fb{margin-top:12px;padding:12px 14px;border-radius:10px;font-weight:700;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--c-ok-lt);color:var(--c-ok);border:1px solid #bfe0d1}
+.fb.bad{background:var(--c-warn-lt);color:var(--c-warn);border:1px solid #f3c4bd}
+.fb ul{font-weight:400;margin:.5em 0 0;color:var(--c-ink)}
+
+/* ---------- Accordion ---------- */
+.acc{border:1px solid var(--c-line);border-radius:12px;margin-bottom:12px;overflow:hidden;background:#fff}
+.acc-head{
+  width:100%;text-align:left;background:var(--c-primary-lt);border:0;cursor:pointer;
+  padding:14px 16px;font-family:var(--font-title);font-weight:700;font-size:1rem;color:var(--c-primary);
+  display:flex;align-items:center;gap:.6em;min-height:52px;
+}
+.acc-head:hover{background:#dceaf4}
+.acc-head .arrow{margin-left:auto;transition:transform .25s ease;flex:none}
+.acc-head[aria-expanded="true"] .arrow{transform:rotate(90deg)}
+.acc-body{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+.acc-body.open{padding:16px;max-height:4000px}
+.step{border-left:3px solid var(--c-accent);padding:0 0 0 14px;margin-bottom:14px}
+.step .n{display:inline-block;background:var(--c-accent);color:#fff;font-weight:800;font-size:.78rem;padding:2px 9px;border-radius:99px;margin-bottom:5px}
+.step .why{font-style:italic;color:var(--c-ink-soft);font-size:.9rem;margin:.35em 0 0}
+.take{background:var(--c-ok-lt);border-left:4px solid var(--c-ok);border-radius:8px;padding:11px 14px;font-size:.94rem}
+
+/* ---------- Mindmap ---------- */
+.mm-wrap{overflow-x:auto;background:#fff;border:1px solid var(--c-line);border-radius:12px;padding:8px}
+.mm-wrap svg{display:block;min-width:640px;width:100%;height:auto}
+
+/* ---------- Flashcards ---------- */
+.fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.fc{perspective:1200px;height:200px;border:0;background:none;padding:0;cursor:pointer;font-family:inherit;display:block}
+.fc-in{display:block;position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:12px;padding:26px 14px 14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;box-shadow:var(--shadow);overflow-y:auto;
+}
+.fc-front{background:linear-gradient(135deg,#1e5f8e,#2b7fa8);color:#fff;font-family:var(--font-title);font-weight:700;font-size:1.02rem}
+.fc-back{background:#fff;border:2px solid var(--c-accent);transform:rotateY(180deg);font-size:.88rem;line-height:1.55}
+.fc-face > .fc-body{display:block;width:100%}
+.fc-tag{position:absolute;top:7px;left:10px;font-size:.68rem;font-weight:800;letter-spacing:.05em;opacity:.75;text-transform:uppercase}
+.fc.known .fc-back{border-color:var(--c-ok);background:var(--c-ok-lt)}
+.fc-bar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:14px}
+.fc-stat{margin-left:auto;font-weight:800;color:var(--c-ok);font-size:.92rem}
+
+/* ---------- Quiz ---------- */
+.q{border:1px solid var(--c-line);border-radius:12px;padding:16px;margin-bottom:14px;background:#fff}
+.q-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.lvl{font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.04em;white-space:nowrap;flex:none}
+.lvl.NB{background:#e6f4ee;color:#2e7d5b} .lvl.TH{background:#e8f2f9;color:#1e5f8e}
+.lvl.VD{background:#fdf1e6;color:#b8611f}  .lvl.VDC{background:#f0eaf7;color:#6b4c9a}
+.q-num{font-weight:800;color:var(--c-ink-soft);flex:none}
+.q-stem{flex:1 1 240px;font-weight:600;min-width:200px}
+.opts{display:grid;gap:8px;margin:10px 0}
+.opt{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:2px solid var(--c-line);
+  border-radius:10px;cursor:pointer;background:#fff;min-height:44px;text-align:left;
+  font-family:var(--font-body);font-size:.95rem;transition:border-color .15s,background .15s;width:100%;
+}
+.opt:hover{border-color:var(--c-primary);background:var(--c-primary-lt)}
+.opt .k{font-weight:800;color:var(--c-primary);flex:none;width:1.3em}
+.opt[aria-checked="true"]{border-color:var(--c-primary);background:var(--c-primary-lt)}
+.opt.correct{border-color:var(--c-ok);background:var(--c-ok-lt)}
+.opt.incorrect{border-color:var(--c-warn);background:var(--c-warn-lt)}
+.opt .mark{margin-left:auto;font-weight:900;flex:none}
+.q-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.hint{background:#fffaf0;border:1px dashed #e8c88a;border-radius:9px;padding:10px 13px;margin-top:9px;font-size:.93rem;display:none}
+.hint.show{display:block}
+.hint b{color:var(--c-accent)}
+.sol{background:var(--c-primary-lt);border-left:4px solid var(--c-primary);border-radius:8px;padding:11px 14px;margin-top:9px;font-size:.93rem;display:none}
+.sol.show{display:block}
+.result{background:#fff;border:2px solid var(--c-primary);border-radius:12px;padding:18px;margin-top:16px;display:none}
+.result.show{display:block}
+.score-big{font-family:var(--font-title);font-size:2.4rem;color:var(--c-primary);text-align:center;margin:0 0 .2em}
+.bar{height:11px;background:#e8eef3;border-radius:99px;overflow:hidden;min-width:90px}
+.bar i{display:block;height:100%;background:var(--c-ok);border-radius:99px;transition:width .6s ease}
+.verdict{text-align:center;font-weight:700;padding:12px;border-radius:10px;margin:12px 0}
+
+/* ---------- Thanh điểm nổi & nút ---------- */
+.hud{
+  position:fixed;z-index:60;right:14px;bottom:14px;
+  background:var(--c-primary);color:#fff;padding:9px 15px;border-radius:99px;
+  font-weight:800;font-size:.9rem;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:.5em;
+}
+.fabs{position:fixed;z-index:60;right:14px;bottom:64px;display:flex;flex-direction:column;gap:9px}
+.fab{
+  width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;color:var(--c-primary);box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+}
+.fab:hover{background:var(--c-primary-lt)}
+.fab[aria-pressed="true"]{background:var(--c-ink);color:#fff}
+#toTop{opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.show{opacity:1;pointer-events:auto}
+.restored{background:var(--c-ok-lt);border:1px solid #bfe0d1;color:var(--c-ok);border-radius:9px;padding:9px 13px;font-size:.9rem;font-weight:700;margin-bottom:12px;display:none}
+.restored.show{display:block}
+
+/* ---------- Banner ngoại tuyến ---------- */
+#mjWarn{display:none;background:#fff4e5;border-bottom:2px solid var(--c-accent);color:#7a4310;padding:9px 14px;font-size:.88rem;text-align:center;font-weight:600}
+html.no-mathjax #mjWarn{display:block}
+html.no-mathjax .mjx-raw, html.no-mathjax .q-stem, html.no-mathjax .opt{font-family:'Cambria Math','Latin Modern Math',Georgia,serif}
+
+footer.bot{text-align:center;padding:26px var(--sp) 90px;color:var(--c-ink-soft);font-size:.88rem}
+
+/* ---------- Footer đồng bộ ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg,var(--c-primary-dk) 0%,var(--c-primary) 60%,#2a7fb8 100%);
+  color:#e8f2f9;text-align:center;padding:40px 20px 96px;
+  border-top:4px solid var(--c-accent);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-title);font-size:1.05rem;font-weight:700;color:#fff;
+  margin:0 0 8px;display:flex;align-items:center;justify-content:center;gap:10px;line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem;margin:0;opacity:.88;max-width:640px;
+  margin-left:auto;margin-right:auto;line-height:1.6;
+}
+@media print{ footer.ds-footer{background:none;color:#000;border-top:1px solid #000} }
+
+/* ---------- Responsive ---------- */
+@media (min-width:640px){
+  .grid2{grid-template-columns:1fr 1fr}
+  .drops{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:768px){
+  .grid3{grid-template-columns:repeat(3,1fr)}
+  .hud{right:auto;left:14px;bottom:14px}
+}
+@media (min-width:1100px){
+  .hud{top:74px;bottom:auto;right:14px;left:auto}
+  .fabs{top:132px;bottom:auto}
+}
+
+/* ---------- Tương phản cao ---------- */
+html.hc body{background:#fff;color:#000}
+html.hc .card,html.hc .q,html.hc .def,html.hc .app-card,html.hc .drop,html.hc .acc,html.hc .note,html.hc .problem,html.hc .fc-back{
+  background:#fff!important;border:2px solid #000!important;box-shadow:none!important;color:#000!important}
+html.hc .card{border-left-width:8px!important}
+html.hc h2,html.hc h3,html.hc .acc-head{color:#000!important;background:#fff!important}
+html.hc .btn{background:#000!important;color:#fff!important;border:2px solid #000!important}
+html.hc .btn.ghost{background:#fff!important;color:#000!important}
+html.hc thead th{background:#000!important;color:#fff!important}
+html.hc td,html.hc th{border-color:#000!important}
+html.hc tbody tr:nth-child(even){background:#fff}
+html.hc .fb.good{color:#00521f!important}
+html.hc .fb.bad{color:#8b0000!important}
+html.hc .opt{border-color:#000!important}
+html.hc .opt[aria-checked="true"]{background:#e0e0e0!important}
+html.hc .opt.correct{background:#fff!important;border-width:4px!important;border-color:#00521f!important}
+html.hc .opt.incorrect{background:#fff!important;border-width:4px!important;border-color:#8b0000!important;border-style:dashed!important}
+html.hc .chip{border-color:#000!important;background:#fff!important}
+html.hc .hud,html.hc .fab{background:#000!important;color:#fff!important;border:2px solid #fff}
+html.hc header.top{background:#000!important}
+html.hc .fc-front{background:#000!important}
+
+@media print{
+  .hud,.fabs,nav.toc,.skip,#mjWarn{display:none!important}
+  .card{opacity:1!important;transform:none!important;box-shadow:none;border:1px solid #999;page-break-inside:avoid}
+  .acc-body{max-height:none!important;padding:16px!important}
+  body{background:#fff}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .card{opacity:1;transform:none}
+  .fc-in{transition:none}
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<a class="skip" href="#noidung">Bỏ qua tới nội dung chính</a>
+<div id="mjWarn" role="status">Đang xem ở chế độ ngoại tuyến — công thức hiển thị dạng ký hiệu LaTeX (ví dụ <code>$x^2$</code>). Kết nối Internet rồi tải lại để xem công thức đẹp.</div>
+
+<svg style="display:none" aria-hidden="true" focusable="false">
+  <symbol id="ic-rocket" viewBox="0 0 24 24"><path d="M12 2s4.5 1.5 6 6c1.5 4.5-1 8-1 8l-3 1-3-3-3-3 1-3s3.5-2.5 8-1M7 14l-3 1-1 4 4-1 1-3zm10-6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 24 24"><path d="M4 3h6a3 3 0 0 1 2 .8A3 3 0 0 1 14 3h6a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-6a1 1 0 0 0-1 1h-2a1 1 0 0 0-1-1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm7 3a1 1 0 0 0-1-1H5v13h5a3 3 0 0 1 1 .2V6zm2 12.2A3 3 0 0 1 14 18h5V5h-5a1 1 0 0 0-1 1v12.2z"/></symbol>
+  <symbol id="ic-slider" viewBox="0 0 24 24"><path d="M3 6h9a3 3 0 0 1 5.8 0H21v2h-3.2a3 3 0 0 1-5.6 0H3V6zm0 10h6.2a3 3 0 0 1 5.6 0H21v2h-6.2a3 3 0 0 1-5.6 0H3v-2z"/></symbol>
+  <symbol id="ic-game" viewBox="0 0 24 24"><path d="M7 7h10a5 5 0 0 1 5 5v1a4 4 0 0 1-7 2.6L13.6 15h-3.2L9 15.6A4 4 0 0 1 2 13v-1a5 5 0 0 1 5-5zm-1 3v2H4v2h2v2h2v-2h2v-2H8v-2H6zm10 1a1.2 1.2 0 1 0 0 2.4A1.2 1.2 0 0 0 16 11zm2.5 2.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></symbol>
+  <symbol id="ic-steps" viewBox="0 0 24 24"><path d="M3 18h5v3H3v-3zm0-6h5v5H3v-5zm7 0h5v9h-5v-9zm7-9h5v18h-5V3z"/></symbol>
+  <symbol id="ic-map" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 1 5.83V9h4a3 3 0 0 1 3 3v1.17a3 3 0 1 1-2 0V12a1 1 0 0 0-1-1h-4v2.17a3 3 0 1 1-2 0V11H7a1 1 0 0 0-1 1v1.17a3 3 0 1 1-2 0V12a3 3 0 0 1 3-3h4V7.83A3 3 0 0 1 12 2z"/></symbol>
+  <symbol id="ic-cards" viewBox="0 0 24 24"><path d="M6 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm12 2.3 1.6.6a2 2 0 0 1 1.2 2.6l-3.4 9.3V6.3z"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm4.7 6.3-6.4 6.4-3-3-1.4 1.4 4.4 4.4 7.8-7.8-1.4-1.4z"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 2 1 21h22L12 2zm0 5 7.5 12.9h-15L12 7zm-1 4v5h2v-5h-2zm0 6v2h2v-2h-2z"/></symbol>
+  <symbol id="ic-bulb" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 4 12.7V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.3A7 7 0 0 1 12 2zm-2 18h4v1a2 2 0 0 1-4 0v-1z"/></symbol>
+  <symbol id="ic-up" viewBox="0 0 24 24"><path d="M12 4l8 8-1.4 1.4L13 7.8V20h-2V7.8L5.4 13.4 4 12l8-8z"/></symbol>
+  <symbol id="ic-contrast" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20V2z"/><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2v16a8 8 0 0 0 0-16z" opacity=".45"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7V5z"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></symbol>
+</svg>
+
+<header class="top">
+  <p class="eyebrow">Chương I — Mệnh đề và Tập hợp</p>
+  <h1>Bài 1. MỆNH ĐỀ</h1>
+  <p class="subtitle">Toán 10 — Kết nối tri thức với cuộc sống</p>
+  <div class="badges">
+    <span class="badge">Mệnh đề &amp; mệnh đề chứa biến</span>
+    <span class="badge">Phủ định</span>
+    <span class="badge">Kéo theo &amp; đảo</span>
+    <span class="badge">Tương đương</span>
+    <span class="badge">Ký hiệu &forall;, &exist;</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Mục lục bài giảng">
+  <div class="toc-inner">
+    <a href="#p1"><svg class="ic"><use href="#ic-rocket"></use></svg>Khởi động</a>
+    <a href="#p2"><svg class="ic"><use href="#ic-book"></use></svg>Lý thuyết</a>
+    <a href="#p4"><svg class="ic"><use href="#ic-game"></use></svg>Trò chơi</a>
+    <a href="#p5"><svg class="ic"><use href="#ic-steps"></use></svg>Ví dụ</a>
+    <a href="#p6"><svg class="ic"><use href="#ic-map"></use></svg>Sơ đồ</a>
+    <a href="#p7"><svg class="ic"><use href="#ic-cards"></use></svg>Flashcards</a>
+    <a href="#p8"><svg class="ic"><use href="#ic-check"></use></svg>Trắc nghiệm</a>
+  </div>
+</nav>
+
+<main id="noidung">
+
+  <section class="card c-accent" id="p1">
+    <h2><span class="sec-num"><span>1</span></span><svg class="ic"><use href="#ic-rocket"></use></svg>Khởi động</h2>
+
+    <p>Mỗi ngày em nghe hàng trăm câu nói. Có câu <b>xác định được đúng hay sai</b>, có câu thì không.
+    Chính sự phân biệt tưởng như đơn giản đó là nền móng của toàn bộ lôgic toán học — và của cả máy tính em đang dùng.</p>
+
+    <h3>Lôgic mệnh đề ở đâu trong đời sống?</h3>
+    <div class="grid3">
+      <div class="app-card">
+        <h3><svg class="ic"><use href="#ic-bulb"></use></svg>Máy tính &amp; điện thoại</h3>
+        <p>Mọi con chip chỉ hiểu hai giá trị: <b>đúng (1)</b> và <b>sai (0)</b>. Các cổng lôgic NOT, AND, OR
+        chính là phủ định và phép nối mệnh đề. Một con chip điện thoại hiện nay chứa
+        <span class="num">hàng chục tỉ</span> transistor — mỗi transistor là một công tắc "đúng / sai".</p>
+      </div>
+      <div class="app-card">
+        <h3><svg class="ic"><use href="#ic-check"></use></svg>Quy chế thi tốt nghiệp</h3>
+        <p>"<i>Thí sinh được công nhận tốt nghiệp <b>nếu và chỉ nếu</b> đủ điều kiện dự thi, không bị đình chỉ,
+        điểm xét tốt nghiệp đạt <span class="num">từ 5,0</span> trở lên và không có bài thi nào bị điểm liệt.</i>"
+        Đây là một mệnh đề <b>tương đương</b> — thiếu một vế là kết luận sai.</p>
+      </div>
+      <div class="app-card">
+        <h3><svg class="ic"><use href="#ic-warn"></use></svg>Xét nghiệm y khoa</h3>
+        <p>"Mắc bệnh <span class="num">&rArr;</span> test dương tính" thường đúng, nhưng mệnh đề <b>đảo</b>
+        "test dương tính <span class="num">&rArr;</span> mắc bệnh" thì <b>không</b>. Với xét nghiệm có độ đặc hiệu
+        <span class="num">98%</span>, cứ 100 người khoẻ vẫn có khoảng 2 người cho kết quả dương tính giả.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <h3><svg class="ic"><use href="#ic-rocket"></use></svg>Bài toán mở đầu</h3>
+      <p>Nhìn bức tranh có nhiều con vật lồng vào nhau, ba người nói ba câu:</p>
+      <ul>
+        <li><b>Câu hỏi trên bảng:</b> “Có bao nhiêu con vật xuất hiện trong hình vẽ?”</li>
+        <li><b>An:</b> “Có 5 con vật xuất hiện trong hình vẽ.”</li>
+        <li><b>Khoa:</b> “Có 6 con vật xuất hiện trong hình vẽ.”</li>
+      </ul>
+      <p><b>Hỏi:</b> Câu nào đúng? Câu nào sai? Câu nào <i>không xác định được</i> tính đúng sai?</p>
+      <div class="btn-row">
+        <button class="btn ghost sm" type="button" id="openHintBtn" aria-expanded="false" aria-controls="openHint">
+          <svg class="ic"><use href="#ic-bulb"></use></svg>Xem gợi ý hướng nghĩ
+        </button>
+      </div>
+      <div class="hint" id="openHint">
+        <p><b>Gợi ý:</b> Đừng vội đếm con vật. Hãy hỏi: <i>“Câu này có thể gán nhãn ĐÚNG hoặc SAI được không?”</i></p>
+        <p>Câu của An và Khoa là những <b>khẳng định</b> — dù chưa biết ai đúng, ta vẫn chắc chắn mỗi câu <b>hoặc đúng
+        hoặc sai</b>. Còn câu trên bảng là <b>câu hỏi</b>, không khẳng định điều gì nên không thể gán đúng/sai.</p>
+        <p>Vì An và Khoa nói hai số khác nhau nên chắc chắn <b>có đúng một người sai</b> — nhưng điều đó không ảnh
+        hưởng đến việc cả hai câu đều là mệnh đề.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="p2">
+    <h2><span class="sec-num"><span>2</span></span><svg class="ic"><use href="#ic-book"></use></svg>Lý thuyết trọng tâm</h2>
+
+    <div class="def">
+      <h3>1. Mệnh đề</h3>
+      <p><b>Mệnh đề lôgic</b> (gọi tắt là <b>mệnh đề</b>) là một câu khẳng định <b>hoặc đúng hoặc sai</b>.</p>
+      <ul>
+        <li>Mỗi mệnh đề phải hoặc đúng hoặc sai; <b>không thể vừa đúng vừa sai</b>.</li>
+        <li>Câu <b>nghi vấn</b>, câu <b>cảm thán</b>, câu <b>cầu khiến</b> <u>không phải</u> là mệnh đề.</li>
+        <li>Ký hiệu mệnh đề bằng chữ in hoa: $P,\ Q,\ R,\ldots$</li>
+      </ul>
+      <p style="margin-bottom:0">Mệnh đề liên quan đến toán học gọi là <b>mệnh đề toán học</b>.</p>
+    </div>
+
+    <div class="def">
+      <h3>2. Mệnh đề chứa biến</h3>
+      <p>Câu chứa biến mà <b>chưa xác định được</b> tính đúng sai gọi là <b>mệnh đề chứa biến</b>.
+      Khi thay biến bởi một giá trị cụ thể, ta được một mệnh đề.</p>
+      <p style="margin-bottom:0">Ví dụ $P(n)$: “$n$ chia hết cho $2$”. Với $n=10$ ta được mệnh đề <b>đúng</b>;
+      với $n=5$ ta được mệnh đề <b>sai</b>. Bản thân câu “$n$ chia hết cho $2$” thì chưa là mệnh đề.</p>
+    </div>
+
+    <div class="def">
+      <h3>3. Mệnh đề phủ định</h3>
+      <p>Phủ định của mệnh đề $P$, ký hiệu $\overline{P}$, được lập bằng cách thêm (hoặc bớt) từ
+      “<b>không</b>” / “<b>không phải</b>” vào trước vị ngữ của $P$.</p>
+      <p style="margin-bottom:0">$P$ và $\overline{P}$ là hai phát biểu <b>trái ngược nhau</b>:
+      nếu $P$ đúng thì $\overline{P}$ sai, nếu $P$ sai thì $\overline{P}$ đúng.</p>
+    </div>
+
+    <div class="def">
+      <h3>4. Mệnh đề kéo theo &mdash; Mệnh đề đảo</h3>
+      <p>Mệnh đề “<b>Nếu $P$ thì $Q$</b>” gọi là <b>mệnh đề kéo theo</b>, ký hiệu $P \Rightarrow Q$.</p>
+      <p><b>Quy tắc vàng:</b> $P \Rightarrow Q$ <b>chỉ sai</b> khi $P$ đúng và $Q$ sai. Trong mọi trường hợp còn lại
+      (đặc biệt là khi $P$ sai) thì $P \Rightarrow Q$ <b>đúng</b>.</p>
+      <p>Khi $P \Rightarrow Q$ là một định lí: $P$ là <b>giả thiết</b>, $Q$ là <b>kết luận</b>. Ta nói:</p>
+      <ul>
+        <li>“$P$ là <b>điều kiện đủ</b> để có $Q$”;</li>
+        <li>“$Q$ là <b>điều kiện cần</b> để có $P$”.</li>
+      </ul>
+      <p style="margin-bottom:0">Mệnh đề $Q \Rightarrow P$ gọi là <b>mệnh đề đảo</b> của $P \Rightarrow Q$.
+      <b>Lưu ý:</b> mệnh đề đảo của một mệnh đề đúng <i>không nhất thiết</i> đúng.</p>
+    </div>
+
+    <div class="def">
+      <h3>5. Mệnh đề tương đương</h3>
+      <p>Mệnh đề “<b>$P$ nếu và chỉ nếu $Q$</b>” gọi là <b>mệnh đề tương đương</b>, ký hiệu $P \Leftrightarrow Q$.</p>
+      <p style="margin-bottom:0">Nếu cả $P \Rightarrow Q$ và $Q \Rightarrow P$ đều đúng thì $P \Leftrightarrow Q$ đúng.
+      Khi đó ta nói “$P$ tương đương $Q$”, hoặc “$P$ là <b>điều kiện cần và đủ</b> để có $Q$”,
+      hoặc “$P$ khi và chỉ khi $Q$”.</p>
+    </div>
+
+    <div class="def">
+      <h3>6. Ký hiệu $\forall$ và $\exists$</h3>
+      <p>$\forall$ đọc là “<b>với mọi</b>”; $\exists$ đọc là “<b>tồn tại</b>” (có ít nhất một).</p>
+      <ul>
+        <li>“Mọi số thực đều có bình phương không âm” $\;\to\; P:\ \forall x \in \mathbb{R},\ x^2 \ge 0$ &nbsp;<b>(đúng)</b></li>
+        <li>“Có một số hữu tỉ mà bình phương bằng 2” $\;\to\; Q:\ \exists x \in \mathbb{Q},\ x^2 = 2$ &nbsp;<b>(sai)</b></li>
+      </ul>
+      <p><b>Quy tắc phủ định</b> — đổi <u>cả lượng từ lẫn tính chất</u>:</p>
+      <p style="margin-bottom:0">
+      $$\overline{\forall x \in X,\ P(x)} \;=\; \exists x \in X,\ \overline{P(x)}
+      \qquad\text{và}\qquad
+      \overline{\exists x \in X,\ P(x)} \;=\; \forall x \in X,\ \overline{P(x)}$$</p>
+    </div>
+
+    <h3>Nhìn bằng hình: “kéo theo” chính là “bao hàm”</h3>
+    <p>Coi $P$ là tập hợp những đối tượng thoả tính chất $P$. Khi đó $P \Rightarrow Q$ đúng nghĩa là
+    <b>tập $P$ nằm trọn trong tập $Q$</b>. Nhìn hình dưới sẽ thấy ngay vì sao mệnh đề đảo thường sai.</p>
+    <div class="mm-wrap">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="svgKtTitle svgKtDesc">
+        <title id="svgKtTitle">Sơ đồ Ven minh hoạ mệnh đề kéo theo</title>
+        <desc id="svgKtDesc">Hình tròn nhỏ "tam giác đều" nằm trọn bên trong hình tròn lớn "tam giác cân", minh hoạ mệnh đề đều suy ra cân là đúng còn mệnh đề đảo là sai.</desc>
+        <ellipse cx="230" cy="150" rx="185" ry="118" fill="#e8f2f9" stroke="#1e5f8e" stroke-width="2.5"/>
+        <ellipse cx="185" cy="160" rx="88" ry="66" fill="#fdf1e6" stroke="#e07a2f" stroke-width="2.5"/>
+        <text x="230" y="62" text-anchor="middle" font-family="Nunito,sans-serif" font-size="17" font-weight="800" fill="#1e5f8e">Q: tam giác CÂN</text>
+        <text x="185" y="166" text-anchor="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="800" fill="#b8611f">P: tam giác ĐỀU</text>
+        <circle cx="330" cy="112" r="6" fill="#1e5f8e"/>
+        <text x="344" y="117" font-family="Nunito,sans-serif" font-size="13.5" fill="#1f2933">cân nhưng không đều</text>
+        <path d="M470 96 C 520 96, 540 120, 545 140" fill="none" stroke="#2e7d5b" stroke-width="2.5" marker-end="url(#ar1)"/>
+        <defs><marker id="ar1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#2e7d5b"/></marker></defs>
+        <text x="466" y="176" text-anchor="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="800" fill="#2e7d5b">P &#8658; Q : ĐÚNG</text>
+        <text x="466" y="200" text-anchor="middle" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">(P nằm trọn trong Q)</text>
+        <text x="466" y="234" text-anchor="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="800" fill="#c0392b">Q &#8658; P : SAI</text>
+        <text x="466" y="258" text-anchor="middle" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">(có điểm của Q ngoài P)</text>
+      </svg>
+    </div>
+    <div class="note">
+      <b>Ghi nhớ nhanh:</b> “đều” là <b>điều kiện đủ</b> để “cân” &mdash; cứ đều thì chắc chắn cân.
+      “cân” là <b>điều kiện cần</b> để “đều” &mdash; muốn đều thì trước hết phải cân, nhưng cân chưa đủ để đều.
+    </div>
+
+    <div class="trap">
+      <h3><svg class="ic"><use href="#ic-warn"></use></svg>Bẫy sai lầm thường gặp</h3>
+      <ol>
+        <li><b>Tưởng “mệnh đề” nghĩa là “câu đúng”.</b><br>
+          <span class="wrong">Sai:</span> “Câu <i>Tổng độ dài hai cạnh bất kì của tam giác nhỏ hơn cạnh còn lại</i> sai nên không phải mệnh đề.”<br>
+          <span class="right">Đúng:</span> Câu đó <b>sai</b> nhưng vẫn <b>là mệnh đề</b> — vì ta xác định được nó sai.
+          Chỉ câu <i>không gán được</i> đúng/sai mới không phải mệnh đề.</li>
+
+        <li><b>Phủ định mà quên đổi lượng từ.</b><br>
+          <span class="wrong">Sai:</span> $\overline{\forall x \in \mathbb{R},\ x^2 \ge 0}$ là “$\forall x \in \mathbb{R},\ x^2 &lt; 0$”.<br>
+          <span class="right">Đúng:</span> $\overline{\forall x \in \mathbb{R},\ x^2 \ge 0}$ là
+          “$\exists x \in \mathbb{R},\ x^2 &lt; 0$”. Phải đổi <b>cả hai</b>: $\forall \to \exists$ và $\ge \to\ &lt;$.</li>
+
+        <li><b>Lẫn lộn điều kiện cần và điều kiện đủ.</b><br>
+          Với $P \Rightarrow Q$ đúng: <b>$P$ đủ, $Q$ cần</b>. Nhớ theo chiều mũi tên — cái ở <b>đuôi</b> mũi tên là <b>đủ</b>,
+          cái ở <b>đầu</b> mũi tên là <b>cần</b>.</li>
+
+        <li><b>Tưởng $P$ sai thì $P \Rightarrow Q$ sai.</b><br>
+          <span class="right">Đúng:</span> $P$ sai thì $P \Rightarrow Q$ <b>luôn đúng</b>, bất kể $Q$ thế nào.
+          Ví dụ “Nếu $2 &gt; 3$ thì trăng làm bằng phô mai” là một mệnh đề <b>đúng</b> về mặt lôgic.</li>
+      </ol>
+    </div>
+  </section>
+
+
+  <section class="card c-accent" id="p4">
+    <h2><span class="sec-num"><span>3</span></span><svg class="ic"><use href="#ic-game"></use></svg>Trò chơi: Phân loại câu</h2>
+
+    <p>Kéo mỗi thẻ vào đúng ô. <b>Trên điện thoại</b> (hoặc dùng bàn phím): <b>bấm chọn</b> một thẻ rồi
+    <b>bấm vào ô</b> muốn đặt. Cẩn thận — có vài thẻ trông rất giống mệnh đề nhưng lại không phải!</p>
+
+    <div class="game-pool" id="pool" aria-label="Kho thẻ chưa phân loại"></div>
+
+    <div class="drops">
+      <div class="drop" id="d0" data-cat="0" tabindex="0" role="button"
+           aria-label="Ô: Không là mệnh đề. Bấm để đặt thẻ đang chọn vào ô này">
+        <h4>Không là mệnh đề</h4><div class="items"></div>
+      </div>
+      <div class="drop" id="d1" data-cat="1" tabindex="0" role="button"
+           aria-label="Ô: Mệnh đề đúng. Bấm để đặt thẻ đang chọn vào ô này">
+        <h4>Mệnh đề ĐÚNG</h4><div class="items"></div>
+      </div>
+      <div class="drop" id="d2" data-cat="2" tabindex="0" role="button"
+           aria-label="Ô: Mệnh đề sai. Bấm để đặt thẻ đang chọn vào ô này">
+        <h4>Mệnh đề SAI</h4><div class="items"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn accent" type="button" id="gCheck"><svg class="ic"><use href="#ic-check"></use></svg>Kiểm tra</button>
+      <button class="btn ghost" type="button" id="gReset">Làm lại</button>
+    </div>
+    <div class="fb" id="gFb" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card" id="p5">
+    <h2><span class="sec-num"><span>4</span></span><svg class="ic"><use href="#ic-steps"></use></svg>Ví dụ giải từng bước</h2>
+    <p>Bấm vào từng ví dụ để mở lời giải. Hãy tự làm ra nháp trước khi xem.</p>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false" aria-controls="ex1">
+        <svg class="ic"><use href="#ic-arrow"></use></svg>
+        Ví dụ 1. Nhận diện mệnh đề và xác định tính đúng sai
+        <svg class="ic arrow"><use href="#ic-arrow"></use></svg>
+      </button>
+      <div class="acc-body" id="ex1">
+        <p><b>Đề:</b> Trong các câu sau, câu nào là mệnh đề? Với mỗi mệnh đề, hãy xác định tính đúng sai.</p>
+        <p>a) Trung Quốc là nước đông dân nhất thế giới; &nbsp; b) Bạn học trường nào? <br>
+           c) Không được làm việc riêng trong giờ học; &nbsp; d) $\pi > \dfrac{10}{3}$; &nbsp; e) $2\,022$ là hợp số.</p>
+
+        <div class="step">
+          <span class="n">Bước 1</span>
+          <p><b>Loại ngay các câu không phải khẳng định.</b> Câu b) là câu nghi vấn, câu c) là câu cầu khiến.
+          Hai câu này <b>không phải mệnh đề</b>.</p>
+          <p class="why">Vì sao: mệnh đề bắt buộc phải gán được nhãn ĐÚNG hoặc SAI. Câu hỏi và câu ra lệnh
+          không khẳng định điều gì nên không gán nhãn được.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 2</span>
+          <p><b>Các câu còn lại a), d), e) đều là khẳng định</b> nên đều là mệnh đề. Giờ mới xét đúng/sai.</p>
+          <p class="why">Vì sao: hai việc “có phải mệnh đề không” và “đúng hay sai” là <i>hai câu hỏi tách rời</i>.
+          Nhiều bạn gộp chung nên loại nhầm mệnh đề sai.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 3</span>
+          <p><b>Xét từng mệnh đề.</b></p>
+          <ul>
+            <li>d) $\pi \approx 3{,}1416$ và $\dfrac{10}{3} \approx 3{,}3333$ nên $\pi &lt; \dfrac{10}{3}$.
+            Vậy mệnh đề d) <b>SAI</b>.</li>
+            <li>e) $2\,022 = 2 \times 3 \times 337$ nên $2\,022$ có ước khác $1$ và chính nó $\Rightarrow$ là hợp số.
+            Mệnh đề e) <b>ĐÚNG</b>.</li>
+            <li>a) Là mệnh đề (khẳng định về thực tế). Tính đúng sai phụ thuộc số liệu dân số tại thời điểm xét —
+            đây vẫn là mệnh đề vì về nguyên tắc ta kiểm chứng được.</li>
+          </ul>
+        </div>
+        <div class="take"><b>Kinh nghiệm:</b> Quy trình 2 nhịp — <b>(1)</b> có phải câu khẳng định không?
+        <b>(2)</b> nếu có, nó đúng hay sai? Đừng bao giờ gộp hai nhịp làm một.</div>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false" aria-controls="ex2">
+        <svg class="ic"><use href="#ic-arrow"></use></svg>
+        Ví dụ 2. Mệnh đề đảo &mdash; điều kiện cần, điều kiện đủ
+        <svg class="ic arrow"><use href="#ic-arrow"></use></svg>
+      </button>
+      <div class="acc-body" id="ex2">
+        <p><b>Đề:</b> Cho $P$: “Số tự nhiên $n$ có chữ số tận cùng là $5$”; &nbsp; $Q$: “$n$ chia hết cho $5$”.</p>
+        <p>a) Phát biểu $P \Rightarrow Q$ và xét tính đúng sai. &nbsp; b) Phát biểu mệnh đề đảo và xét tính đúng sai.
+        &nbsp; c) Nêu điều kiện cần, điều kiện đủ.</p>
+
+        <div class="step">
+          <span class="n">Bước 1</span>
+          <p><b>Phát biểu $P \Rightarrow Q$:</b> “Nếu số tự nhiên $n$ có chữ số tận cùng là $5$ thì $n$ chia hết cho $5$.”</p>
+          <p class="why">Vì sao: khuôn mẫu cố định “Nếu $P$ thì $Q$” — chép nguyên vẹn $P$ vào sau chữ “Nếu”.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 2</span>
+          <p><b>Xét tính đúng sai của $P \Rightarrow Q$.</b> Số tận cùng bằng $5$ luôn viết được dạng
+          $10k + 5 = 5(2k+1)$, chia hết cho $5$. Không có phản ví dụ nên $P \Rightarrow Q$ <b>ĐÚNG</b>.</p>
+          <p class="why">Vì sao: muốn khẳng định kéo theo đúng phải chứng minh tổng quát; muốn bác bỏ thì chỉ cần
+          <b>một</b> phản ví dụ.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 3</span>
+          <p><b>Mệnh đề đảo $Q \Rightarrow P$:</b> “Nếu số tự nhiên $n$ chia hết cho $5$ thì $n$ có chữ số tận cùng là $5$.”</p>
+          <p>Chọn $n = 20$: chia hết cho $5$ nhưng tận cùng là $0$, không phải $5$. Vậy mệnh đề đảo <b>SAI</b>.</p>
+          <p class="why">Vì sao: chỉ cần <b>một</b> số phá vỡ là đủ kết luận sai — không cần xét mọi số.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 4</span>
+          <p><b>Điều kiện cần / đủ.</b> Vì $P \Rightarrow Q$ đúng nên:</p>
+          <ul>
+            <li>“Tận cùng bằng $5$” là <b>điều kiện đủ</b> để “$n$ chia hết cho $5$”.</li>
+            <li>“$n$ chia hết cho $5$” là <b>điều kiện cần</b> để “$n$ tận cùng bằng $5$”.</li>
+          </ul>
+          <p class="why">Vì sao: đuôi mũi tên = đủ, đầu mũi tên = cần. Vì mệnh đề đảo sai nên
+          <b>không</b> được nói “cần và đủ”.</p>
+        </div>
+        <div class="take"><b>Kinh nghiệm:</b> Muốn bác bỏ một mệnh đề kéo theo, hãy đi <b>săn phản ví dụ</b>:
+        tìm trường hợp giả thiết đúng mà kết luận sai. Ở đây $n = 20$ (hoặc $10$, $30$…) là đủ.</div>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false" aria-controls="ex3">
+        <svg class="ic"><use href="#ic-arrow"></use></svg>
+        Ví dụ 3. Phủ định mệnh đề chứa $\forall$, $\exists$
+        <svg class="ic arrow"><use href="#ic-arrow"></use></svg>
+      </button>
+      <div class="acc-body" id="ex3">
+        <p><b>Đề:</b> Viết mệnh đề phủ định và xác định tính đúng sai của phủ định đó:</p>
+        <p>a) $P: \ \exists x \in \mathbb{R},\ x^2 + 1 = 0$ &nbsp;&nbsp;
+           b) $Q: \ \exists n \in \mathbb{N},\ n \ \vdots \ (n+1)$ &nbsp;&nbsp;
+           c) $R: \ \forall x \in \mathbb{R},\ x^2 - x + 1 > 0$</p>
+
+        <div class="step">
+          <span class="n">Bước 1</span>
+          <p><b>Áp dụng quy tắc đổi kép.</b> Đổi $\exists \leftrightarrow \forall$ <u>và</u> phủ định tính chất bên trong:</p>
+          <ul>
+            <li>a) $\overline{P}: \ \forall x \in \mathbb{R},\ x^2 + 1 \ne 0$</li>
+            <li>b) $\overline{Q}: \ \forall n \in \mathbb{N},\ n \text{ không chia hết cho } (n+1)$</li>
+            <li>c) $\overline{R}: \ \exists x \in \mathbb{R},\ x^2 - x + 1 \le 0$</li>
+          </ul>
+          <p class="why">Vì sao: phủ định “có ít nhất một cái thoả” chính là “không cái nào thoả” = “mọi cái đều không thoả”.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 2</span>
+          <p><b>Xét a).</b> Với mọi $x$ thực, $x^2 \ge 0$ nên $x^2 + 1 \ge 1 &gt; 0$, không bao giờ bằng $0$.
+          Vậy $P$ <b>sai</b>, do đó $\overline{P}$ <b>ĐÚNG</b>.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 3</span>
+          <p><b>Xét b).</b> Thử $n = 0$: ta có $0 = 0 \times 1$ nên $0$ chia hết cho $0 + 1 = 1$.
+          Vậy tồn tại $n$ thoả mãn $\Rightarrow$ $Q$ <b>đúng</b>, do đó $\overline{Q}$ <b>SAI</b>.</p>
+          <p class="why">Vì sao: đây là bẫy kinh điển — nhiều bạn bỏ quên $n = 0$ vì $0 \in \mathbb{N}$.</p>
+        </div>
+        <div class="step">
+          <span class="n">Bước 4</span>
+          <p><b>Xét c).</b> Tam thức $f(x) = x^2 - x + 1$ có $a = 1 &gt; 0$ và
+          $\Delta = (-1)^2 - 4 \cdot 1 \cdot 1 = -3 &lt; 0$ nên $f(x) &gt; 0$ với mọi $x$.
+          (Cách khác: $x^2 - x + 1 = \left(x - \dfrac{1}{2}\right)^2 + \dfrac{3}{4} \ge \dfrac{3}{4} &gt; 0$.)</p>
+          <p>Vậy $R$ <b>đúng</b>, do đó $\overline{R}$ <b>SAI</b>.</p>
+        </div>
+        <div class="take"><b>Kinh nghiệm:</b> Sau khi viết xong phủ định, hãy tự kiểm: <i>“Mệnh đề gốc và phủ định
+        của nó có đúng một cái đúng, một cái sai không?”</i> Nếu cả hai cùng đúng hoặc cùng sai thì em đã viết nhầm.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card c-ok" id="p6">
+    <h2><span class="sec-num"><span>5</span></span><svg class="ic"><use href="#ic-map"></use></svg>Sơ đồ tư duy tổng kết</h2>
+    <p>Toàn bộ Bài 1 gói trong một trang. Trên điện thoại, em có thể vuốt ngang để xem hết sơ đồ.</p>
+    <div class="mm-wrap">
+      <svg viewBox="0 0 900 560" role="img" aria-labelledby="mmT mmD">
+        <title id="mmT">Sơ đồ tư duy bài Mệnh đề</title>
+        <desc id="mmD">Nút trung tâm Mệnh đề toả ra năm nhánh: Khái niệm, Phủ định, Kéo theo và đảo, Tương đương, Lượng từ với mọi và tồn tại.</desc>
+
+        <path d="M450 280 C 330 250, 280 180, 195 128" fill="none" stroke="#1e5f8e" stroke-width="3.5" opacity=".85"/>
+        <path d="M450 280 C 580 250, 640 190, 712 132" fill="none" stroke="#c0392b" stroke-width="3.5" opacity=".85"/>
+        <path d="M450 280 C 350 320, 290 360, 190 400" fill="none" stroke="#e07a2f" stroke-width="3.5" opacity=".85"/>
+        <path d="M450 280 C 570 320, 630 360, 720 400" fill="none" stroke="#2e7d5b" stroke-width="3.5" opacity=".85"/>
+        <path d="M450 280 C 450 380, 452 440, 452 494" fill="none" stroke="#6b4c9a" stroke-width="3.5" opacity=".85"/>
+
+        <ellipse cx="450" cy="280" rx="96" ry="46" fill="#12496e"/>
+        <text x="450" y="274" text-anchor="middle" font-family="Merriweather,Georgia,serif" font-size="22" font-weight="900" fill="#fff">MỆNH ĐỀ</text>
+        <text x="450" y="297" text-anchor="middle" font-family="Nunito,sans-serif" font-size="12" fill="#bcdcef">Toán 10 — Bài 1</text>
+
+        <g>
+          <rect x="34" y="66" width="290" height="118" rx="14" fill="#e8f2f9" stroke="#1e5f8e" stroke-width="2.5"/>
+          <text x="52" y="92" font-family="Nunito,sans-serif" font-size="15.5" font-weight="800" fill="#1e5f8e">1. KHÁI NIỆM</text>
+          <text x="52" y="115" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Câu khẳng định, hoặc đúng hoặc sai</text>
+          <text x="52" y="135" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• KHÔNG là mệnh đề: hỏi / cảm thán / cầu khiến</text>
+          <text x="52" y="155" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Mệnh đề chứa biến: thay giá trị → mệnh đề</text>
+          <text x="52" y="175" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">VD: “13 là số nguyên tố” (Đ)</text>
+        </g>
+
+        <g>
+          <rect x="576" y="66" width="290" height="118" rx="14" fill="#fdecea" stroke="#c0392b" stroke-width="2.5"/>
+          <text x="594" y="92" font-family="Nunito,sans-serif" font-size="15.5" font-weight="800" fill="#c0392b">2. PHỦ ĐỊNH</text>
+          <text x="594" y="115" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Thêm / bớt “không”, “không phải”</text>
+          <text x="594" y="135" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• P đúng ⟺ phủ định của P sai</text>
+          <text x="594" y="155" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Hai phát biểu trái ngược nhau</text>
+          <text x="594" y="175" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">VD: “17 không phải số chính phương” (Đ)</text>
+        </g>
+
+        <g>
+          <rect x="14" y="326" width="310" height="140" rx="14" fill="#fdf1e6" stroke="#e07a2f" stroke-width="2.5"/>
+          <text x="32" y="352" font-family="Nunito,sans-serif" font-size="15.5" font-weight="800" fill="#b8611f">3. KÉO THEO &amp; ĐẢO</text>
+          <text x="32" y="375" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• P ⇒ Q : “Nếu P thì Q”</text>
+          <text x="32" y="395" font-family="Nunito,sans-serif" font-size="12.5" font-weight="700" fill="#c0392b">• CHỈ SAI khi P đúng và Q sai</text>
+          <text x="32" y="415" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• P đủ để có Q ; Q cần để có P</text>
+          <text x="32" y="435" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Đảo: Q ⇒ P (không nhất thiết đúng)</text>
+          <text x="32" y="455" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">Đuôi mũi tên = ĐỦ, đầu mũi tên = CẦN</text>
+        </g>
+
+        <g>
+          <rect x="576" y="326" width="310" height="140" rx="14" fill="#e6f4ee" stroke="#2e7d5b" stroke-width="2.5"/>
+          <text x="594" y="352" font-family="Nunito,sans-serif" font-size="15.5" font-weight="800" fill="#2e7d5b">4. TƯƠNG ĐƯƠNG</text>
+          <text x="594" y="375" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• P ⇔ Q : “P nếu và chỉ nếu Q”</text>
+          <text x="594" y="395" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• Đúng khi CẢ P ⇒ Q và Q ⇒ P đúng</text>
+          <text x="594" y="415" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• “P là điều kiện cần và đủ để có Q”</text>
+          <text x="594" y="435" font-family="Nunito,sans-serif" font-size="12.5" fill="#1f2933">• “P khi và chỉ khi Q”</text>
+          <text x="594" y="455" font-family="Nunito,sans-serif" font-size="12.5" fill="#5b6672">VD: n ⋮ 5 ⟺ n tận cùng 0 hoặc 5</text>
+        </g>
+
+        <g>
+          <rect x="272" y="494" width="360" height="58" rx="14" fill="#f0eaf7" stroke="#6b4c9a" stroke-width="2.5"/>
+          <text x="290" y="518" font-family="Nunito,sans-serif" font-size="15.5" font-weight="800" fill="#6b4c9a">5. LƯỢNG TỪ ∀ , ∃</text>
+          <text x="290" y="540" font-family="Nunito,sans-serif" font-size="12.5" font-weight="700" fill="#1f2933">Phủ định: đổi ∀ ↔ ∃ VÀ phủ định tính chất</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card c-accent" id="p7">
+    <h2><span class="sec-num"><span>6</span></span><svg class="ic"><use href="#ic-cards"></use></svg>Flashcards ghi nhớ</h2>
+    <p>Bấm (hoặc nhấn <kbd>Enter</kbd>) để lật thẻ. Thẻ nào đã thuộc thì bấm nút “Đã thuộc” ở mặt sau.</p>
+    <div class="fc-bar">
+      <button class="btn ghost sm" type="button" id="fcFlip">Lật tất cả</button>
+      <button class="btn ghost sm" type="button" id="fcShuffle">Trộn thẻ</button>
+      <button class="btn ghost sm" type="button" id="fcClear">Xoá đánh dấu</button>
+      <span class="fc-stat" id="fcStat" aria-live="polite">Đã thuộc: 0/12</span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </section>
+
+  <section class="card" id="p8">
+    <h2><span class="sec-num"><span>7</span></span><svg class="ic"><use href="#ic-check"></use></svg>Trắc nghiệm phân tầng</h2>
+    <p>10 câu theo 4 mức độ: <b>4 Nhận biết &mdash; 3 Thông hiểu &mdash; 2 Vận dụng &mdash; 1 Vận dụng cao</b>.
+    Bài làm được lưu tự động; thứ tự phương án đảo lại mỗi lần vào.</p>
+
+    <div class="restored" id="restored" role="status"></div>
+    <div id="quiz"></div>
+
+    <div class="btn-row">
+      <button class="btn" type="button" id="qSubmit"><svg class="ic"><use href="#ic-check"></use></svg>Nộp bài &amp; xem kết quả</button>
+      <button class="btn ghost" type="button" id="qRetry">Làm lại toàn bộ</button>
+      <button class="btn ghost" type="button" id="qRetryWrong">Chỉ làm lại câu sai</button>
+      <button class="btn warn" type="button" id="qClear">Xoá tiến độ</button>
+    </div>
+
+    <div class="result" id="result" role="region" aria-label="Bảng tổng kết kết quả"></div>
+  </section>
+
+</main>
+<div class="hud" id="hud" aria-live="polite">
+  <svg class="ic"><use href="#ic-star"></use></svg><span id="hudText">Điểm: 0/10</span>
+</div>
+<div class="fabs">
+  <button class="fab" id="hcBtn" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Tương phản cao">
+    <svg class="ic"><use href="#ic-contrast"></use></svg>
+  </button>
+  <button class="fab" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang">
+    <svg class="ic"><use href="#ic-up"></use></svg>
+  </button>
+</div>
+
+<script>
+/* ============ TIỆN ÍCH CHUNG ============ */
+var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var KEY = 'baigiang:menh-de-toan10:v1';
+
+function loadState(){
+  try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }
+  catch(e){ return {}; }
+}
+function saveState(s){
+  try { s.ts = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
+  catch(e){ /* chế độ riêng tư: bỏ qua */ }
+}
+var ST = loadState();
+var saveTimer = null;
+function persist(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveState(ST); }, 300);
+}
+function mj(el){
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise(el ? [el] : undefined)['catch'](function(){});
+  }
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* Phát hiện MathJax không tải được */
+setTimeout(function(){
+  if (!(window.MathJax && window.MathJax.startup && window.MathJax.startup.document)) {
+    document.documentElement.classList.add('no-mathjax');
+  }
+}, 6000);
+
+/* Hiện dần khi cuộn */
+(function(){
+  var cards = document.querySelectorAll('.card');
+  if (REDUCE || !('IntersectionObserver' in window)) {
+    cards.forEach(function(c){ c.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  cards.forEach(function(c){ io.observe(c); });
+})();
+
+/* Nút về đầu trang */
+(function(){
+  var btn = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    btn.classList.toggle('show', window.scrollY > 400);
+  }, { passive:true });
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior: REDUCE ? 'auto' : 'smooth' });
+  });
+})();
+
+/* Tương phản cao */
+(function(){
+  var btn = document.getElementById('hcBtn');
+  function apply(on){
+    document.documentElement.classList.toggle('hc', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.setAttribute('aria-label', on ? 'Tắt chế độ tương phản cao' : 'Bật chế độ tương phản cao');
+  }
+  apply(!!ST.hc);
+  btn.addEventListener('click', function(){
+    ST.hc = !ST.hc; persist(); apply(!!ST.hc);
+  });
+})();
+
+/* Gợi ý bài toán mở đầu */
+(function(){
+  var b = document.getElementById('openHintBtn'), h = document.getElementById('openHint');
+  if (!b || !h) return;
+  b.addEventListener('click', function(){
+    var on = h.classList.toggle('show');
+    b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if (on) mj(h);
+  });
+})();
+
+/* ============ PHẦN 4 — GAME PHÂN LOẠI ============ */
+(function(){
+  var pool = document.getElementById('pool');
+  if (!pool) return;
+
+  /* cat: 0 = không là mệnh đề, 1 = mệnh đề đúng, 2 = mệnh đề sai */
+  var CARDS = [
+    { id:'g1', t:'$13$ là số nguyên tố.', cat:1, why:'Khẳng định đúng: 13 chỉ chia hết cho 1 và 13.' },
+    { id:'g2', t:'Tổng độ dài hai cạnh bất kì của một tam giác nhỏ hơn độ dài cạnh còn lại.', cat:2, why:'Bất đẳng thức tam giác nói điều ngược lại: tổng hai cạnh LỚN HƠN cạnh còn lại.' },
+    { id:'g3', t:'Bạn đã làm bài tập chưa?', cat:0, why:'Câu nghi vấn — không khẳng định điều gì nên không gán được đúng/sai.' },
+    { id:'g4', t:'Thời tiết hôm nay thật đẹp!', cat:0, why:'Câu cảm thán, nêu cảm nhận cá nhân — không xác định được tính đúng sai.' },
+    { id:'g5', t:'$\\pi > \\dfrac{10}{3}$', cat:2, why:'π ≈ 3,1416 còn 10/3 ≈ 3,3333 nên π &lt; 10/3. Đây là mệnh đề SAI (vẫn là mệnh đề!).' },
+    { id:'g6', t:'Phương trình $3x + 7 = 0$ có nghiệm.', cat:1, why:'Có nghiệm x = −7/3. Đừng nhầm với “có nghiệm nguyên”.' },
+    { id:'g7', t:'$2\\,022$ là hợp số.', cat:1, why:'2022 = 2 × 3 × 337 nên là hợp số.' },
+    { id:'g8', t:'$x + 2 > 5$', cat:0, why:'Mệnh đề CHỨA BIẾN: đúng khi x = 4, sai khi x = 1. Chưa thay giá trị thì chưa là mệnh đề.' },
+    { id:'g9', t:'Có ít nhất một số cộng với chính nó bằng $0$.', cat:1, why:'Chọn x = 0 thì 0 + 0 = 0. Chỉ cần một số là đủ cho lượng từ “tồn tại”.' }
+  ];
+  var CATNAME = ['Không là mệnh đề', 'Mệnh đề ĐÚNG', 'Mệnh đề SAI'];
+
+  var drops = Array.prototype.slice.call(document.querySelectorAll('.drop'));
+  var fb = document.getElementById('gFb');
+  var selected = null;
+  var checked = false;
+
+  function makeChip(c){
+    var el = document.createElement('div');
+    el.className = 'chip';
+    el.id = c.id;
+    el.draggable = true;
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', 'Thẻ: ' + c.t.replace(/\$/g, '') + '. Bấm để chọn, rồi bấm vào một ô để đặt.');
+    el.innerHTML = '<span class="mk" aria-hidden="true"></span><span class="tx">' + c.t + '</span>';
+    el.addEventListener('dragstart', function(e){
+      if (checked) { e.preventDefault(); return; }
+      e.dataTransfer.setData('text/plain', c.id);
+      e.dataTransfer.effectAllowed = 'move';
+      el.classList.add('dragging');
+    });
+    el.addEventListener('dragend', function(){ el.classList.remove('dragging'); });
+    el.addEventListener('click', function(){ pick(el); });
+    el.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(el); }
+      if (selected === el && /^[123]$/.test(e.key)) { e.preventDefault(); place(el, drops[+e.key - 1]); }
+    });
+    return el;
+  }
+
+  function pick(el){
+    if (checked) return;
+    if (selected === el) { selected.classList.remove('sel'); selected = null; return; }
+    if (selected) selected.classList.remove('sel');
+    selected = el; el.classList.add('sel');
+    say('Đã chọn thẻ. Bấm vào một ô để đặt, hoặc bấm phím 1, 2, 3 tương ứng ba ô.');
+  }
+  function say(msg){
+    fb.className = 'fb show good';
+    fb.innerHTML = msg;
+  }
+  function place(el, dropEl){
+    if (checked) return;
+    dropEl.querySelector('.items').appendChild(el);
+    el.classList.remove('sel'); selected = null;
+    fb.className = 'fb';
+    saveGame();
+  }
+
+  drops.forEach(function(d, i){
+    d.addEventListener('dragover', function(e){ if (!checked) { e.preventDefault(); d.classList.add('over'); } });
+    d.addEventListener('dragleave', function(){ d.classList.remove('over'); });
+    d.addEventListener('drop', function(e){
+      e.preventDefault(); d.classList.remove('over');
+      if (checked) return;
+      var id = e.dataTransfer.getData('text/plain');
+      var el = document.getElementById(id);
+      if (el) place(el, d);
+    });
+    d.addEventListener('click', function(){ if (selected) place(selected, d); });
+    d.addEventListener('keydown', function(e){
+      if ((e.key === 'Enter' || e.key === ' ') && selected) { e.preventDefault(); place(selected, d); }
+    });
+  });
+  pool.addEventListener('dragover', function(e){ if (!checked) e.preventDefault(); });
+  pool.addEventListener('drop', function(e){
+    e.preventDefault(); if (checked) return;
+    var el = document.getElementById(e.dataTransfer.getData('text/plain'));
+    if (el) { pool.appendChild(el); saveGame(); }
+  });
+  pool.addEventListener('click', function(e){
+    if (selected && e.target === pool) { pool.appendChild(selected); selected.classList.remove('sel'); selected = null; saveGame(); }
+  });
+
+  function saveGame(){
+    var m = {};
+    CARDS.forEach(function(c){
+      var el = document.getElementById(c.id);
+      var p = el && el.parentElement;
+      var host = p && p.parentElement;
+      m[c.id] = (host && host.classList.contains('drop')) ? host.getAttribute('data-cat') : 'pool';
+    });
+    ST.game = m; persist();
+  }
+
+  function build(restore){
+    pool.innerHTML = '';
+    drops.forEach(function(d){ d.querySelector('.items').innerHTML = ''; });
+    checked = false; selected = null;
+    fb.className = 'fb';
+    var order = CARDS.slice();
+    for (var i = order.length - 1; i > 0; i--) { var j = Math.random() * (i + 1) | 0; var tmp = order[i]; order[i] = order[j]; order[j] = tmp; }
+    order.forEach(function(c){
+      var el = makeChip(c);
+      var dest = pool;
+      if (restore && ST.game && ST.game[c.id] && ST.game[c.id] !== 'pool') {
+        var dd = drops[+ST.game[c.id]];
+        if (dd) dest = dd.querySelector('.items');
+      }
+      dest.appendChild(el);
+    });
+    mj(document.getElementById('p4'));
+  }
+
+  document.getElementById('gCheck').addEventListener('click', function(){
+    var placed = 0;
+    CARDS.forEach(function(c){ var el = document.getElementById(c.id); if (el && el.closest('.drop')) placed++; });
+    if (placed < CARDS.length) {
+      fb.className = 'fb show bad';
+      fb.innerHTML = '⚠ Còn ' + (CARDS.length - placed) + ' thẻ chưa được xếp. Hãy xếp hết rồi kiểm tra nhé!';
+      return;
+    }
+    checked = true;
+    var ok = 0, wrongList = '';
+    CARDS.forEach(function(c){
+      var el = document.getElementById(c.id);
+      var host = el.closest('.drop');
+      var got = +host.getAttribute('data-cat');
+      var mk = el.querySelector('.mk');
+      el.draggable = false;
+      if (got === c.cat) { ok++; el.classList.add('right'); mk.textContent = '✓'; }
+      else {
+        el.classList.add('wrong'); mk.textContent = '✗';
+        wrongList += '<li><b>' + c.t + '</b> → phải ở ô “' + CATNAME[c.cat] + '”. ' + c.why + '</li>';
+      }
+    });
+    fb.className = 'fb show ' + (ok === CARDS.length ? 'good' : 'bad');
+    fb.innerHTML = (ok === CARDS.length
+        ? '🎉 Chính xác toàn bộ ' + ok + '/' + CARDS.length + ' thẻ! Em đã phân biệt tốt “câu” và “mệnh đề”.'
+        : 'Đúng ' + ok + '/' + CARDS.length + ' thẻ. Xem lại các thẻ sau:')
+      + (wrongList ? '<ul>' + wrongList + '</ul>' : '');
+    mj(fb);
+  });
+
+  document.getElementById('gReset').addEventListener('click', function(){
+    ST.game = null; persist(); build(false);
+  });
+
+  build(true);
+})();
+
+/* ============ PHẦN 5 — ACCORDION ============ */
+(function(){
+  document.querySelectorAll('.acc-head').forEach(function(h){
+    h.addEventListener('click', function(){
+      var body = document.getElementById(h.getAttribute('aria-controls'));
+      var open = h.getAttribute('aria-expanded') === 'true';
+      h.setAttribute('aria-expanded', open ? 'false' : 'true');
+      body.classList.toggle('open', !open);
+      if (!open) mj(body);
+    });
+  });
+})();
+
+/* ============ PHẦN 7 — FLASHCARDS ============ */
+(function(){
+  var grid = document.getElementById('fcGrid');
+  if (!grid) return;
+
+  var FC = [
+    { tag:'Khái niệm', f:'Mệnh đề là gì?', b:'Câu <b>khẳng định</b> mà ta xác định được là <b>đúng</b> hoặc <b>sai</b>. Mỗi mệnh đề hoặc đúng hoặc sai, không thể vừa đúng vừa sai.' },
+    { tag:'Khái niệm', f:'Ba loại câu KHÔNG phải mệnh đề?', b:'Câu <b>nghi vấn</b>, câu <b>cảm thán</b>, câu <b>cầu khiến</b>. (Và cả mệnh đề chứa biến khi chưa thay giá trị.)' },
+    { tag:'Khái niệm', f:'Mệnh đề chứa biến?', b:'Câu chứa biến, <b>chưa</b> xác định được đúng sai. Thay biến bằng giá trị cụ thể thì trở thành mệnh đề.<br>VD: “$n$ chia hết cho $2$”.' },
+    { tag:'Phủ định', f:'Cách lập $\\overline{P}$ và quan hệ với $P$?', b:'Thêm hoặc bớt “<b>không</b>”, “<b>không phải</b>” trước vị ngữ.<br>$P$ đúng $\\Rightarrow$ $\\overline{P}$ sai, và ngược lại.' },
+    { tag:'Kéo theo', f:'$P \\Rightarrow Q$ SAI khi nào?', b:'<b>Chỉ sai duy nhất</b> khi $P$ <b>đúng</b> và $Q$ <b>sai</b>. Mọi trường hợp khác đều đúng — kể cả khi $P$ sai.' },
+    { tag:'Kéo theo', f:'Điều kiện cần / điều kiện đủ?', b:'Với $P \\Rightarrow Q$ đúng:<br>$P$ là điều kiện <b>ĐỦ</b> để có $Q$ (đuôi mũi tên);<br>$Q$ là điều kiện <b>CẦN</b> để có $P$ (đầu mũi tên).' },
+    { tag:'Mệnh đề đảo', f:'Mệnh đề đảo của $P \\Rightarrow Q$?', b:'Là $Q \\Rightarrow P$.<br><b>Lưu ý:</b> mệnh đề đảo của một mệnh đề <i>đúng</i> thì <b>không nhất thiết đúng</b>.' },
+    { tag:'Tương đương', f:'Khi nào $P \\Leftrightarrow Q$ đúng?', b:'Khi <b>cả hai</b> $P \\Rightarrow Q$ và $Q \\Rightarrow P$ đều đúng. Đọc: “$P$ nếu và chỉ nếu $Q$”, “$P$ là điều kiện <b>cần và đủ</b> để có $Q$”.' },
+    { tag:'Lượng từ', f:'Ký hiệu $\\forall$ và $\\exists$ đọc thế nào?', b:'$\\forall$ đọc là “<b>với mọi</b>”.<br>$\\exists$ đọc là “<b>tồn tại</b>” (có ít nhất một).' },
+    { tag:'Lượng từ', f:'Quy tắc phủ định mệnh đề có $\\forall$, $\\exists$?', b:'Đổi <b>cả hai</b>: lượng từ và tính chất.<br>$\\overline{\\forall x, P(x)} = \\exists x, \\overline{P(x)}$<br>$\\overline{\\exists x, P(x)} = \\forall x, \\overline{P(x)}$' },
+    { tag:'Kỹ thuật', f:'Muốn BÁC BỎ “$\\forall x, P(x)$” cần gì?', b:'Chỉ cần <b>một phản ví dụ</b> — một giá trị $x_0$ làm $P(x_0)$ sai. Ngược lại, muốn <b>khẳng định</b> thì phải chứng minh cho mọi $x$.' },
+    { tag:'Kỹ thuật', f:'Bẫy: mệnh đề SAI có phải mệnh đề không?', b:'<b>CÓ.</b> Mệnh đề sai vẫn là mệnh đề. Điều kiện để là mệnh đề là <i>gán được nhãn</i> đúng/sai, chứ không phải <i>phải đúng</i>.' }
+  ];
+
+  ST.flash = ST.flash || {};
+  var order = FC.map(function(_, i){ return i; });
+
+  function render(){
+    grid.innerHTML = '';
+    order.forEach(function(i){
+      var c = FC[i];
+      var known = !!ST.flash['f' + i];
+      var btn = document.createElement('div');
+      btn.className = 'fc' + (known ? ' known' : '');
+      btn.setAttribute('role', 'button');
+      btn.tabIndex = 0;
+      btn.setAttribute('aria-label', 'Thẻ ghi nhớ: ' + c.f.replace(/\$/g, '') +
+        '. Bấm hoặc nhấn Enter để lật xem đáp án.' + (known ? ' Đã đánh dấu là đã thuộc.' : ''));
+      btn.innerHTML =
+        '<div class="fc-in">' +
+          '<div class="fc-face fc-front"><span class="fc-tag">' + c.tag + '</span>' +
+            '<div class="fc-body">' + c.f + '</div></div>' +
+          '<div class="fc-face fc-back"><span class="fc-tag">' + c.tag + '</span>' +
+            '<div class="fc-body">' + c.b + '</div>' +
+            '<button type="button" class="btn ok sm" style="margin-top:10px;flex:none" data-know="' + i + '">' +
+            (known ? '✓ Đã thuộc' : 'Đánh dấu đã thuộc') + '</button></div>' +
+        '</div>';
+      btn.addEventListener('click', function(e){
+        var k = e.target.closest('[data-know]');
+        if (k) {
+          e.stopPropagation();
+          var idx = k.getAttribute('data-know');
+          ST.flash['f' + idx] = !ST.flash['f' + idx];
+          persist(); render();
+          return;
+        }
+        btn.classList.toggle('flip');
+      });
+      btn.addEventListener('keydown', function(e){
+        if (e.target !== btn) return;
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.classList.toggle('flip'); }
+      });
+      grid.appendChild(btn);
+    });
+    mj(grid);
+    updStat();
+  }
+  function updStat(){
+    var n = 0;
+    FC.forEach(function(_, i){ if (ST.flash['f' + i]) n++; });
+    document.getElementById('fcStat').textContent = 'Đã thuộc: ' + n + '/' + FC.length;
+  }
+
+  document.getElementById('fcFlip').addEventListener('click', function(){
+    var cards = grid.querySelectorAll('.fc');
+    var anyUp = Array.prototype.some.call(cards, function(c){ return !c.classList.contains('flip'); });
+    cards.forEach(function(c){ c.classList.toggle('flip', anyUp); });
+  });
+  document.getElementById('fcShuffle').addEventListener('click', function(){
+    for (var i = order.length - 1; i > 0; i--) { var j = Math.random() * (i + 1) | 0; var t = order[i]; order[i] = order[j]; order[j] = t; }
+    render();
+  });
+  document.getElementById('fcClear').addEventListener('click', function(){
+    ST.flash = {}; persist(); render();
+  });
+
+  render();
+})();
+
+/* ============ PHẦN 8 — TRẮC NGHIỆM ============ */
+(function(){
+  var host = document.getElementById('quiz');
+  if (!host) return;
+
+  var QUIZ = [
+    { id:'q1', level:'NB',
+      stem:'Trong các câu sau, câu nào <b>là mệnh đề</b>?',
+      options:['$13$ là số nguyên tố.', 'Bạn học trường nào?', 'Không được làm việc riêng trong giờ học!', 'Thời tiết hôm nay thật đẹp!'],
+      answer:0,
+      hint1:'Mệnh đề phải là câu <b>khẳng định</b> mà ta gán được nhãn đúng hoặc sai.',
+      hint2:'Loại bỏ câu nghi vấn, câu cầu khiến và câu cảm thán. Còn lại đúng một câu.',
+      solution:'“$13$ là số nguyên tố” là câu khẳng định, xác định được là <b>đúng</b> nên là mệnh đề. Ba câu còn lại lần lượt là câu nghi vấn, câu cầu khiến, câu cảm thán &mdash; không phải mệnh đề.' },
+
+    { id:'q2', level:'NB',
+      stem:'Mệnh đề phủ định của $P$: “$17$ là số chính phương” là',
+      options:['$\\overline{P}$: “$17$ không phải là số chính phương”.',
+               '$\\overline{P}$: “$17$ là số nguyên tố”.',
+               '$\\overline{P}$: “$16$ là số chính phương”.',
+               '$\\overline{P}$: “$17$ không phải là số nguyên tố”.'],
+      answer:0,
+      hint1:'Phủ định lập bằng cách thêm “không” / “không phải” vào trước <b>vị ngữ</b> của $P$.',
+      hint2:'Giữ nguyên chủ ngữ ($17$) và giữ nguyên tính chất (số chính phương), chỉ thêm từ phủ định.',
+      solution:'$\\overline{P}$: “$17$ không phải là số chính phương”. Đây là mệnh đề <b>đúng</b> vì $4^2=16$ và $5^2=25$, không có số nguyên nào bình phương bằng $17$.' },
+
+    { id:'q3', level:'NB',
+      stem:'Mệnh đề $P \\Rightarrow Q$ <b>sai</b> khi và chỉ khi',
+      options:['$P$ đúng và $Q$ sai.', '$P$ sai và $Q$ đúng.', '$P$ sai và $Q$ sai.', '$P$ đúng và $Q$ đúng.'],
+      answer:0,
+      hint1:'Nhớ lại “quy tắc vàng” ở phần Lý thuyết: chỉ có <b>một</b> trường hợp duy nhất làm $P \\Rightarrow Q$ sai.',
+      hint2:'Một lời hứa “Nếu trời mưa thì tôi mang ô” chỉ bị coi là thất hứa khi trời <i>mưa thật</i> mà lại <i>không</i> mang ô.',
+      solution:'$P \\Rightarrow Q$ chỉ sai ở dòng $P$ đúng, $Q$ sai. Đặc biệt, khi $P$ sai thì $P \\Rightarrow Q$ <b>luôn đúng</b> bất kể $Q$ thế nào.' },
+
+    { id:'q4', level:'NB',
+      stem:'Ký hiệu $\\exists$ được đọc là',
+      options:['“tồn tại”', '“với mọi”', '“suy ra”', '“tương đương”'],
+      answer:0,
+      hint1:'Có hai lượng từ trong bài: một cái nói về <i>tất cả</i>, một cái nói về <i>ít nhất một</i>.',
+      hint2:'$\\forall$ đọc là “với mọi”. Vậy $\\exists$ đọc là gì?',
+      solution:'$\\exists$ đọc là “<b>tồn tại</b>” (nghĩa là có ít nhất một). Còn $\\forall$ đọc là “với mọi”, $\\Rightarrow$ đọc là “suy ra”, $\\Leftrightarrow$ đọc là “tương đương”.' },
+
+    { id:'q5', level:'TH',
+      stem:'Mệnh đề nào sau đây <b>đúng</b>?',
+      options:['$\\forall x \\in \\mathbb{R},\\ x^2 + 1 > 0$',
+               '$\\forall x \\in \\mathbb{R},\\ x^2 + 1 \\le 0$',
+               '$\\exists x \\in \\mathbb{R},\\ x^2 + 1 = 0$',
+               '$\\exists x \\in \\mathbb{Q},\\ x^2 = 2$'],
+      answer:0,
+      hint1:'Nhớ rằng $x^2 \\ge 0$ với mọi số thực $x$. Từ đó suy ra $x^2+1$ có thể nhỏ nhất bằng bao nhiêu?',
+      hint2:'Giá trị nhỏ nhất của $x^2+1$ là $1$ (tại $x=0$), nên $x^2+1$ luôn dương. Còn $\\sqrt{2}$ có phải số hữu tỉ không?',
+      solution:'Vì $x^2 \\ge 0$ nên $x^2+1 \\ge 1 > 0$ với mọi $x \\in \\mathbb{R}$ &rarr; phương án đầu <b>đúng</b>. Hai phương án giữa sai vì $x^2+1$ không bao giờ $\\le 0$. Phương án cuối sai vì $\\sqrt{2}$ là số vô tỉ.' },
+
+    { id:'q6', level:'TH',
+      stem:'Cho mệnh đề: “Nếu tam giác $ABC$ đều thì tam giác $ABC$ cân”. Mệnh đề <b>đảo</b> của nó là',
+      options:['“Nếu tam giác $ABC$ cân thì tam giác $ABC$ đều” &mdash; mệnh đề này <b>sai</b>.',
+               '“Nếu tam giác $ABC$ cân thì tam giác $ABC$ đều” &mdash; mệnh đề này <b>đúng</b>.',
+               '“Nếu tam giác $ABC$ không đều thì tam giác $ABC$ không cân” &mdash; mệnh đề này <b>sai</b>.',
+               '“Tam giác $ABC$ đều khi và chỉ khi tam giác $ABC$ cân” &mdash; mệnh đề này <b>đúng</b>.'],
+      answer:0,
+      hint1:'Mệnh đề đảo của $P \\Rightarrow Q$ là $Q \\Rightarrow P$ &mdash; chỉ việc <b>đổi chỗ</b> giả thiết và kết luận.',
+      hint2:'Sau khi đổi chỗ, hãy thử tìm một tam giác cân mà <b>không</b> đều, chẳng hạn tam giác có ba cạnh $5$, $5$, $8$.',
+      solution:'Đảo là “Nếu tam giác $ABC$ cân thì tam giác $ABC$ đều”. Mệnh đề này <b>sai</b>: tam giác có ba cạnh $5;\\,5;\\,8$ là cân nhưng không đều. Đây chính là lý do không được viết $\\Leftrightarrow$.' },
+
+    { id:'q7', level:'TH',
+      stem:'Cho $P$: “Tứ giác $ABCD$ là hình vuông”, $Q$: “Tứ giác $ABCD$ là hình chữ nhật”. Khẳng định nào <b>đúng</b>?',
+      options:['$P$ là điều kiện <b>đủ</b> để có $Q$.',
+               '$P$ là điều kiện <b>cần</b> để có $Q$.',
+               '$P$ là điều kiện <b>cần và đủ</b> để có $Q$.',
+               '$Q$ là điều kiện <b>đủ</b> để có $P$.'],
+      answer:0,
+      hint1:'Trước hết xác định chiều kéo theo nào đúng: mọi hình vuông đều là hình chữ nhật, hay ngược lại?',
+      hint2:'Ta có $P \\Rightarrow Q$ đúng. Với $P \\Rightarrow Q$: cái ở <b>đuôi</b> mũi tên là điều kiện đủ, cái ở <b>đầu</b> mũi tên là điều kiện cần.',
+      solution:'Mọi hình vuông đều là hình chữ nhật nên $P \\Rightarrow Q$ <b>đúng</b>, do đó $P$ là điều kiện <b>đủ</b> để có $Q$ (và $Q$ là điều kiện <b>cần</b> để có $P$). Không phải cần và đủ vì hình chữ nhật $3 \\times 5$ không là hình vuông.' },
+
+    { id:'q8', level:'VD',
+      stem:'Cho $R:\\ \\forall x \\in \\mathbb{R},\\ x^2 - x + 1 > 0$. Phủ định $\\overline{R}$ và tính đúng sai của $\\overline{R}$ là',
+      options:['$\\overline{R}: \\exists x \\in \\mathbb{R},\\ x^2 - x + 1 \\le 0$ &mdash; mệnh đề này <b>sai</b>.',
+               '$\\overline{R}: \\exists x \\in \\mathbb{R},\\ x^2 - x + 1 \\le 0$ &mdash; mệnh đề này <b>đúng</b>.',
+               '$\\overline{R}: \\forall x \\in \\mathbb{R},\\ x^2 - x + 1 \\le 0$ &mdash; mệnh đề này <b>sai</b>.',
+               '$\\overline{R}: \\exists x \\in \\mathbb{R},\\ x^2 - x + 1 < 0$ &mdash; mệnh đề này <b>đúng</b>.'],
+      answer:0,
+      hint1:'Phủ định phải đổi <b>cả hai</b>: $\\forall$ thành $\\exists$, và phủ định của “$> 0$” là “$\\le 0$” (chứ không phải “$< 0$”).',
+      hint2:'Xét dấu tam thức $f(x)=x^2-x+1$: tính $\\Delta = b^2-4ac$ với $a=1,\\ b=-1,\\ c=1$. Nếu $a>0$ và $\\Delta<0$ thì $f(x)$ luôn dương.',
+      solution:'$\\overline{R}: \\exists x \\in \\mathbb{R},\\ x^2-x+1 \\le 0$. Ta có $\\Delta = (-1)^2 - 4\\cdot1\\cdot1 = -3 < 0$ và $a=1>0$ nên $x^2-x+1>0$ với mọi $x$. (Hoặc: $x^2-x+1=\\left(x-\\dfrac12\\right)^2+\\dfrac34 \\ge \\dfrac34$.) Vậy $R$ đúng, nên $\\overline{R}$ <b>sai</b>.' },
+
+    { id:'q9', level:'VD',
+      stem:'Với hai số thực $a$, $b$, xét $P$: “$a^2 < b^2$” và $Q$: “$0 < a < b$”. Khẳng định nào <b>đúng</b>?',
+      options:['$Q \\Rightarrow P$ đúng, $P \\Rightarrow Q$ sai.',
+               '$P \\Rightarrow Q$ đúng, $Q \\Rightarrow P$ sai.',
+               'Cả $P \\Rightarrow Q$ và $Q \\Rightarrow P$ đều đúng.',
+               'Cả $P \\Rightarrow Q$ và $Q \\Rightarrow P$ đều sai.'],
+      answer:0,
+      hint1:'Xét riêng từng chiều. Với chiều $P \\Rightarrow Q$, hãy thử cho $b$ nhận giá trị <b>âm</b>.',
+      hint2:'Thử $a=1,\\ b=-2$: khi đó $a^2=1 < 4=b^2$ nên $P$ đúng, nhưng $0<1<-2$ là sai nên $Q$ sai. Còn chiều kia: từ $0<a<b$ nhân hai vế dương với nhau.',
+      solution:'<b>Chiều $Q \\Rightarrow P$ đúng:</b> nếu $0<a<b$ thì nhân hai bất đẳng thức dương $a<b$ và $a<b$ được $a^2<b^2$. <br><b>Chiều $P \\Rightarrow Q$ sai:</b> chọn $a=1,\\ b=-2$ thì $a^2=1<4=b^2$ (P đúng) nhưng $0<1<-2$ sai (Q sai). Vậy chỉ $Q \\Rightarrow P$ đúng.' },
+
+    { id:'q10', level:'VDC',
+      stem:'Cho bốn mệnh đề: <br>(1) $\\exists x \\in \\mathbb{Q},\\ x^2 = 2$; &nbsp; (2) $\\forall n \\in \\mathbb{N},\\ n^2+n+41$ là số nguyên tố; <br>(3) $\\exists x \\in \\mathbb{R},\\ x^2 + 1 = 0$; &nbsp; (4) $\\forall x \\in \\mathbb{R},\\ |x| \\ge x$. <br>Số mệnh đề <b>đúng</b> là',
+      options:['$1$', '$2$', '$3$', '$0$'],
+      answer:0,
+      hint1:'Xét từng mệnh đề riêng. Với (2), đừng chỉ thử vài số nhỏ &mdash; hãy nghĩ xem có giá trị $n$ nào làm biểu thức chắc chắn phân tích được thành tích.',
+      hint2:'Với (2), thử $n = 40$: khi đó $n^2+n+41 = 40\\cdot41+41 = 41\\cdot41$. Với (4), xét riêng hai trường hợp $x \\ge 0$ và $x < 0$.',
+      solution:'(1) <b>Sai</b> vì $\\sqrt{2}$ vô tỉ, không có số hữu tỉ nào bình phương bằng $2$.<br>(2) <b>Sai</b>: với $n=40$ thì $n^2+n+41 = 40^2+40+41 = 1681 = 41^2$, là hợp số.<br>(3) <b>Sai</b> vì $x^2+1 \\ge 1 > 0$ với mọi $x$ thực.<br>(4) <b>Đúng</b>: nếu $x \\ge 0$ thì $|x| = x$; nếu $x < 0$ thì $|x| = -x > 0 > x$.<br>Vậy chỉ có <b>1</b> mệnh đề đúng.' }
+  ];
+
+  var LVLNAME = { NB:'Nhận biết', TH:'Thông hiểu', VD:'Vận dụng', VDC:'Vận dụng cao' };
+  var LETTER = ['A', 'B', 'C', 'D'];
+  var orderMap = {};
+  var submitted = false;
+
+  ST.answers  = ST.answers  || {};
+  ST.hintUsed = ST.hintUsed || {};
+
+  function shuffleIdx(n){
+    var a = [];
+    for (var i = 0; i < n; i++) a.push(i);
+    for (var k = n - 1; k > 0; k--) { var j = Math.random() * (k + 1) | 0; var t = a[k]; a[k] = a[j]; a[j] = t; }
+    return a;
+  }
+
+  function render(){
+    host.innerHTML = '';
+    QUIZ.forEach(function(q, qi){
+      orderMap[q.id] = shuffleIdx(q.options.length);
+      var box = document.createElement('div');
+      box.className = 'q';
+      box.id = 'box-' + q.id;
+
+      var opts = orderMap[q.id].map(function(oi, pos){
+        return '<button class="opt" type="button" role="radio" aria-checked="false" ' +
+               'data-q="' + q.id + '" data-orig="' + oi + '" data-pos="' + pos + '">' +
+               '<span class="k" aria-hidden="true">' + LETTER[pos] + '.</span>' +
+               '<span class="tx">' + q.options[oi] + '</span>' +
+               '<span class="mark" aria-hidden="true"></span></button>';
+      }).join('');
+
+      box.innerHTML =
+        '<div class="q-head">' +
+          '<span class="q-num">Câu ' + (qi + 1) + '</span>' +
+          '<span class="lvl ' + q.level + '">' + LVLNAME[q.level] + '</span>' +
+          '<span class="q-stem">' + q.stem + '</span>' +
+        '</div>' +
+        '<div class="opts" role="radiogroup" aria-label="Phương án câu ' + (qi + 1) + '">' + opts + '</div>' +
+        '<div class="q-tools">' +
+          '<button class="btn ghost sm" type="button" data-hint="' + q.id + '">' +
+            '<svg class="ic"><use href="#ic-bulb"></use></svg><span>Gợi ý</span></button>' +
+        '</div>' +
+        '<div class="hint" id="h-' + q.id + '" role="status"></div>' +
+        '<div class="sol" id="s-' + q.id + '"><b>Lời giải.</b> ' + q.solution + '</div>';
+
+      host.appendChild(box);
+    });
+
+    /* Khôi phục lựa chọn đã lưu */
+    QUIZ.forEach(function(q){
+      if (ST.answers[q.id] !== undefined && ST.answers[q.id] !== null) {
+        var btn = host.querySelector('[data-q="' + q.id + '"][data-orig="' + ST.answers[q.id] + '"]');
+        if (btn) markChecked(btn);
+      }
+      var hu = ST.hintUsed[q.id] || 0;
+      if (hu > 0) showHint(q, hu, true);
+    });
+
+    bind();
+    mj(host);
+    updHud();
+  }
+
+  function markChecked(btn){
+    var group = btn.parentElement;
+    group.querySelectorAll('.opt').forEach(function(o){ o.setAttribute('aria-checked', 'false'); });
+    btn.setAttribute('aria-checked', 'true');
+  }
+
+  function bind(){
+    host.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (submitted) return;
+        markChecked(btn);
+        ST.answers[btn.getAttribute('data-q')] = +btn.getAttribute('data-orig');
+        persist(); updHud();
+      });
+      btn.addEventListener('keydown', function(e){
+        if (submitted) return;
+        var group = btn.parentElement;
+        var list = Array.prototype.slice.call(group.querySelectorAll('.opt'));
+        var i = list.indexOf(btn);
+        var nx = null;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') nx = list[(i + 1) % list.length];
+        if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  nx = list[(i - 1 + list.length) % list.length];
+        if (nx) { e.preventDefault(); nx.focus(); nx.click(); }
+      });
+    });
+
+    host.querySelectorAll('[data-hint]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var id = b.getAttribute('data-hint');
+        var q = QUIZ.filter(function(x){ return x.id === id; })[0];
+        var lv = Math.min((ST.hintUsed[id] || 0) + 1, 2);
+        ST.hintUsed[id] = lv; persist();
+        showHint(q, lv, false);
+      });
+    });
+  }
+
+  function showHint(q, lv, silent){
+    var el = document.getElementById('h-' + q.id);
+    var html = '<p style="margin:0 0 .4em"><b>Gợi ý 1.</b> ' + q.hint1 + '</p>';
+    if (lv >= 2) html += '<p style="margin:0"><b>Gợi ý 2.</b> ' + q.hint2 + '</p>';
+    el.innerHTML = html;
+    el.classList.add('show');
+    var btn = host.querySelector('[data-hint="' + q.id + '"] span:last-child');
+    if (btn) btn.textContent = lv >= 2 ? 'Đã xem cả 2 gợi ý' : 'Gợi ý sâu hơn';
+    if (lv >= 2) { var bb = host.querySelector('[data-hint="' + q.id + '"]'); if (bb) bb.disabled = true; }
+    if (!silent) mj(el);
+  }
+
+  function countAnswered(){
+    var n = 0;
+    QUIZ.forEach(function(q){ if (ST.answers[q.id] !== undefined && ST.answers[q.id] !== null) n++; });
+    return n;
+  }
+  function score(){
+    var s = 0;
+    QUIZ.forEach(function(q){ if (ST.answers[q.id] === q.answer) s++; });
+    return s;
+  }
+  function updHud(){
+    var t = document.getElementById('hudText');
+    t.textContent = submitted ? ('Điểm: ' + score() + '/10') : ('Đã làm: ' + countAnswered() + '/10');
+  }
+
+  function grade(){
+    submitted = true;
+    QUIZ.forEach(function(q){
+      var box = document.getElementById('box-' + q.id);
+      box.querySelectorAll('.opt').forEach(function(o){
+        var orig = +o.getAttribute('data-orig');
+        o.disabled = true;
+        if (orig === q.answer) {
+          o.classList.add('correct');
+          o.querySelector('.mark').textContent = '✓';
+          o.setAttribute('aria-label', 'Phương án đúng');
+        } else if (o.getAttribute('aria-checked') === 'true') {
+          o.classList.add('incorrect');
+          o.querySelector('.mark').textContent = '✗';
+          o.setAttribute('aria-label', 'Phương án em chọn — sai');
+        }
+      });
+      document.getElementById('s-' + q.id).classList.add('show');
+    });
+
+    var byLvl = { NB:[0,0], TH:[0,0], VD:[0,0], VDC:[0,0] };
+    QUIZ.forEach(function(q){
+      byLvl[q.level][1]++;
+      if (ST.answers[q.id] === q.answer) byLvl[q.level][0]++;
+    });
+    var s = score(), diem = s;
+    var hints = 0;
+    QUIZ.forEach(function(q){ hints += (ST.hintUsed[q.id] || 0); });
+
+    var verdict, vcolor;
+    if (diem >= 9)      { verdict = 'Nắm rất vững — em có thể thử thêm các câu vận dụng cao về lượng từ và phản ví dụ.'; vcolor = 'var(--c-ok-lt);color:var(--c-ok)'; }
+    else if (diem >= 7) { verdict = 'Tốt. Hãy xem lại lời giải các câu sai, đặc biệt phần điều kiện cần — điều kiện đủ.'; vcolor = 'var(--c-primary-lt);color:var(--c-primary)'; }
+    else if (diem >= 5) { verdict = 'Đạt. Cần luyện lại quy tắc phủ định mệnh đề có ∀, ∃ và quy tắc “P ⇒ Q chỉ sai khi P đúng, Q sai”.'; vcolor = '#fff4e5;color:#b8611f'; }
+    else                { verdict = 'Hãy xem lại Phần 2 (Lý thuyết) và Phần 5 (Ví dụ) trước khi làm lại nhé.'; vcolor = 'var(--c-warn-lt);color:var(--c-warn)'; }
+
+    var rows = ['NB','TH','VD','VDC'].map(function(L){
+      var d = byLvl[L][0], t = byLvl[L][1], pc = t ? Math.round(d / t * 100) : 0;
+      return '<tr><td class="lbl">' + LVLNAME[L] + '</td><td><b>' + d + '/' + t + '</b></td>' +
+             '<td><div class="bar"><i style="width:' + pc + '%"></i></div></td><td>' + pc + '%</td></tr>';
+    }).join('');
+
+    var res = document.getElementById('result');
+    res.innerHTML =
+      '<p class="score-big">' + diem + '<span style="font-size:1.2rem;color:#5b6672">/10</span></p>' +
+      '<div class="tbl-wrap"><table><caption class="sr-only">Kết quả theo mức độ</caption>' +
+      '<thead><tr><th>Mức độ</th><th>Đúng</th><th>Tỉ lệ</th><th>%</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>' +
+      '<p style="text-align:center;color:#5b6672;font-size:.92rem">Em đã dùng <b>' + hints + '</b> lượt gợi ý.</p>' +
+      '<div class="verdict" style="background:' + vcolor + '">' + verdict + '</div>';
+    res.classList.add('show');
+    mj(res);
+    updHud();
+    document.getElementById('qSubmit').disabled = true;
+    res.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'nearest' });
+  }
+
+  document.getElementById('qSubmit').addEventListener('click', function(){
+    if (countAnswered() < QUIZ.length) {
+      if (!confirm('Em còn ' + (QUIZ.length - countAnswered()) + ' câu chưa chọn đáp án. Vẫn nộp bài chứ?')) return;
+    }
+    ST.submitted = true; persist();
+    grade();
+  });
+
+  document.getElementById('qRetry').addEventListener('click', function(){
+    ST.answers = {}; ST.submitted = false; persist();
+    submitted = false;
+    document.getElementById('qSubmit').disabled = false;
+    document.getElementById('result').classList.remove('show');
+    document.getElementById('restored').classList.remove('show');
+    render();
+  });
+
+  document.getElementById('qRetryWrong').addEventListener('click', function(){
+    QUIZ.forEach(function(q){ if (ST.answers[q.id] === q.answer) return; delete ST.answers[q.id]; });
+    ST.submitted = false; persist();
+    submitted = false;
+    document.getElementById('qSubmit').disabled = false;
+    document.getElementById('result').classList.remove('show');
+    render();
+  });
+
+  document.getElementById('qClear').addEventListener('click', function(){
+    if (!confirm('Xoá toàn bộ tiến độ đã lưu (đáp án, ghi chú, flashcards, trò chơi)?')) return;
+    try { localStorage.removeItem(KEY); } catch(e){}
+    location.reload();
+  });
+
+  render();
+
+  /* Thông báo khôi phục + tự chấm lại nếu đã nộp */
+  if (ST.ts && (countAnswered() > 0)) {
+    var d = new Date(ST.ts);
+    var p2 = function(x){ return (x < 10 ? '0' : '') + x; };
+    var el = document.getElementById('restored');
+    el.textContent = 'Đã khôi phục bài làm lúc ' + p2(d.getHours()) + ':' + p2(d.getMinutes()) +
+                     ' ngày ' + p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + '.';
+    el.classList.add('show');
+  }
+  if (ST.submitted) grade();
+})();
+
+/* Mục lục: đánh dấu phần đang xem */
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc-inner a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      var i = secs.indexOf(en.target);
+      if (i < 0) return;
+      links.forEach(function(l,j){ l.classList.toggle('active', i === j); });
+    });
+  }, { rootMargin: '-70px 0px -65% 0px' });
+  secs.forEach(function(s){ if (s) io.observe(s); });
+})();
+</script>
+
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>

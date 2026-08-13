@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phép tính Lôgarit – Toán 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+window.MathJax = {
+  tex:{ inlineMath:[['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']], processEscapes:true },
+  svg:{ fontCache:'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM – đồng bộ BaiGiang_DiemDuongMat
+═══════════════════════════════════════════════════ */
+:root {
+  --indigo:    #312e81;
+  --indigo-d:  #1e1b4b;
+  --indigo-m:  #4338ca;
+  --indigo-l:  #818cf8;
+  --indigo-p:  #eef2ff;
+  --cyan:      #0891b2;
+  --cyan-l:    #e0f2fe;
+  --amber:     #d97706;
+  --amber-l:   #fef3c7;
+  --green:     #059669;
+  --green-l:   #d1fae5;
+  --red:       #dc2626;
+  --red-l:     #fee2e2;
+  --blue:      #1d4ed8;
+  --blue-l:    #dbeafe;
+  --orange:    #ea580c;
+  --orange-l:  #ffedd5;
+  --rose:      #e11d48;
+  --rose-l:    #ffe4e6;
+  --emerald:   #059669;
+  --emerald-l: #d1fae5;
+  --bg:        #f8fafc;
+  --card:      #ffffff;
+  --border:    #e2e8f0;
+  --text:      #1e293b;
+  --muted:     #64748b;
+  --shadow:    0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg: 0 12px 40px rgba(49,46,129,.16);
+  --radius:    16px;
+  --radius-sm: 10px;
+  --radius-xs: 7px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  overflow-x: hidden;
+  padding: 0 0 80px;
+}
+h1, h2, h3, h4 {
+  font-family: 'Merriweather', serif;
+  color: var(--indigo);
+  line-height: 1.3;
+  margin-top: 0;
+}
+p { margin-bottom: .75rem; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin-bottom: .35rem; }
+strong { font-weight: 800; }
+
+/* ═══════════════════════════════════════════════════
+   HEADER  (.page-header)
+═══════════════════════════════════════════════════ */
+.page-header {
+  background: linear-gradient(135deg, var(--indigo-d) 0%, #3730a3 55%, #6d28d9 100%);
+  color: #fff;
+  padding: clamp(3rem,8vw,5.5rem) 1.5rem clamp(2.5rem,6vw,4.5rem);
+  text-align: center;
+  border-bottom: 5px solid var(--amber);
+  position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    url("data:image/svg+xml;utf8,<svg width='90' height='90' xmlns='http://www.w3.org/2000/svg'><polygon points='10,80 45,10 80,80' stroke='rgba(255,255,255,.04)' stroke-width='1.5' fill='none'/></svg>") repeat,
+    url("data:image/svg+xml;utf8,<svg width='60' height='60' xmlns='http://www.w3.org/2000/svg'><circle cx='30' cy='30' r='22' stroke='rgba(255,255,255,.025)' stroke-width='1' fill='none'/></svg>") repeat;
+}
+.page-header h1 {
+  position: relative; z-index: 1;
+  font-size: clamp(1.7rem,5vw,3.1rem);
+  font-family: 'Merriweather', serif;
+  color: #fff !important;
+  text-shadow: 0 4px 18px rgba(0,0,0,.35);
+  margin-bottom: 1rem;
+}
+.page-header > p {
+  position: relative; z-index: 1;
+  color: #c7d2fe; font-size: clamp(.9rem,2vw,1.05rem);
+  max-width: 640px; margin: 0 auto 1.5rem;
+}
+.badge-row {
+  position: relative; z-index: 1;
+  display: flex; gap: 9px; justify-content: center; flex-wrap: wrap;
+}
+.badge {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; padding: 4px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 400;
+  background: var(--card); border-bottom: 2px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+}
+.nav-wrap {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; overflow-x: auto; padding: 0 1rem;
+  scrollbar-width: none;
+}
+.nav-wrap::-webkit-scrollbar { display: none; }
+.nav-a {
+  flex-shrink: 0; padding: 11px 12px;
+  font-size: 11.5px; font-weight: 700; color: var(--muted);
+  text-decoration: none; border-bottom: 3px solid transparent;
+  transition: all .2s; display: flex; align-items: center; gap: 5px;
+}
+.nav-a:hover, .nav-a.on { color: var(--indigo-m); border-bottom-color: var(--indigo-l); }
+
+/* ═══════════════════════════════════════════════════
+   LESSON BODY
+═══════════════════════════════════════════════════ */
+.lesson-body {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+  display: flex; flex-direction: column; gap: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION CARDS
+═══════════════════════════════════════════════════ */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  margin-bottom: 3rem; box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.card.vis { opacity: 1; transform: none; }
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 5px; height: 100%; border-radius: 5px 0 0 5px;
+  background: var(--cyan); z-index: 2;
+}
+.c-amber::before  { background: var(--amber) !important; }
+.c-indigo::before { background: var(--indigo-m) !important; }
+.c-emerald::before{ background: var(--green) !important; }
+.c-rose::before   { background: var(--rose) !important; }
+
+/* Card head */
+.card-head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 1.1rem 1.6rem;
+  font-weight: 700; font-size: 1.05rem;
+  font-family: 'Merriweather', serif;
+  border-bottom: 2px solid var(--border);
+}
+.c-amber .card-head  { background: #fffbeb; border-bottom-color: #fde68a; color: #92400e; }
+.c-indigo .card-head { background: var(--indigo-p); border-bottom-color: #c7d2fe; color: var(--indigo); }
+.c-emerald .card-head{ background: #ecfdf5; border-bottom-color: #a7f3d0; color: #065f46; }
+.c-rose .card-head   { background: #fff1f2; border-bottom-color: #fecdd3; color: #9f1239; }
+
+.card-head .icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem; flex-shrink: 0;
+}
+.c-amber  .card-head .icon  { background: #fef3c7; }
+.c-indigo .card-head .icon  { background: #e0e7ff; }
+.c-emerald .card-head .icon { background: #d1fae5; }
+.c-rose   .card-head .icon  { background: #fce7f3; }
+
+.sect-label {
+  margin-left: auto;
+  border-radius: 100px; padding: 2px 12px;
+  font-size: .75rem; font-family: 'Nunito', sans-serif; font-weight: 800;
+}
+.c-amber  .sect-label { background: #fde68a; color: #92400e; }
+.c-indigo .sect-label { background: #c7d2fe; color: var(--indigo); }
+.c-emerald .sect-label{ background: #a7f3d0; color: #065f46; }
+.c-rose   .sect-label { background: #fecdd3; color: #9f1239; }
+.c-cyan::before   { background: var(--cyan) !important; }
+.c-cyan .card-head{ background: #ecfeff; border-bottom-color: #a5f3fc; color: #155e75; }
+.c-cyan .card-head .icon { background: #cffafe; }
+.c-cyan .sect-label { background: #a5f3fc; color: #155e75; }
+
+.card-body { padding: clamp(1.4rem,4vw,2.25rem); }
+
+/* ═══════════════════════════════════════════════════
+   GRIDS
+═══════════════════════════════════════════════════ */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 1rem 0; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin: 1rem 0; }
+.ga { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 14px; margin: 1rem 0; }
+@media(max-width:760px){ .g2 { grid-template-columns: 1fr; } }
+@media(max-width:680px){ .g3 { grid-template-columns: 1fr 1fr; } }
+@media(max-width:460px){ .g3 { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════════
+   SVG / LOOP DIAGRAM
+═══════════════════════════════════════════════════ */
+.svg-w { margin: 1.25rem 0; text-align: center; }
+.svg-w svg { max-width: 100%; height: auto; }
+.loop-diagram { margin: 1.5rem 0; display: flex; justify-content: center; }
+.loop-diagram svg { max-width: 520px; width: 100%; }
+
+/* ═══════════════════════════════════════════════════
+   CALLOUT BOXES
+═══════════════════════════════════════════════════ */
+.box { border-radius: var(--radius-sm); padding: 1.1rem 1.4rem; margin: 1rem 0; border: 1.5px solid; }
+.box p, .box li { font-size: .9rem; }
+.box-in  { background: var(--indigo-p); border-color: #c7d2fe;
+           border-left: 4px solid var(--indigo-l);
+           border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.box-gr  { background: var(--green-l);  border-color: #6ee7b7; }
+.box-am  { background: var(--amber-l);  border-color: #fcd34d; }
+.box-bl  { background: var(--blue-l);   border-color: #93c5fd; }
+.box-re  { background: var(--red-l);    border-color: #fca5a5; }
+.box-in strong { color: var(--indigo-m); }
+
+/* Question amber box (with emoji anchor) */
+.box-am {
+  background: var(--amber-l);
+  border: 1.5px solid #fcd34d;
+  border-radius: var(--radius-sm);
+  padding: 1.2rem 1.5rem 1.2rem 3rem;
+  margin-top: 1.25rem; position: relative;
+}
+.box-am::before {
+  content: '❓'; position: absolute; top: 50%; left: 14px;
+  transform: translateY(-50%); font-size: 1.1rem;
+}
+.box-am p { color: #92400e; font-weight: 600; font-size: .95rem; line-height: 1.7; }
+
+.note { background: var(--green-l); border-left: 4px solid var(--green); padding: 1rem 1.25rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; font-size: .88rem; }
+.warn { background: var(--red-l);   border-left: 4px solid var(--red);   padding: 1rem 1.25rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; font-size: .88rem; }
+.tip  { background: var(--amber-l); border-left: 4px solid var(--amber); padding: 1rem 1.25rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; font-size: .88rem; }
+
+/* ═══════════════════════════════════════════════════
+   STORY IMAGE BLOCK
+═══════════════════════════════════════════════════ */
+.story-img-wrap {
+  display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.story-img-wrap figure { flex: 0 0 200px; }
+.story-img-wrap figure svg { width: 100%; border-radius: var(--radius-sm); }
+.story-img-wrap figure figcaption {
+  font-size: .75rem; color: var(--muted);
+  text-align: center; margin-top: 6px; font-style: italic;
+}
+.story-text { flex: 1; min-width: 220px; }
+.story-text p { color: var(--text); margin-bottom: .75rem; }
+
+/* ═══════════════════════════════════════════════════
+   TC – PROPERTY CARD GRID
+═══════════════════════════════════════════════════ */
+.tc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 18px; margin-top: 1.5rem;
+}
+.tc-card {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; transition: box-shadow .2s, transform .2s;
+}
+.tc-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.tc-head {
+  background: var(--indigo); color: #fff;
+  padding: 10px 15px; font-weight: 800; font-size: .88rem;
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Nunito', sans-serif; letter-spacing: .02em;
+}
+.tc-head .num {
+  width: 24px; height: 24px; background: rgba(255,255,255,.25);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; flex-shrink: 0;
+}
+.tc-body { padding: 14px 16px; font-size: .88rem; }
+.tc-body .formula-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0; border-bottom: 1px dashed var(--border);
+}
+.tc-body .formula-row:last-child { border-bottom: none; }
+.tc-body .formula-row .lbl {
+  flex: 0 0 30px; width: 30px; height: 30px;
+  background: var(--indigo-p); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: var(--indigo-m); font-size: .78rem; flex-shrink: 0;
+}
+.tc-body .def-text { color: var(--muted); line-height: 1.6; font-size: .88rem; margin-bottom: .5rem; }
+.tc-body .def-text strong { color: var(--indigo); }
+.condition-tag {
+  font-size: .73rem; background: var(--amber-l); color: var(--amber);
+  border-radius: 4px; padding: 1px 7px; display: inline-block; margin-left: 6px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RICHTER TABLE
+═══════════════════════════════════════════════════ */
+.richter-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .87rem; }
+.richter-table th {
+  background: var(--amber); color: #fff; padding: 9px 14px; text-align: left; font-weight: 700;
+}
+.richter-table th:first-child { border-radius: 8px 0 0 0; }
+.richter-table th:last-child  { border-radius: 0 8px 0 0; }
+.richter-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); }
+.richter-table tr:nth-child(even) td { background: var(--amber-l); }
+.richter-table tr:hover td { background: #fde68a; }
+.richter-table .hl { font-weight: 800; color: var(--amber); }
+
+/* ═══════════════════════════════════════════════════
+   ACCORDION  (.acc-item / .acc-trigger / .chev)
+═══════════════════════════════════════════════════ */
+.acc { display: flex; flex-direction: column; gap: 10px; }
+.acc-item {
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--card);
+}
+.acc-trigger {
+  width: 100%; background: var(--bg); border: none; cursor: pointer;
+  padding: .95rem 1.35rem;
+  display: flex; align-items: center; gap: 12px;
+  text-align: left; font-size: .9rem; font-weight: 700;
+  color: var(--indigo); transition: background .2s;
+  font-family: 'Nunito', sans-serif;
+}
+.acc-trigger:hover { background: var(--indigo-p); }
+.acc-icon {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: .9rem;
+}
+.acc-icon.chem { background: #dcfce7; color: #16a34a; }
+.acc-icon.math { background: var(--indigo-p); color: var(--indigo-m); }
+.chev {
+  margin-left: auto; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--border); display: flex; align-items: center;
+  justify-content: center; font-size: .7rem; color: var(--muted);
+  transition: transform .3s; flex-shrink: 0;
+}
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s ease, padding .3s;
+  padding: 0 1.35rem;
+}
+.acc-item.open .acc-body {
+  max-height: 2400px;
+  padding: 0 1.35rem 1.35rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Steps */
+.step { display: flex; gap: 12px; margin-bottom: 1rem; }
+.step-num {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--cyan); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .8rem; margin-top: 2px;
+}
+.step-content p { color: var(--text); font-size: .9rem; margin-bottom: 4px; }
+.sc {
+  display: inline-block; background: var(--green-l); color: #065f46;
+  border-left: 3px solid var(--green); padding: 5px 12px;
+  border-radius: 0 6px 6px 0; font-size: .84rem; margin-top: 6px;
+}
+.result-box {
+  background: linear-gradient(90deg, var(--indigo-p), #e0e7ff);
+  border: 1.5px solid #c7d2fe; border-radius: var(--radius-sm);
+  padding: 12px 18px; margin-top: 14px; text-align: center;
+  font-weight: 800; color: var(--indigo); font-size: 1rem;
+  font-family: 'Merriweather', serif;
+}
+
+/* ═══════════════════════════════════════════════════
+   DRAG & DROP
+═══════════════════════════════════════════════════ */
+.dnd-area {
+  display: grid; grid-template-columns: 1fr 2fr; gap: 20px;
+}
+@media(max-width:600px){ .dnd-area { grid-template-columns: 1fr; } }
+.dnd-col-label {
+  font-size: .78rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted); margin-bottom: 10px;
+}
+.dnd-sources { display: flex; flex-direction: column; gap: 10px; }
+.source-row {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: .88rem;
+}
+.source-row .formula-label { font-weight: 600; color: var(--text); flex: 1; }
+.drop-grid { display: flex; flex-direction: column; gap: 10px; }
+.drop-z {
+  border: 2px dashed var(--border); border-radius: var(--radius-sm);
+  padding: 10px 14px; min-height: 50px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  transition: border-color .2s, background .2s;
+  font-size: .85rem; color: var(--muted); position: relative;
+}
+.drop-z.drag-over { border-color: var(--indigo-l); background: var(--indigo-p); }
+.drop-z.correct   { border-color: var(--green) !important; background: var(--green-l); }
+.drop-z.wrong     { border-color: var(--red) !important;   background: var(--red-l); }
+.drop-z .drop-hint { font-style: italic; font-size: .82rem; }
+.drop-z .drop-label {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+}
+.drop-z.correct .drop-label { color: var(--green); }
+.drop-z.wrong   .drop-label { color: var(--red); }
+.chips-pool { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--indigo); color: #fff;
+  border-radius: 100px; padding: 7px 18px; min-height: 44px;
+  font-size: .86rem; font-weight: 700;
+  cursor: grab; user-select: none;
+  box-shadow: 0 2px 8px rgba(49,46,129,.22);
+  transition: transform .15s, box-shadow .15s, opacity .2s;
+  touch-action: none;
+}
+.chip:active { cursor: grabbing; transform: scale(1.05); }
+.chip.placed    { opacity: .4; cursor: default; pointer-events: none; }
+.chip.in-zone   { background: var(--green); }
+.chip.wrong-chip{ background: var(--red); }
+.dnd-controls { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+.dnd-score { font-weight: 800; color: var(--text); font-size: .93rem; align-self: center; margin-left: 4px; }
+
+/* ═══════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════ */
+.btn {
+  padding: 9px 22px; border-radius: var(--radius-sm);
+  font-weight: 700; font-size: .88rem;
+  border: none; cursor: pointer; font-family: 'Nunito', sans-serif;
+  display: inline-flex; align-items: center; gap: 7px;
+  transition: background .2s, transform .1s;
+}
+.btn:active { transform: scale(.97); }
+.btn:hover  { transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-primary { background: var(--cyan); color: #fff; }
+.btn-primary:hover { background: #0e7490; }
+.btn-ghost   { background: var(--border); color: var(--muted); }
+.btn-ghost:hover { background: #cbd5e1; }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.25rem; justify-content: center; }
+
+/* ── QUIZ ── */
+.quiz-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.quiz-item {
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1.1rem 1.25rem;
+  transition: border-color .25s, box-shadow .25s;
+}
+.quiz-item.done { box-shadow: var(--shadow); }
+.quiz-q { font-weight: 700; color: var(--text); margin-bottom: .85rem; line-height: 1.55; }
+.quiz-q .qnum {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cyan); color: #fff; font-weight: 800; font-size: .82rem;
+  width: 28px; height: 28px; border-radius: 50%; margin-right: .55rem;
+  flex-shrink: 0;
+}
+.quiz-choices { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+@media (max-width: 600px) { .quiz-choices { grid-template-columns: 1fr; } }
+.quiz-choice {
+  display: flex; align-items: center; gap: .55rem;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs); padding: .65rem .85rem;
+  cursor: pointer; font-size: .92rem; line-height: 1.45;
+  transition: border-color .2s, background .2s, transform .15s;
+}
+.quiz-choice:hover:not(.locked) { border-color: var(--cyan); background: #ecfeff; transform: translateY(-1px); }
+.quiz-choice .ch-key {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .82rem; color: var(--muted);
+  width: 26px; height: 26px; border: 1.5px solid var(--border); border-radius: 50%;
+  flex-shrink: 0; background: #fff;
+}
+.quiz-choice.correct { background: var(--green-l); border-color: var(--green); }
+.quiz-choice.correct .ch-key { background: var(--green); color: #fff; border-color: var(--green); }
+.quiz-choice.wrong   { background: var(--red-l);   border-color: var(--red); }
+.quiz-choice.wrong   .ch-key { background: var(--red); color: #fff; border-color: var(--red); }
+.quiz-choice.locked  { cursor: default; }
+.quiz-explain {
+  margin-top: .85rem; padding: .85rem 1rem;
+  background: var(--indigo-p); border-left: 4px solid var(--indigo-m);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  font-size: .9rem; line-height: 1.6; color: var(--text);
+  display: none;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain strong { color: var(--indigo-m); }
+
+/* Score bar floating bottom */
+.score-bar {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: #fff; border: 1.5px solid var(--border); border-radius: 100px;
+  padding: .55rem 1.25rem; box-shadow: 0 8px 30px rgba(49,46,129,.18);
+  display: flex; align-items: center; gap: .75rem; z-index: 100;
+  font-size: .88rem; font-weight: 700; color: var(--text);
+  opacity: 0; pointer-events: none; transition: opacity .35s, transform .35s;
+}
+.score-bar.show { opacity: 1; pointer-events: auto; }
+.score-track {
+  width: 140px; height: 8px; background: var(--border); border-radius: 100px; overflow: hidden;
+}
+.score-fill {
+  height: 100%; background: linear-gradient(90deg, var(--cyan), var(--green));
+  width: 0%; transition: width .5s ease;
+}
+.score-num { color: var(--cyan); font-weight: 800; }
+@media (max-width: 500px) {
+  .score-bar { font-size: .8rem; padding: .45rem 1rem; }
+  .score-track { width: 90px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   FLASHCARDS
+═══════════════════════════════════════════════════ */
+.fc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 16px; margin: 1rem 0;
+}
+.fc { height: 165px; perspective: 800px; cursor: pointer; }
+.fc-inner {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4,0,.2,1);
+  border-radius: 13px;
+}
+.fc.flipped .fc-inner { transform: rotateY(180deg); }
+.fc-front, .fc-back {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; border-radius: 13px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 1.2rem; text-align: center;
+  box-shadow: 0 4px 16px rgba(49,46,129,.12);
+}
+.fc-front { background: linear-gradient(135deg, var(--indigo-d), #3730a3); color: #fff; }
+.fc-back  {
+  background: linear-gradient(135deg, #fefce8, #fef9c3);
+  border: 2px solid #fcd34d; color: var(--indigo);
+  transform: rotateY(180deg);
+}
+.fc-q    { font-weight: 800; font-size: 1.05rem; line-height: 1.4; }
+.fc-hint { font-size: .7rem; opacity: .5; margin-top: 9px; font-style: italic; }
+.fc-ans  { font-weight: 800; font-size: 1rem; line-height: 1.5; }
+.fc-label{ font-size: .73rem; color: var(--muted); margin-top: 7px; font-style: italic; }
+.fc-tap-hint { text-align: center; margin-top: 12px; font-size: .78rem; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+footer {
+  background: var(--indigo-d); color: #c7d2fe;
+  text-align: center; padding: 3rem 1.5rem; margin-top: 4rem;
+}
+footer h3 { color: #fff; margin-bottom: .5rem; font-family: 'Merriweather', serif; }
+footer p  { font-size: .85rem; opacity: .65; }
+
+/* ═══════════════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════════════ */
+.section-intro { color: var(--muted); font-size: .93rem; margin-bottom: 1rem; line-height: 1.7; }
+.divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ PAGE HEADER ══════════════════ -->
+<header class="page-header">
+  <h1>📐 Phép tính Lôgarit</h1>
+  <p>Toán học lớp 11 · Chủ đề: Hàm số mũ và Lôgarit</p>
+  <div class="badge-row">
+    <span class="badge">🎯 Khởi động</span>
+    <span class="badge">📘 Lý thuyết</span>
+    <span class="badge">🔬 Ví dụ</span>
+    <span class="badge">🎮 Tương tác</span>
+    <span class="badge">🃏 Flashcards</span>
+  </div>
+</header>
+
+
+<!-- ══════════════════ STICKY NAV ══════════════════ -->
+<nav aria-label="Điều hướng bài học">
+  <div class="nav-wrap">
+    <a href="#p1" class="nav-a"><i class="fa-solid fa-rocket"></i> Khởi động</a>
+    <a href="#p2" class="nav-a"><i class="fa-solid fa-book-open"></i> Lý thuyết</a>
+    <a href="#p-richter" class="nav-a"><i class="fa-solid fa-house-crack"></i> Ứng dụng</a>
+    <a href="#p4" class="nav-a"><i class="fa-solid fa-flask"></i> Ví dụ</a>
+    <a href="#p5" class="nav-a"><i class="fa-solid fa-puzzle-piece"></i> Ghép nối</a>
+    <a href="#p6" class="nav-a"><i class="fa-solid fa-clone"></i> Flashcards</a>
+    <a href="#quiz" class="nav-a"><i class="fa-solid fa-circle-question"></i> Trắc nghiệm</a>
+  </div>
+</nav>
+
+<div class="lesson-body">
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 – KHỞI ĐỘNG (c-amber)
+══════════════════════════════════════════ -->
+<section class="card card c-amber" id="p1">
+  <div class="card-head">
+    <span class="icon">🌍</span>
+    <span>Khởi động: Câu chuyện về Thang Richter</span>
+    <span class="sect-label">Mục 1</span>
+  </div>
+  <div class="card-body">
+    <div class="story-img-wrap">
+      <!-- SVG seismograph illustration -->
+      <figure>
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b;border-radius:10px;">
+          <!-- Screen -->
+          <rect x="10" y="10" width="180" height="90" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+          <!-- Grid lines -->
+          <line x1="10" y1="55" x2="190" y2="55" stroke="#1e3a5f" stroke-width=".8"/>
+          <line x1="10" y1="35" x2="190" y2="35" stroke="#1e3a5f" stroke-width=".5"/>
+          <line x1="10" y1="75" x2="190" y2="75" stroke="#1e3a5f" stroke-width=".5"/>
+          <!-- Seismic wave path -->
+          <polyline
+            points="10,55 30,55 38,55 42,38 46,72 50,30 54,80 58,38 62,68 66,48 70,62 74,52 78,58 90,55 120,55 130,55 140,52 145,58 150,55 190,55"
+            fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Needle cursor -->
+          <line x1="100" y1="10" x2="100" y2="100" stroke="#facc15" stroke-width="1" stroke-dasharray="3 2"/>
+          <!-- Device body -->
+          <rect x="70" y="105" width="60" height="25" rx="5" fill="#334155"/>
+          <rect x="80" y="108" width="40" height="8" rx="3" fill="#475569"/>
+          <circle cx="93" cy="120" r="4" fill="#22c55e"/>
+          <circle cx="107" cy="120" r="4" fill="#f59e0b"/>
+          <!-- Stand -->
+          <line x1="100" y1="130" x2="85" y2="140" stroke="#64748b" stroke-width="2"/>
+          <line x1="100" y1="130" x2="115" y2="140" stroke="#64748b" stroke-width="2"/>
+          <!-- Label -->
+          <text x="100" y="9" text-anchor="middle" fill="#94a3b8" font-size="5" font-family="monospace">SEISMOGRAPH</text>
+        </svg>
+        <figcaption>Máy đo địa chấn (Seismograph)</figcaption>
+      </figure>
+
+      <div class="story-text">
+		<p> Trước khi thang đo Richter ra đời, người ta đánh giá một trận động đất thông qua thiệt hại của các tòa nhà và cảm nhận của con người, điều này gây ra sự thiếu khách quan trong đánh giá.</p>
+        <p>Năm 1935, nhà địa chấn học <strong>Charles F. Richter</strong> cần tìm cách so sánh sức mạnh của các trận động đất. Ông muốn tạo ra một thang đo mới dựa trên sự ghi nhận của máy đo địa chấn. 
+		Máy đo địa chấn ghi lại biên độ dao động của trận động đất <em> A</em> (đơn vị: $\mu m$, đọc là micromet) — nhưng con số này có thể trải dài từ vài chục đến hàng chục triệu, rất khó so sánh trực quan.</p>
+		<p>Ông đã định nghĩa độ Richter như sau: nếu viết biên độ dao động dưới dạng $10^M$, thì <em>số mũ $M$ đó</em> chính là độ lớn cần tìm cho trận động đất đó!</p>
+      </div>
+    </div>
+
+    <!-- Bảng quy luật – chỉ dùng lũy thừa 10, CHƯA xuất hiện log -->
+    <div class="tbl-wrap" style="margin:1.25rem 0">
+      <table class="richter-table">
+        <thead>
+          <tr>
+            <th>Biên độ A (μm)</th>
+            <th>Dạng lũy thừa của 10</th>
+            <th>Số mũ</th>
+            <th>Độ Richter M</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>10</td><td>10<sup>1</sup></td><td>1</td><td class="hl">1</td></tr>
+          <tr><td>100</td><td>10<sup>2</sup></td><td>2</td><td class="hl">2</td></tr>
+          <tr><td>1 000</td><td>10<sup>3</sup></td><td>3</td><td class="hl">3</td></tr>
+          <tr><td>10 000</td><td>10<sup>4</sup></td><td>4</td><td class="hl">4</td></tr>
+          <tr><td>100 000</td><td>10<sup>5</sup></td><td>5</td><td class="hl">5 ⚡</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Nhận xét:</strong> Khi A là lũy thừa nguyên của 10, ta tìm M rất dễ. Nhưng hầu hết động đất thực tế <em>không cho ra biên độ "đẹp"</em> như vậy!
+    </div>
+
+    <!-- BOX-AM – câu hỏi mở bài -->
+    <div class="box-am">
+      <p>Máy đo ghi được biên độ <strong>A = 64 000 μm</strong>. Trận động đất này có bao nhiêu độ Richter?</p>
+      <p style="margin-top:.6rem;font-size:.9rem">
+        <em>Ta thấy ngay: 10<sup>4</sup> = 10 000 &lt; 64 000 &lt; 100 000 = 10<sup>5</sup>,</em><br>
+        nên M nằm giữa 4 và 5 — nhưng <strong>chính xác là bao nhiêu?</strong>
+      </p>
+      <p style="margin-top:.6rem;font-size:.9rem;color:#92400e">
+        Câu hỏi này <strong>không thể trả lời</strong> bằng lũy thừa hay phép tính thông thường. Chúng ta cần một <em>phép toán hoàn toàn mới</em> — đó chính là <strong>Lôgarit</strong>!
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 – LÝ THUYẾT TRỌNG TÂM (c-indigo)
+══════════════════════════════════════════ -->
+<section class="card card c-indigo" id="p2">
+  <div class="card-head">
+    <span class="icon">📘</span>
+    <span>Lý thuyết trọng tâm</span>
+    <span class="sect-label">Mục 2</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Cho số thực \(a\) với \(a > 0,\ a \neq 1\) và số thực dương \(b\). <strong>Lôgarit cơ số \(a\) của \(b\)</strong> là số thực \(\alpha\) thoả mãn \(a^\alpha = b\). Kí hiệu: \(\log_a b = \alpha\).</p>
+
+    <!-- SVG Loop Diagram: a^α = b ⟺ log_a b = α -->
+    <div class="loop-diagram">
+      <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#6366f1"/>
+          </marker>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+          </marker>
+        </defs>
+        <!-- Left box: a^α = b -->
+        <rect x="20" y="40" width="160" height="80" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+        <text x="100" y="74" text-anchor="middle" font-family="serif" font-size="18" fill="#4338ca" font-weight="bold">aᵅ = b</text>
+        <text x="100" y="96" text-anchor="middle" font-size="11" fill="#6366f1">Phép lũy thừa</text>
+        <text x="100" y="112" text-anchor="middle" font-size="10" fill="#818cf8">(a &gt; 0, a ≠ 1, b &gt; 0)</text>
+
+        <!-- Right box: log_a b = α -->
+        <rect x="300" y="40" width="160" height="80" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="380" y="74" text-anchor="middle" font-family="serif" font-size="18" fill="#92400e" font-weight="bold">logₐ b = α</text>
+        <text x="380" y="96" text-anchor="middle" font-size="11" fill="#d97706">Phép lôgarit</text>
+        <text x="380" y="112" text-anchor="middle" font-size="10" fill="#f59e0b">Nghịch đảo của lũy thừa</text>
+
+        <!-- Arrow top: left → right -->
+        <path d="M185,65 Q240,28 295,65" fill="none" stroke="#6366f1" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="240" y="30" text-anchor="middle" font-size="11" fill="#4f46e5" font-weight="600">lấy lôgarit cơ số a</text>
+
+        <!-- Arrow bottom: right → left -->
+        <path d="M295,95 Q240,132 185,95" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr2)"/>
+        <text x="240" y="148" text-anchor="middle" font-size="11" fill="#b45309" font-weight="600">lũy thừa hóa</text>
+
+        <!-- Center symbol -->
+        <text x="240" y="85" text-anchor="middle" font-size="22" fill="#94a3b8">⟺</text>
+      </svg>
+    </div>
+
+    <!-- Chú ý: Lôgarit thập phân & tự nhiên -->
+    <div class="warn" style="margin-bottom:1.5rem">
+      <p style="font-weight:800;color:var(--red);margin-bottom:.5rem">Chú ý:</p>
+      <p style="margin:.3rem 0">
+        <strong>a)</strong> Lôgarit cơ số 10 được gọi là <em>lôgarit thập phân</em>.
+        Ta viết \(\log N\) thay cho \(\log_{10} N\).
+      </p>
+      <p style="margin:.3rem 0">
+        <strong>b)</strong> Lôgarit cơ số \(e\) còn được gọi là <em>lôgarit tự nhiên</em>.
+        Ta viết \(\ln N\) thay cho \(\log_e N\).
+      </p>
+    </div>
+
+    <!-- TC: Property Cards -->
+    <div class="tc">
+
+      <!-- Card 1: Định nghĩa & tính chất cơ bản -->
+      <div class="tc-card">
+        <div class="tc-head">
+          <span class="num">1</span>
+          Định nghĩa &amp; Tính chất cơ bản
+        </div>
+        <div class="tc-body">
+          <p class="def-text">Cho \(a > 0,\; a \ne 1,\; b > 0\):</p>
+          <div class="formula-row">
+            <span class="lbl">Đ</span>
+            <span>\(\log_a b = \alpha \;\Leftrightarrow\; a^\alpha = b\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">P1</span>
+            <span>\(\log_a 1 = 0\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">P2</span>
+            <span>\(\log_a a = 1\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">P3</span>
+            <span>\(\log_a a^\alpha = \alpha\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">P4</span>
+            <span>\(a^{\log_a b} = b\)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Tích / Thương / Lũy thừa -->
+      <div class="tc-card">
+        <div class="tc-head">
+          <span class="num">2</span>
+          Lôgarit Tích · Thương · Lũy thừa
+        </div>
+        <div class="tc-body">
+          <p class="def-text" style="margin-bottom:6px">Với \(M, N > 0;\; a > 0, a \ne 1\):</p>
+          <div class="formula-row">
+            <span class="lbl">✕</span>
+            <span>\(\log_a(M \cdot N) = \log_a M + \log_a N\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">÷</span>
+            <span>\(\log_a\!\dfrac{M}{N} = \log_a M - \log_a N\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">α</span>
+            <span>\(\log_a M^\alpha = \alpha \cdot \log_a M\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">√</span>
+            <span>\(\log_a \sqrt[n]{M} = \dfrac{1}{n}\log_a M\)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Đổi cơ số -->
+      <div class="tc-card">
+        <div class="tc-head">
+          <span class="num">3</span>
+          Công thức đổi cơ số
+        </div>
+        <div class="tc-body">
+          <p class="def-text" style="margin-bottom:6px">Cho \(a, b, c > 0;\; a,c \ne 1\):</p>
+          <div class="formula-row">
+            <span class="lbl">⇄</span>
+            <span>\(\log_a b = \dfrac{\log_c b}{\log_c a}\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">★</span>
+            <span>\(\log_a b = \dfrac{1}{\log_b a}\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">∘</span>
+            <span>\(\log_a b \cdot \log_b c = \log_a c\)</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">log</span>
+            <span>\(\log_a b = \dfrac{\log b}{\log a} = \dfrac{\ln b}{\ln a}\)</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.tc -->
+
+    <div class="box-in" style="margin-top:20px">
+      <strong>💡 Ghi nhớ nhanh:</strong> Lôgarit biến <em>nhân thành cộng</em>, <em>chia thành trừ</em>, <em>lũy thừa thành tích</em>.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2.5 – QUAY LẠI BÀI RICHTER
+══════════════════════════════════════════ -->
+<section class="card c-amber" id="p-richter">
+  <div class="card-head">
+    <span class="icon">🌍</span>
+    <span>Ứng dụng: Giải quyết bài toán Thang Richter</span>
+    <span class="sect-label">Ứng dụng</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">
+      Bây giờ, sau khi đã nắm được lôgarit, hãy quay lại câu hỏi hồi đầu bài
+      và giải quyết nó một cách chính xác, đầy đủ!
+    </p>
+
+    <!-- Công thức chính thức -->
+    <div class="box-in" style="margin-bottom:1.25rem">
+      <div style="font-weight:800;color:var(--indigo-m);margin-bottom:.5rem">
+        <i class="fas fa-book-open" style="margin-right:6px"></i>Công thức thang Richter (dạng đơn giản):
+      </div>
+      $$M = \log_{10}(A)$$
+      <p style="font-size:.88rem;margin-top:.5rem;color:var(--muted)">
+        với <em>A</em> là biên độ dao động (μm). Đây chính là ứng dụng trực tiếp của định nghĩa lôgarit:
+        <strong>M là số mũ cần tìm sao cho 10<sup>M</sup> = A</strong>.
+      </p>
+    </div>
+
+    <!-- 4 bài giải theo accordion -->
+    <div class="acc">
+
+      <!-- Bài 1: Giải câu hỏi đầu bài A = 64 000 -->
+      <div class="acc-item" id="acc-r1">
+        <button class="acc-trigger" onclick="toggleAcc('acc-r1')">
+          <span class="acc-icon math">📐</span>
+          <span>
+            <strong>Giải câu hỏi đầu bài:</strong>
+            Tính \(M\) khi \(A = 64\,000\;\mu\text{m}\)
+          </span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Áp dụng công thức:</strong></p>
+              <p>\(M = \log_{10}(64\,000)\)</p>
+              <div class="sc">Theo định nghĩa: M là số mũ sao cho \(10^M = 64\,000\).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Dùng máy tính cầm tay:</strong></p>
+              <p>\(M = \log_{10}(64\,000) \approx 4{,}806\)</p>
+              <div class="sc">Bấm: <code style="background:var(--indigo-p);padding:2px 7px;border-radius:4px;font-size:.85rem">log(64000)</code> → màn hình hiện <strong>4.806</strong></div>
+            </div>
+          </div>
+          <div class="result-box">
+            \(M \approx 4{,}806\) độ Richter — đúng như dự đoán: M nằm giữa 4 và 5! ✓
+          </div>
+        </div>
+      </div>
+
+      <!-- Bài 2: Trận động đất Tōhoku 2011 -->
+      <div class="acc-item" id="acc-r2">
+        <button class="acc-trigger" onclick="toggleAcc('acc-r2')">
+          <span class="acc-icon chem">🌏</span>
+          <span>
+            <strong>Ví dụ 2:</strong>
+            Trận động đất Tōhoku (Nhật Bản, 2011) đo được biên độ
+            \(A = 1\,259\,000\,000\;\mu\text{m}\). Tính M.
+          </span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Áp dụng công thức:</strong></p>
+              <p>\(M = \log_{10}(1\,259\,000\,000)\)</p>
+              <div class="sc">Theo định nghĩa: M là số mũ sao cho \(10^M = 1\,259\,000\,000\).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Dùng máy tính cầm tay:</strong></p>
+              <p>\(M = \log_{10}(1\,259\,000\,000) \approx 9{,}1\)</p>
+              <div class="sc">Bấm: <code style="background:var(--indigo-p);padding:2px 7px;border-radius:4px;font-size:.85rem">log(1259000000)</code> → màn hình hiện <strong>9.100</strong></div>
+            </div>
+          </div>
+          <div class="result-box">
+            \(M \approx 9{,}1\) — một trong những trận động đất mạnh nhất lịch sử hiện đại! 🔴
+          </div>
+        </div>
+      </div>
+
+      <!-- Bài 3: So sánh hai trận động đất -->
+      <div class="acc-item" id="acc-r3">
+        <button class="acc-trigger" onclick="toggleAcc('acc-r3')">
+          <span class="acc-icon math">🔢</span>
+          <span>
+            <strong>Ví dụ 3:</strong>
+            Trận A có \(M_1 = 5\), trận B có \(M_2 = 7\).
+            Biên độ trận B lớn hơn trận A bao nhiêu lần?
+          </span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Tìm biên độ từng trận:</strong></p>
+              <p>\(M_1 = 5 \;\Rightarrow\; A_1 = 10^5\;\mu\text{m}\)</p>
+              <p>\(M_2 = 7 \;\Rightarrow\; A_2 = 10^7\;\mu\text{m}\)</p>
+              <div class="sc">Dùng ngược lại định nghĩa: nếu \(\log_{10} A = M\) thì \(A = 10^M\).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Tính tỉ lệ:</strong></p>
+              <p>\(\dfrac{A_2}{A_1} = \dfrac{10^7}{10^5} = 10^{7-5} = 10^2 = 100\)</p>
+            </div>
+          </div>
+          <div class="result-box">
+            Biên độ trận B lớn hơn trận A đúng <strong>100 lần</strong>.
+            Chênh 2 bậc trên thang Richter = gấp 100 lần về biên độ! ⚡
+          </div>
+          <div class="note" style="margin-top:.75rem">
+            <strong>Tổng quát:</strong> Mỗi bậc trên thang Richter tương ứng biên độ gấp <strong>10 lần</strong>;
+            2 bậc = 100 lần; 3 bậc = 1 000 lần. Đây chính là "sức mạnh nén số" của lôgarit!
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 4: So sánh 2 trận động đất thật -->
+      <div class="acc-item" id="acc-r4">
+        <button class="acc-trigger" onclick="toggleAcc('acc-r4')">
+          <span class="acc-icon" style="background:var(--red-l);font-size:1.25rem">🌏</span>
+          <span>
+            <strong>Ví dụ 4 (So sánh thực tế):</strong>
+            Động đất Sumatra 2004 (M = 9,1) và Thổ Nhĩ Kỳ–Syria 2023 (M = 7,8).
+            Biên độ trận 2004 gấp mấy lần trận 2023?
+          </span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+
+          <!-- Bối cảnh 2 trận -->
+          <div class="g2" style="gap:1rem;margin-bottom:1.25rem">
+            <div class="box-gr" style="border-left:4px solid var(--indigo-m)">
+              <p><strong>🌊 Động đất Sumatra – Ấn Độ Dương (26/12/2004)</strong></p>
+              <p>Độ lớn <strong>M = 9,1</strong> trên thang Richter — một trong những trận động đất mạnh nhất
+              từng được ghi nhận. Trận động đất xảy ra ngoài khơi bờ biển Sumatra (Indonesia) và kích
+              hoạt loạt sóng thần khổng lồ tràn vào 14 quốc gia, cướp đi hơn <strong>230 000</strong> sinh
+              mạng.</p>
+            </div>
+            <div class="box-gr" style="border-left:4px solid var(--amber)">
+              <p><strong>🏚️ Động đất Thổ Nhĩ Kỳ – Syria (6/2/2023)</strong></p>
+              <p>Độ lớn <strong>M = 7,8</strong> trên thang Richter, tâm chấn tại tỉnh Kahramanmaraş
+              (Thổ Nhĩ Kỳ). Trận động đất phá hủy hàng chục nghìn tòa nhà ở cả Thổ Nhĩ Kỳ và miền bắc
+              Syria, khiến hơn <strong>50 000</strong> người thiệt mạng.</p>
+            </div>
+          </div>
+
+          <!-- Đề bài -->
+          <div class="box-in" style="margin-bottom:1.25rem">
+            <strong>Đề bài:</strong> Biết \(M = \log_{10} A\) (với \(A\) là biên độ dao động, đơn vị µm).
+            Hãy tính biên độ dao động của trận Sumatra 2004 gấp bao nhiêu lần trận Thổ Nhĩ Kỳ 2023?
+            <em>Làm tròn kết quả đến hàng đơn vị.</em>
+          </div>
+
+          <!-- Lời giải -->
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Lập tỉ số biên độ:</strong></p>
+              <p>
+                \(\dfrac{A_{2004}}{A_{2023}}
+                = \dfrac{10^{M_{2004}}}{10^{M_{2023}}}
+                = 10^{\,M_{2004} - M_{2023}}
+                = 10^{\,9{,}1 - 7{,}8}
+                = 10^{1{,}3}\)
+              </p>
+              <div class="sc">
+                Dùng tính chất: \(\log_{10} A = M \Leftrightarrow A = 10^M\), rồi chia 2 vế.
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Tính \(10^{1{,}3}\) bằng máy tính cầm tay:</strong></p>
+              <p>\(10^{1{,}3} \approx 19{,}95 \approx \mathbf{20}\)</p>
+            </div>
+          </div>
+
+          <div class="result-box">
+            Biên độ dao động của trận Sumatra 2004 lớn hơn trận Thổ Nhĩ Kỳ 2023 khoảng
+            <strong>20 lần</strong> — dù chỉ chênh 1,3 bậc trên thang Richter!
+          </div>
+
+          <div class="note" style="margin-top:.75rem">
+            <strong>Nhận xét:</strong> Sự chênh lệch nhỏ về chỉ số Richter ẩn chứa sự khác biệt
+            khổng lồ về năng lượng thực tế — đây là lý do thang đo lôgarit được các nhà khoa học
+            ưa dùng cho các đại lượng có phạm vi biến thiên cực rộng.
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /.acc -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 – VÍ DỤ PHÂN TÍCH (.acc)
+══════════════════════════════════════════ -->
+<section class="card card c-emerald" id="p4">
+  <div class="card-head">
+    <span class="icon">🔬</span>
+    <span>Ví dụ phân tích có lời giải</span>
+    <span class="sect-label">Mục 3</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Nhấn vào từng ví dụ để xem phân tích chi tiết từng bước.</p>
+
+    <div class="acc" id="acc-main">
+
+      <!-- Accordion 1: Hóa học – pH -->
+      <div class="acc-item" id="acc-1">
+        <button class="acc-trigger" onclick="toggleAcc('acc-1')">
+          <span class="acc-icon chem">🧪</span>
+          <span><strong>Ví dụ 1 (Hóa học – pH)</strong></span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+
+          <!-- Đề bài -->
+          <div class="box-in" style="margin-bottom:1.1rem;line-height:1.75">
+            Trong hoá học, độ pH của một dung dịch được tính theo công thức
+            \(\text{pH} = -\log\!\left[\text{H}^+\right]\),
+            trong đó \(\left[\text{H}^+\right]\) là nồng độ H⁺ (ion hydro) tính bằng mol/L.
+            Các dung dịch có pH bé hơn 7 thì có tính acid, có pH lớn hơn 7 thì có tính kiềm,
+            có pH bằng 7 thì trung tính.
+            <br/><br/>
+            <strong>a)</strong> Tính độ pH của dung dịch có nồng độ H⁺ là 0,0001 mol/L.
+            Dung dịch này có tính acid, kiềm hay trung tính?
+            <br/>
+            <strong>b)</strong> Dung dịch A có nồng độ H⁺ gấp đôi nồng độ H⁺ của dung dịch B.
+            Độ pH của dung dịch nào lớn hơn và lớn hơn bao nhiêu?
+            Làm tròn kết quả đến hàng phần nghìn.
+          </div>
+
+          <!-- Lời giải -->
+          <p style="text-align:center;font-style:italic;font-weight:700;margin-bottom:.75rem">Giải</p>
+
+          <p><strong>a)</strong></p>
+          <p style="margin:.3rem 0 .5rem">
+            \(\text{pH} = -\log 0{,}0001 = -\log 10^{-4} = 4\log 10 = 4.\)
+          </p>
+          <p>Do 4 &lt; 7 nên dung dịch có tính acid.</p>
+
+          <p style="margin-top:1rem"><strong>b)</strong></p>
+          <p style="margin:.3rem 0 .5rem">
+            Kí hiệu pH<sub>A</sub>, pH<sub>B</sub> lần lượt là độ pH của hai dung dịch A và B;
+            \(\left[\text{H}^+\right]_A\), \(\left[\text{H}^+\right]_B\) lần lượt là nồng độ
+            của hai dung dịch A và B. Ta có
+          </p>
+          <p style="text-align:center;margin:.4rem 0 .6rem">
+            \(\text{pH}_A
+              = -\log\!\left[\text{H}^+\right]_A
+              = -\log\!\left(2\left[\text{H}^+\right]_B\right)
+              = -\log 2 - \log\!\left[\text{H}^+\right]_B
+              = -\log 2 + \text{pH}_B.\)
+          </p>
+          <p>Suy ra \(\text{pH}_B - \text{pH}_A = \log 2 \approx 0{,}301.\)</p>
+          <p>Vậy dung dịch B có độ pH lớn hơn và lớn hơn khoảng 0,301.</p>
+
+        </div>
+      </div>
+
+      <!-- Accordion 2: Đổi cơ số -->
+      <div class="acc-item" id="acc-2">
+        <button class="acc-trigger" onclick="toggleAcc('acc-2')">
+          <span class="acc-icon math">📐</span>
+          <span>
+            <strong>Ví dụ 2 (Đổi cơ số):</strong> Cho \(\log_2 3 = a,\;\log_2 5 = b\).
+            Biểu diễn \(\log_9 10\) theo \(a, b\).
+          </span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+          <div class="box-in" style="margin-bottom:16px">
+            <strong>Chiến lược:</strong> Đổi cơ số về cơ số 2 (vì đã biết \(\log_2 3\) và \(\log_2 5\)), sau đó phân tích 9 và 10.
+          </div>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Đổi cơ số từ 9 về 2:</strong></p>
+              <p>\(\log_9 10 = \dfrac{\log_2 10}{\log_2 9}\)</p>
+              <div class="sc">Dùng công thức đổi cơ số: \(\log_a b = \dfrac{\log_c b}{\log_c a}\) với \(c = 2\).</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Phân tích tử số — \(\log_2 10\):</strong></p>
+              <p>\(\log_2 10 = \log_2(2 \cdot 5) = \log_2 2 + \log_2 5 = 1 + b\)</p>
+              <div class="sc">Dùng tính chất lôgarit tích: \(\log_a(MN) = \log_a M + \log_a N\).</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>Phân tích mẫu số — \(\log_2 9\):</strong></p>
+              <p>\(\log_2 9 = \log_2 3^2 = 2\log_2 3 = 2a\)</p>
+              <div class="sc">Dùng tính chất lũy thừa: \(\log_a M^\alpha = \alpha \log_a M\).</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>Ghép lại kết quả:</strong></p>
+              <p>\(\log_9 10 = \dfrac{1+b}{2a}\)</p>
+            </div>
+          </div>
+
+          <div class="result-box">
+            ✅ Kết quả: \(\displaystyle\log_9 10 = \frac{1+b}{2a}\)
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 3: Cường độ âm – Decibel -->
+      <div class="acc-item" id="acc-3">
+        <button class="acc-trigger" onclick="toggleAcc('acc-3')">
+          <span class="acc-icon" style="background:#e0f2fe;font-size:1.2rem">🔊</span>
+          <span><strong>Ví dụ 3 (Vật lí – Cường độ âm và Mức cường độ âm)</strong></span>
+          <span class="chev">▼</span>
+        </button>
+        <div class="acc-body">
+
+          <!-- Đề bài -->
+          <div class="box-in" style="margin-bottom:1.1rem;line-height:1.75">
+            Trong vật lí, mức cường độ âm \(L\) (đơn vị decibel, kí hiệu dB) được tính theo công thức
+            \[L = 10\log\dfrac{I}{I_0},\]
+            trong đó \(I\) là cường độ âm (đơn vị W/m²) và \(I_0 = 10^{-12}\) W/m² là cường độ âm
+            chuẩn (ngưỡng nghe tối thiểu của tai người).
+            <br/><br/>
+            <strong>a)</strong> Tiếng nói chuyện bình thường có cường độ âm \(I = 10^{-6}\) W/m².
+            Tính mức cường độ âm của tiếng nói chuyện đó.
+            <br/>
+            <strong>b)</strong> Tiếng ồn tại một công trường xây dựng có cường độ âm lớn gấp
+            1&nbsp;000 lần tiếng nói chuyện bình thường. Hỏi tiếng ồn tại công trường lớn hơn
+            tiếng nói chuyện bao nhiêu decibel?
+          </div>
+
+          <!-- Lời giải -->
+          <p style="text-align:center;font-style:italic;font-weight:700;margin-bottom:.75rem">Giải</p>
+
+          <p><strong>a)</strong></p>
+          <p style="margin:.3rem 0 .5rem">
+            \(L = 10\log\dfrac{10^{-6}}{10^{-12}} = 10\log 10^{6} = 10 \cdot 6 = 60\) (dB).
+          </p>
+
+          <p style="margin-top:1rem"><strong>b)</strong></p>
+          <p style="margin:.3rem 0 .5rem">
+            Kí hiệu \(L_1\), \(I_1\) là mức cường độ âm và cường độ âm của tiếng ồn công trường;
+            \(L_2\), \(I_2\) là của tiếng nói chuyện. Theo đề bài \(I_1 = 1\,000\,I_2\). Ta có
+          </p>
+          <p style="text-align:center;margin:.4rem 0 .3rem">
+            \(L_1 - L_2
+              = 10\log\dfrac{I_1}{I_0} - 10\log\dfrac{I_2}{I_0}
+              = 10\log\dfrac{I_1}{I_2}
+              = 10\log 1\,000.\)
+          </p>
+          <p style="text-align:center;margin:.2rem 0 .6rem">
+            \(= 10\log 10^3 = 10 \times 3 = 30\) (dB).
+          </p>
+          <p>Vì \(L_1 - L_2 = 30\) nên tiếng ồn tại công trường lớn hơn tiếng nói chuyện bình thường 30 dB.</p>
+
+        </div>
+      </div>
+
+    </div><!-- /.acc -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 – DRAG & DROP (.dnd-area)
+══════════════════════════════════════════ -->
+<section class="card card c-rose" id="p5">
+  <div class="card-head">
+    <span class="icon">🎮</span>
+    <span>Bài tập: Ghép nối công thức</span>
+    <span class="sect-label">Mục 4</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Kéo mỗi <strong>chip công thức</strong> từ bên dưới và thả vào ô kết quả đúng ở bên phải.</p>
+
+    <div class="dnd-area" id="dnd-area">
+      <!-- Left: source formulas -->
+      <div>
+        <p class="dnd-col-label">📌 Biểu thức</p>
+        <div class="dnd-sources" id="dnd-sources">
+          <div class="source-row" data-id="s1">
+            <span class="formula-label">\(\log_a(M \cdot N)\)</span>
+          </div>
+          <div class="source-row" data-id="s2">
+            <span class="formula-label">\(\log_a\!\left(\dfrac{M}{N}\right)\)</span>
+          </div>
+          <div class="source-row" data-id="s3">
+            <span class="formula-label">\(\log_a M^\alpha\)</span>
+          </div>
+          <div class="source-row" data-id="s4">
+            <span class="formula-label">\(\log_a b\)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: drop zones -->
+      <div>
+        <p class="dnd-col-label">🎯 Kết quả tương ứng</p>
+        <div class="drop-grid">
+          <div class="drop-z" id="drop-s1" data-accept="chip-s1">
+            <span class="drop-hint">Thả kết quả cho \(\log_a(M \cdot N)\) vào đây…</span>
+          </div>
+          <div class="drop-z" id="drop-s2" data-accept="chip-s2">
+            <span class="drop-hint">Thả kết quả cho \(\log_a(M/N)\) vào đây…</span>
+          </div>
+          <div class="drop-z" id="drop-s3" data-accept="chip-s3">
+            <span class="drop-hint">Thả kết quả cho \(\log_a M^\alpha\) vào đây…</span>
+          </div>
+          <div class="drop-z" id="drop-s4" data-accept="chip-s4">
+            <span class="drop-hint">Thả kết quả cho \(\log_a b\) (đổi cơ số) vào đây…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chips pool -->
+    <p class="dnd-col-label" style="margin-top:20px">🃏 Chips — kéo từ đây:</p>
+    <div class="chips-pool" id="chips-pool">
+      <div class="chip" id="chip-s3" draggable="true" data-target="drop-s3">\(\alpha \log_a M\)</div>
+      <div class="chip" id="chip-s1" draggable="true" data-target="drop-s1">\(\log_a M + \log_a N\)</div>
+      <div class="chip" id="chip-s4" draggable="true" data-target="drop-s4">\(\dfrac{1}{\log_b a}\)</div>
+      <div class="chip" id="chip-s2" draggable="true" data-target="drop-s2">\(\log_a M - \log_a N\)</div>
+    </div>
+
+    <div class="dnd-controls">
+      <button class="btn btn-primary" onclick="checkDnd()">✅ Kiểm tra</button>
+      <button class="btn btn-ghost" onclick="resetDnd()">🔄 Làm lại</button>
+      <span class="dnd-score" id="dnd-score"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 – FLASHCARDS (.fc-grid)
+══════════════════════════════════════════ -->
+<section class="card c-indigo" id="p6">
+  <div class="card-head">
+    <span class="icon">🃏</span>
+    <span>Thẻ ghi nhớ nhanh — Flashcards</span>
+    <span class="sect-label">Mục 5</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Nhấn vào mỗi thẻ để lật và xem kết quả. Ôn lại cho đến khi thuộc lòng!</p>
+
+    <!-- ── Nhóm 1: Tính chất cơ bản ── -->
+    <p style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:.25rem 0 .75rem">
+      Nhóm 1 · Tính chất cơ bản
+    </p>
+    <div class="fc-grid" style="margin-bottom:1.5rem">
+
+      <!-- FC 1 -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a 1 = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a 1 = 0\)</div>
+            <div class="fc-label">Vì \(a^0 = 1\)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 2 -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a a = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a a = 1\)</div>
+            <div class="fc-label">Vì \(a^1 = a\)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 3 -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a a^\alpha = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a a^\alpha = \alpha\)</div>
+            <div class="fc-label">Lôgarit &amp; lũy thừa triệt tiêu nhau</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 4 -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(a^{\log_a b} = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(a^{\log_a b} = b\)</div>
+            <div class="fc-label">Lũy thừa &amp; lôgarit triệt tiêu nhau</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.fc-grid nhóm 1 -->
+
+    <!-- ── Nhóm 2: Tích · Thương · Lũy thừa ── -->
+    <p style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:.25rem 0 .75rem">
+      Nhóm 2 · Lôgarit Tích · Thương · Lũy thừa
+    </p>
+    <div class="fc-grid" style="margin-bottom:1.5rem">
+
+      <!-- FC 5: log tích -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a(M\!\cdot\!N) = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a M + \log_a N\)</div>
+            <div class="fc-label">Lôgarit của tích = tổng lôgarit</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 6: log thương -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a\!\dfrac{M}{N} = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a M - \log_a N\)</div>
+            <div class="fc-label">Lôgarit của thương = hiệu lôgarit</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 7: log lũy thừa -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a M^\alpha = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\alpha \cdot \log_a M\)</div>
+            <div class="fc-label">Số mũ "rơi xuống" thành hệ số</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 8: log căn bậc n -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a \sqrt[n]{M} = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\dfrac{1}{n}\,\log_a M\)</div>
+            <div class="fc-label">Vì \(\sqrt[n]{M}=M^{1/n}\), dùng TC lũy thừa</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.fc-grid nhóm 2 -->
+
+    <!-- ── Nhóm 3: Đổi cơ số ── -->
+    <p style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:.25rem 0 .75rem">
+      Nhóm 3 · Công thức đổi cơ số
+    </p>
+    <div class="fc-grid" style="margin-bottom:.5rem">
+
+      <!-- FC 9: đổi cơ số tổng quát -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q" style="font-size:.9rem">Đổi \(\log_a b\) sang cơ số \(c\)?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a b = \dfrac{\log_c b}{\log_c a}\)</div>
+            <div class="fc-label">Tử: log đối số · Mẫu: log cơ số</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 10: nghịch đảo cơ số -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a b = \;?\) (qua \(\log_b a\))</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a b = \dfrac{1}{\log_b a}\)</div>
+            <div class="fc-label">Đảo cơ số và đối số thì lấy nghịch đảo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 11: lôgarit xích -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">\(\log_a b \cdot \log_b c = \;?\)</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">\(\log_a b \cdot \log_b c = \log_a c\)</div>
+            <div class="fc-label">Quy tắc "xích" — cơ số trung gian triệt tiêu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 12: đổi sang log / ln -->
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q" style="font-size:.9rem">Đổi \(\log_a b\) sang \(\log\) hoặc \(\ln\)?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans" style="font-size:.9rem">\(\dfrac{\log b}{\log a} = \dfrac{\ln b}{\ln a}\)</div>
+            <div class="fc-label">Dùng máy tính: bấm log hoặc ln đều được</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.fc-grid nhóm 3 -->
+
+    <div style="display:flex;justify-content:center;margin-top:1.25rem">
+      <button class="btn btn-ghost" onclick="resetAllCards()">
+        <i class="fa-solid fa-rotate-left" style="margin-right:.4rem"></i>Lật tất cả về mặt trước
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 – TRẮC NGHIỆM RÈN LUYỆN
+══════════════════════════════════════════ -->
+<section class="card c-cyan" id="quiz">
+  <div class="card-head">
+    <span class="icon">📝</span>
+    <span>Trắc nghiệm rèn luyện</span>
+    <span class="sect-label">Mục 6</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">12 câu trắc nghiệm chọn lọc — chọn đáp án để kiểm tra ngay. Bảng điểm bám đáy màn hình sẽ cập nhật trong lúc bạn làm.</p>
+
+    <div class="quiz-list" id="quiz-list"><!-- JS renders here --></div>
+
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn btn-ghost" onclick="resetQuiz()">
+        <i class="fa-solid fa-rotate-left" style="margin-right:.4rem"></i>Làm lại từ đầu
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Score bar floating -->
+<div class="score-bar" id="score-bar">
+  <i class="fa-solid fa-chart-simple" style="color:var(--cyan)"></i>
+  <span>Điểm:&nbsp;<span class="score-num" id="score-num">0</span>/12</span>
+  <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+</div>
+
+</div><!-- /.lesson-body -->
+
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+'use strict';
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────── */
+const rvObs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.card').forEach(c => rvObs.observe(c));
+
+/* ─────────────────────────────────────────────
+   NAV HIGHLIGHT
+───────────────────────────────────────────── */
+const navAs = document.querySelectorAll('.nav-a');
+const secs  = document.querySelectorAll('section.card[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
+  navAs.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+
+/* ─────────────────────────────────────────────
+   ACCORDION  (.acc-item / .acc-trigger)
+───────────────────────────────────────────── */
+function toggleAcc(id) {
+  const item = document.getElementById(id);
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+  if (!wasOpen && window.MathJax)
+    setTimeout(() => MathJax.typesetPromise([item]).catch(() => {}), 50);
+}
+
+/* ─────────────────────────────────────────────
+   FLASHCARD FLIP
+───────────────────────────────────────────── */
+function flipCard(el) { el.classList.toggle('flipped'); }
+function resetAllCards() {
+  document.querySelectorAll('.fc').forEach(c => c.classList.remove('flipped'));
+}
+
+/* ─────────────────────────────────────────────
+   DRAG & DROP
+───────────────────────────────────────────── */
+const DND_ANSWERS = {
+  'chip-s1': 'drop-s1',
+  'chip-s2': 'drop-s2',
+  'chip-s3': 'drop-s3',
+  'chip-s4': 'drop-s4'
+};
+let dragging = null;
+
+function initDnd() {
+  /* ── Desktop drag ── */
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      dragging = chip;
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(() => chip.style.opacity = '.35', 0);
+    });
+    chip.addEventListener('dragend', () => {
+      chip.style.opacity = '';
+      dragging = null;
+    });
+  });
+
+  document.querySelectorAll('.drop-z').forEach(zone => {
+    zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if (!dragging) return;
+      _doPlace(zone, dragging);
+    });
+  });
+
+  /* ── Touch drag ── */
+  let tChip = null, tClone = null;
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('touchstart', e => {
+      tChip = chip;
+      const r = chip.getBoundingClientRect();
+      tClone = chip.cloneNode(true);
+      tClone.style.cssText = `position:fixed;top:${r.top}px;left:${r.left}px;
+        width:${r.width}px;opacity:.82;pointer-events:none;z-index:9999;margin:0;`;
+      document.body.appendChild(tClone);
+    }, { passive: true });
+
+    chip.addEventListener('touchmove', e => {
+      if (!tClone) return;
+      const t = e.touches[0];
+      tClone.style.top  = (t.clientY - tClone.offsetHeight / 2) + 'px';
+      tClone.style.left = (t.clientX - tClone.offsetWidth  / 2) + 'px';
+      document.querySelectorAll('.drop-z').forEach(z => {
+        const r = z.getBoundingClientRect();
+        z.classList.toggle('drag-over',
+          t.clientX >= r.left && t.clientX <= r.right &&
+          t.clientY >= r.top  && t.clientY <= r.bottom);
+      });
+    }, { passive: true });
+
+    chip.addEventListener('touchend', e => {
+      if (!tChip || !tClone) return;
+      tClone.remove(); tClone = null;
+      const t = e.changedTouches[0];
+      document.querySelectorAll('.drop-z').forEach(z => {
+        z.classList.remove('drag-over');
+        const r = z.getBoundingClientRect();
+        if (t.clientX >= r.left && t.clientX <= r.right &&
+            t.clientY >= r.top  && t.clientY <= r.bottom)
+          _doPlace(z, tChip);
+      });
+      tChip = null;
+    });
+  });
+}
+
+function _doPlace(zone, chip) {
+  /* return existing chip in that zone to pool */
+  const prevChipId = zone.dataset.chip;
+  if (prevChipId) {
+    const prevChip = document.getElementById(prevChipId);
+    if (prevChip) {
+      prevChip.style.opacity = '';
+      document.getElementById('chips-pool').appendChild(prevChip);
+    }
+    zone.dataset.chip = '';
+    zone.classList.remove('correct', 'wrong');
+    const oldLbl = zone.querySelector('.drop-label');
+    if (oldLbl) oldLbl.remove();
+  }
+  /* remove chip from its previous zone */
+  document.querySelectorAll('.drop-z').forEach(z => {
+    if (z.dataset.chip === chip.id) {
+      z.dataset.chip = '';
+      z.classList.remove('correct', 'wrong');
+      const lbl = z.querySelector('.drop-label');
+      if (lbl) lbl.remove();
+      _restoreHint(z);
+    }
+  });
+  /* clear hint text and append chip */
+  const hint = zone.querySelector('.drop-hint');
+  if (hint) hint.style.display = 'none';
+  zone.appendChild(chip);
+  chip.style.opacity = '';
+  zone.dataset.chip = chip.id;
+}
+
+function _restoreHint(zone) {
+  let hint = zone.querySelector('.drop-hint');
+  if (!hint) {
+    hint = document.createElement('span');
+    hint.className = 'drop-hint';
+    hint.textContent = zone.dataset.hint || '';
+    zone.appendChild(hint);
+  }
+  hint.style.display = '';
+}
+
+function checkDnd() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('.drop-z').forEach(zone => {
+    const chipId = zone.dataset.chip;
+    if (!chipId) return;
+    total++;
+    const isRight = DND_ANSWERS[chipId] === zone.id;
+    if (isRight) { correct++; zone.classList.add('correct');  zone.classList.remove('wrong'); }
+    else          {            zone.classList.add('wrong');    zone.classList.remove('correct'); }
+    let lbl = zone.querySelector('.drop-label');
+    if (!lbl) { lbl = document.createElement('span'); lbl.className = 'drop-label'; zone.appendChild(lbl); }
+    lbl.textContent = isRight ? '✓ Đúng' : '✗ Sai';
+  });
+  const scoreEl = document.getElementById('dnd-score');
+  if (!scoreEl) return;
+  scoreEl.textContent = total === 0
+    ? '⚠ Chưa thả chip nào!'
+    : `${correct}/${total} đúng ${correct === total ? '🎉 Xuất sắc!' : '— Thử lại nhé!'}`;
+}
+
+function resetDnd() {
+  const pool = document.getElementById('chips-pool');
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.classList.remove('placed', 'in-zone', 'wrong-chip');
+    chip.style.opacity = '';
+    pool.appendChild(chip);
+  });
+  const hints = [
+    'Thả kết quả cho \\(\\log_a(M \\cdot N)\\) vào đây…',
+    'Thả kết quả cho \\(\\log_a(M/N)\\) vào đây…',
+    'Thả kết quả cho \\(\\log_a M^\\alpha\\) vào đây…',
+    'Thả kết quả cho \\(\\log_a b\\) (đổi cơ số) vào đây…'
+  ];
+  document.querySelectorAll('.drop-z').forEach((z, i) => {
+    z.dataset.chip = '';
+    z.classList.remove('correct', 'wrong', 'drag-over');
+    const lbl = z.querySelector('.drop-label');
+    if (lbl) lbl.remove();
+    let hint = z.querySelector('.drop-hint');
+    if (!hint) { hint = document.createElement('span'); hint.className = 'drop-hint'; z.appendChild(hint); }
+    hint.textContent = hints[i] || '';
+    hint.style.display = '';
+    z.dataset.hint = hints[i] || '';
+  });
+  const scoreEl = document.getElementById('dnd-score');
+  if (scoreEl) scoreEl.textContent = '';
+  if (window.MathJax) {
+    const area = document.getElementById('dnd-area');
+    if (area) MathJax.typesetPromise([area]).catch(() => {});
+  }
+}
+
+/* ─────────────────────────────────────────────
+   QUIZ – 12 CÂU TRẮC NGHIỆM
+───────────────────────────────────────────── */
+const QUIZ = [
+  {
+    q: 'Cho \\(a>0,\\;b>0,\\;a\\ne 1\\). Công thức nào dưới đây là đúng?',
+    choices: [
+      '\\(b^{\\log_a b} = a\\)',
+      '\\(\\log_a a = 1\\)',
+      '\\(\\log_a 2^a = 2\\)',
+      '\\(\\log_a 1 = a\\)'
+    ],
+    correct: 1,
+    explain: 'Theo tính chất cơ bản: \\(\\log_a a = 1\\) vì \\(a^1 = a\\). Còn \\(\\log_a 1 = 0\\) (không phải \\(a\\)); \\(a^{\\log_a b} = b\\) (không phải \\(b^{\\log_a b}=a\\)).'
+  },
+  {
+    q: 'Số thực \\(\\alpha\\) nào dưới đây thoả mãn \\(2^{\\alpha} = 7\\)?',
+    choices: [
+      '\\(\\alpha = \\log_2 7\\)',
+      '\\(\\alpha = \\log_7 2\\)',
+      '\\(\\alpha = \\sqrt{7}\\)',
+      '\\(\\alpha = \\sqrt[7]{2}\\)'
+    ],
+    correct: 0,
+    explain: 'Theo định nghĩa lôgarit: \\(a^{\\alpha} = b \\Leftrightarrow \\alpha = \\log_a b\\). Với \\(2^{\\alpha} = 7\\) thì \\(\\alpha = \\log_2 7\\).'
+  },
+  {
+    q: 'Công thức nào dưới đây là <strong>sai</strong>? (với \\(a>0,\\;a\\ne 1;\\;b,c>0\\))',
+    choices: [
+      '\\(\\log_a(b\\cdot c) = \\log_a b + \\log_a c\\)',
+      '\\(\\log_a \\dfrac{b}{c} = \\log_a b - \\log_a c\\)',
+      '\\(\\log_a(b+c) = \\log_a b \\cdot \\log_a c\\)',
+      '\\(\\log_a b^n = n\\log_a b\\) (với \\(n\\in\\mathbb{R}\\))'
+    ],
+    correct: 2,
+    explain: 'Không có công thức nào cho \\(\\log_a(b+c)\\). Các công thức tích, thương, lũy thừa chỉ áp dụng cho phép nhân/chia/lũy thừa của đối số — không áp dụng cho phép cộng.'
+  },
+  {
+    q: 'Với \\(a\\) là số thực dương tuỳ ý, \\(\\log_7(7a)\\) bằng',
+    choices: [
+      '\\(1 - \\log_7 a\\)',
+      '\\(1 + \\log_7 a\\)',
+      '\\(1 + a\\)',
+      '\\(a\\)'
+    ],
+    correct: 1,
+    explain: '\\(\\log_7(7a) = \\log_7 7 + \\log_7 a = 1 + \\log_7 a\\) (dùng công thức lôgarit của tích).'
+  },
+  {
+    q: 'Với \\(a\\) là số thực dương tuỳ ý, \\(4\\ln\\sqrt{a}\\) bằng',
+    choices: [
+      '\\(-4\\ln a\\)',
+      '\\(8\\ln a\\)',
+      '\\(2\\ln a\\)',
+      '\\(-2\\ln a\\)'
+    ],
+    correct: 2,
+    explain: '\\(4\\ln\\sqrt{a} = 4\\ln a^{1/2} = 4\\cdot\\dfrac{1}{2}\\ln a = 2\\ln a\\).'
+  },
+  {
+    q: 'Biểu thức \\(P = \\log_a\\!\\left(a^3\\cdot b^2\\right)\\) bằng với biểu thức nào? (giả sử biểu thức có nghĩa)',
+    choices: [
+      '\\(3 + 2\\log_a b\\)',
+      '\\(5\\log_a b\\)',
+      '\\(5\\)',
+      '\\(6\\log_a b\\)'
+    ],
+    correct: 0,
+    explain: '\\(\\log_a(a^3 b^2) = \\log_a a^3 + \\log_a b^2 = 3 + 2\\log_a b\\).'
+  },
+  {
+    q: 'Với \\(0&lt;a\\ne 1\\), biểu thức \\(P = \\log_a\\!\\left(a^3\\sqrt{a}\\right)\\) bằng',
+    choices: [
+      '\\(\\dfrac{3}{2}\\)',
+      '\\(\\dfrac{7}{2}\\)',
+      '\\(\\dfrac{5}{2}\\)',
+      '\\(\\dfrac{1}{2}\\)'
+    ],
+    correct: 1,
+    explain: '\\(a^3\\sqrt{a} = a^3\\cdot a^{1/2} = a^{7/2}\\). Do đó \\(\\log_a a^{7/2} = \\dfrac{7}{2}\\).'
+  },
+  {
+    q: 'Biểu thức \\(P = \\log_{a^3} b^5\\) bằng (với \\(a>0,\\;a\\ne 1;\\;b>0\\))',
+    choices: [
+      '\\(15\\log_a b\\)',
+      '\\(\\dfrac{3}{5}\\log_a b\\)',
+      '\\(2\\log_a b\\)',
+      '\\(\\dfrac{5}{3}\\log_a b\\)'
+    ],
+    correct: 3,
+    explain: '\\(\\log_{a^3} b^5 = \\dfrac{1}{3}\\log_a b^5 = \\dfrac{1}{3}\\cdot 5\\log_a b = \\dfrac{5}{3}\\log_a b\\).'
+  },
+  {
+    q: 'Cho \\(a\\) là số thực dương tuỳ ý khác 1. Mệnh đề nào dưới đây là đúng?',
+    choices: [
+      '\\(\\log_2 a = \\log_a 2\\)',
+      '\\(\\log_2 a = \\dfrac{1}{\\log_a 2}\\)',
+      '\\(\\log_2 a = \\dfrac{1}{\\log_2 a}\\)',
+      '\\(\\log_2 a = -\\log_a 2\\)'
+    ],
+    correct: 1,
+    explain: 'Công thức nghịch đảo: \\(\\log_a b = \\dfrac{1}{\\log_b a}\\). Áp dụng với cơ số 2: \\(\\log_2 a = \\dfrac{1}{\\log_a 2}\\).'
+  },
+  {
+    q: 'Cho \\(a,b\\) dương, \\(a\\ne 1\\) và \\(\\log_a b = 2\\). Giá trị \\(\\log_{a^2}(ab^2)\\) bằng',
+    choices: [
+      '\\(2\\)',
+      '\\(\\dfrac{3}{2}\\)',
+      '\\(\\dfrac{1}{2}\\)',
+      '\\(\\dfrac{5}{2}\\)'
+    ],
+    correct: 3,
+    explain: '\\(\\log_{a^2}(ab^2) = \\dfrac{1}{2}\\log_a(ab^2) = \\dfrac{1}{2}\\bigl(\\log_a a + 2\\log_a b\\bigr) = \\dfrac{1}{2}(1 + 2\\cdot 2) = \\dfrac{5}{2}\\).'
+  },
+  {
+    q: 'Với \\(a,b\\) dương bất kì, mệnh đề nào sau đây là đúng?',
+    choices: [
+      '\\(\\log_2\\!\\left(\\dfrac{2a^3}{b}\\right) = 1 + 3\\log_2 a + \\log_2 b\\)',
+      '\\(\\log_2\\!\\left(\\dfrac{2a^3}{b}\\right) = 1 + \\dfrac{1}{3}\\log_2 a + \\log_2 b\\)',
+      '\\(\\log_2\\!\\left(\\dfrac{2a^3}{b}\\right) = 1 + 3\\log_2 a - \\log_2 b\\)',
+      '\\(\\log_2\\!\\left(\\dfrac{2a^3}{b}\\right) = 1 + \\dfrac{1}{3}\\log_2 a - \\log_2 b\\)'
+    ],
+    correct: 2,
+    explain: '\\(\\log_2\\dfrac{2a^3}{b} = \\log_2(2a^3) - \\log_2 b = \\log_2 2 + \\log_2 a^3 - \\log_2 b = 1 + 3\\log_2 a - \\log_2 b\\).'
+  },
+  {
+    q: 'Máy tính fx-500MS chỉ có phím <strong>log</strong> và <strong>ln</strong> (không có phím nhập cơ số tuỳ ý). Cần bấm thế nào để tính \\(\\log_2 3\\)?',
+    choices: [
+      '\\(\\dfrac{\\ln 3}{\\ln 2}\\)',
+      '\\(\\dfrac{\\ln 2}{\\ln 3}\\)',
+      '\\(\\dfrac{\\log 2}{\\log 3}\\)',
+      'Không thể tính.'
+    ],
+    correct: 0,
+    explain: 'Công thức đổi cơ số: \\(\\log_a b = \\dfrac{\\ln b}{\\ln a}\\). Vậy \\(\\log_2 3 = \\dfrac{\\ln 3}{\\ln 2}\\). Có thể dùng \\(\\dfrac{\\log 3}{\\log 2}\\) cũng được.'
+  }
+];
+
+const QUIZ_STATE = []; // mảng đáp án đã chọn (null nếu chưa chọn)
+
+function renderQuiz() {
+  const root = document.getElementById('quiz-list');
+  if (!root) return;
+  const keys = ['A','B','C','D'];
+  root.innerHTML = QUIZ.map((it, i) => `
+    <div class="quiz-item" id="qi-${i}">
+      <div class="quiz-q"><span class="qnum">${i+1}</span>${it.q}</div>
+      <div class="quiz-choices">
+        ${it.choices.map((c, j) => `
+          <div class="quiz-choice" data-q="${i}" data-c="${j}" onclick="pickAnswer(${i}, ${j})">
+            <span class="ch-key">${keys[j]}</span><span>${c}</span>
+          </div>`).join('')}
+      </div>
+      <div class="quiz-explain" id="qe-${i}"><strong>Giải thích:</strong> ${it.explain}</div>
+    </div>
+  `).join('');
+  QUIZ_STATE.length = 0;
+  for (let i = 0; i < QUIZ.length; i++) QUIZ_STATE.push(null);
+  if (window.MathJax) setTimeout(() => MathJax.typesetPromise([root]).catch(()=>{}), 30);
+}
+
+function pickAnswer(qi, ci) {
+  if (QUIZ_STATE[qi] !== null) return; // đã chốt
+  QUIZ_STATE[qi] = ci;
+  const item = document.getElementById('qi-' + qi);
+  const correctIdx = QUIZ[qi].correct;
+  item.querySelectorAll('.quiz-choice').forEach(el => {
+    el.classList.add('locked');
+    const c = +el.dataset.c;
+    if (c === correctIdx) el.classList.add('correct');
+    else if (c === ci) el.classList.add('wrong');
+  });
+  item.classList.add('done');
+  document.getElementById('qe-' + qi).classList.add('show');
+  updateScore();
+  if (window.MathJax) setTimeout(() => MathJax.typesetPromise([item]).catch(()=>{}), 30);
+}
+
+function updateScore() {
+  let answered = 0, correct = 0;
+  for (let i = 0; i < QUIZ.length; i++) {
+    if (QUIZ_STATE[i] !== null) {
+      answered++;
+      if (QUIZ_STATE[i] === QUIZ[i].correct) correct++;
+    }
+  }
+  const bar = document.getElementById('score-bar');
+  const num = document.getElementById('score-num');
+  const fill = document.getElementById('score-fill');
+  if (!bar) return;
+  if (answered > 0) bar.classList.add('show'); else bar.classList.remove('show');
+  num.textContent = correct;
+  fill.style.width = (correct / QUIZ.length * 100) + '%';
+}
+
+function resetQuiz() {
+  renderQuiz();
+  document.getElementById('score-bar').classList.remove('show');
+  document.getElementById('score-fill').style.width = '0%';
+  document.getElementById('score-num').textContent = '0';
+}
+
+/* ─────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  initDnd();
+  document.querySelectorAll('.drop-z').forEach(z => {
+    z.dataset.hint = z.querySelector('.drop-hint')?.textContent || '';
+  });
+  renderQuiz();
+});
+
+window.addEventListener('load', () => {
+  if (window.MathJax) MathJax.typesetPromise().catch(() => {});
+});
+</script>
+
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+<button class="theme-toggle" id="hcToggle" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<button class="to-top" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+
+<script id="ds-nav-js">
+(function(){
+  var links=document.querySelectorAll('.nav-a');
+  var secs=document.querySelectorAll('section[id]');
+  if(!links.length||!secs.length) return;
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      links.forEach(function(l){l.classList.remove('active');});
+      var a=document.querySelector('.nav-a[href="#'+e.target.id+'"]');
+      if(a){a.classList.add('active');a.scrollIntoView({block:'nearest',inline:'center'});}
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(function(x){obs.observe(x);});
+})();
+</script>
+</body>
+</html>
+</html>

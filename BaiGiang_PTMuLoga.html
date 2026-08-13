@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phương trình &amp; Bất phương trình Mũ và Lôgarit – Toán 11</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- MathJax v3 -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']],
+    processEscapes: true,
+    tags: 'none'
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: {
+    typeset: false,
+    ready() {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(function() { MathJax.typesetPromise([document.body]); });
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ==========================================================
+   DESIGN TOKENS (verbatim từ bài giảng gốc)
+   ========================================================== */
+:root {
+  --indigo-900:#312e81; --indigo-700:#4338ca; --indigo-500:#6366f1;
+  --indigo-200:#c7d2fe; --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  --amber-700:#b45309; --amber-600:#d97706; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  --green-700:#047857; --green-600:#059669; --green-100:#d1fae5; --green-50:#ecfdf5;
+  --red-700:#b91c1c; --red-600:#dc2626; --red-100:#fee2e2; --red-50:#fef2f2;
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1;
+  --slate-200:#e2e8f0; --slate-100:#f1f5f9;
+  --bg:#f8fafc; --white:#ffffff; --border:#e2e8f0;
+  --shadow-lg:0 8px 32px rgba(49,46,129,.12);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+}
+
+/* ==========================================================
+   RESET / BASE
+   ========================================================== */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--font-body);
+  font-size:15.5px; line-height:1.65;
+  color:var(--slate-700); background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+body.has-score-bar { padding-bottom:70px; }
+h1, h2, h3, h4 { font-family:var(--font-head); color:var(--slate-900); line-height:1.3; }
+p { margin:8px 0; }
+a { color:var(--indigo-700); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* ==========================================================
+   HERO HEADER (với blobs + grid background)
+   ========================================================== */
+.hero {
+  position:relative;
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #6d28d9 55%, var(--cyan-700) 100%);
+  color:#fff;
+  padding:64px 24px 84px;
+  overflow:hidden;
+  text-align:center;
+}
+.hero-grid-bg {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+.hero-blob {
+  position:absolute; border-radius:50%;
+  filter:blur(60px); opacity:.35; pointer-events:none;
+}
+.hero-blob-1 {
+  width:340px; height:340px;
+  background:#22d3ee;
+  top:-100px; left:-80px;
+}
+.hero-blob-2 {
+  width:380px; height:380px;
+  background:#c4b5fd;
+  bottom:-140px; right:-90px;
+}
+.hero-inner {
+  position:relative; z-index:2;
+  max-width:880px; margin:0 auto;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.28);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  padding:6px 16px; border-radius:999px;
+  font-size:12.5px; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:18px;
+}
+.hero-badge i { font-size:11px; }
+.hero h1 {
+  color:#fff; font-weight:700;
+  font-size:clamp(1.55rem, 3.6vw, 2.55rem);
+  letter-spacing:-.01em; line-height:1.25;
+  margin-bottom:10px;
+}
+.hero-sub {
+  font-size:clamp(.95rem, 1.6vw, 1.08rem);
+  opacity:.92; max-width:680px; margin:0 auto 22px;
+}
+.hero-tags {
+  display:flex; gap:9px; justify-content:center; flex-wrap:wrap;
+}
+.hero-tag {
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.25);
+  padding:5px 14px; border-radius:999px;
+  font-size:.78rem; font-weight:600;
+}
+
+/* ==========================================================
+   STICKY NAV
+   ========================================================== */
+.nav-wrap {
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
+}
+.nav {
+  max-width:1080px; margin:0 auto;
+  padding:10px 16px;
+  display:flex; gap:6px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+}
+.nav::-webkit-scrollbar { height:4px; }
+.nav::-webkit-scrollbar-thumb { background:var(--indigo-200); border-radius:2px; }
+.nav-link {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 13px; border-radius:999px;
+  font-size:13px; font-weight:700;
+  color:var(--slate-500); white-space:nowrap;
+  border:1.5px solid transparent;
+  transition:all .18s;
+}
+.nav-link i { font-size:11px; opacity:.85; }
+.nav-link:hover { background:var(--indigo-50); color:var(--indigo-700); text-decoration:none; }
+.nav-link.active {
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.25);
+}
+.nav-link.active i { opacity:1; }
+
+/* ==========================================================
+   MAIN WRAPPER & CARDS
+   ========================================================== */
+main {
+  max-width:1080px; margin:0 auto;
+  padding:32px 16px 60px;
+}
+.card {
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
+  padding:28px 32px;
+  margin-bottom:28px;
+  border-left:5px solid var(--indigo-700);
+  position:relative;
+}
+.c-amber  { border-left-color:var(--amber-600); }
+.c-indigo { border-left-color:var(--indigo-700); }
+.c-cyan   { border-left-color:var(--cyan-600); }
+.c-violet { border-left-color:var(--violet-600); }
+.c-green  { border-left-color:var(--green-600); }
+.c-red    { border-left-color:var(--red-600); }
+
+/* Section title pattern */
+.sec-title {
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:22px;
+  padding-bottom:18px;
+  border-bottom:1.5px dashed var(--border);
+}
+.sec-icon {
+  width:54px; height:54px;
+  border-radius:var(--radius-md);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; color:#fff;
+  flex-shrink:0;
+  box-shadow:var(--shadow-sm);
+}
+.ic-amber  { background:linear-gradient(135deg, var(--amber-600), #ea580c); }
+.ic-indigo { background:linear-gradient(135deg, var(--indigo-700), var(--indigo-500)); }
+.ic-cyan   { background:linear-gradient(135deg, var(--cyan-600), var(--cyan-400)); }
+.ic-violet { background:linear-gradient(135deg, var(--violet-600), #a78bfa); }
+.ic-green  { background:linear-gradient(135deg, var(--green-600), #34d399); }
+.ic-red    { background:linear-gradient(135deg, var(--red-600), #fb7185); }
+.sec-label {
+  font-size:11.5px; font-weight:800;
+  color:var(--slate-500);
+  letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:2px;
+}
+.sec-title h2 {
+  font-size:clamp(1.15rem, 2.1vw, 1.4rem);
+  font-weight:700; color:var(--slate-900);
+  line-height:1.3;
+}
+
+/* ==========================================================
+   CALLOUT BOXES
+   ========================================================== */
+.box {
+  border-radius:var(--radius-md);
+  padding:15px 20px;
+  margin:16px 0;
+  border:1.5px solid;
+  display:flex; gap:12px; align-items:flex-start;
+}
+.box i { font-size:17px; flex-shrink:0; margin-top:2px; }
+.box .box-body { flex:1; }
+.box .box-body strong:first-child { display:block; margin-bottom:4px; font-size:14.5px; }
+.box-in { background:var(--indigo-50); border-color:var(--indigo-200); color:var(--indigo-900); }
+.box-in i { color:var(--indigo-700); }
+.box-am { background:var(--amber-50); border-color:var(--amber-100); color:#78350f; }
+.box-am i { color:var(--amber-600); }
+.box-gr { background:var(--green-50); border-color:#a7f3d0; color:#064e3b; }
+.box-gr i { color:var(--green-600); }
+.box-cy { background:var(--cyan-50); border-color:var(--cyan-100); color:#164e63; }
+.box-cy i { color:var(--cyan-600); }
+.box-re { background:var(--red-50); border-color:#fecaca; color:#7f1d1d; }
+.box-re i { color:var(--red-600); }
+
+/* ==========================================================
+   THEORY CARDS (.tc + .tc-row)
+   ========================================================== */
+.g2 {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin:14px 0;
+}
+.tc {
+  background:var(--indigo-50);
+  border-radius:var(--radius-md);
+  padding:20px 22px;
+  border:1.5px solid var(--indigo-200);
+}
+.tc h3 {
+  font-family:var(--font-head); font-size:14.5px;
+  color:var(--indigo-900); margin-bottom:14px;
+  padding-bottom:11px; border-bottom:1.5px solid var(--indigo-200);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.tc.tc-cy { background:var(--cyan-50); border-color:var(--cyan-100); }
+.tc.tc-cy h3 { color:#164e63; border-bottom-color:var(--cyan-100); }
+.chip-lab {
+  border-radius:999px; padding:2px 10px;
+  font-size:11px; font-weight:800; white-space:nowrap;
+}
+.cl-ind { background:var(--indigo-700); color:#fff; }
+.cl-cy  { background:var(--cyan-600); color:#fff; }
+.cl-am  { background:var(--amber-600); color:#fff; }
+.cl-gr  { background:var(--green-600); color:#fff; }
+.tc-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:7px 0; gap:10px;
+  border-bottom:1px dashed var(--slate-200);
+}
+.tc-row:last-child { border-bottom:none; }
+.tc-row .lbl { font-weight:700; font-size:12.5px; color:var(--slate-500); flex-shrink:0; }
+.tc-row .val { font-weight:700; color:var(--slate-900); text-align:right; font-size:13.5px; }
+.monotag {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:12px; font-weight:800; padding:3px 10px;
+  border-radius:999px;
+}
+.mt-up { background:var(--green-100); color:var(--green-700); }
+.mt-dn { background:var(--red-100); color:var(--red-700); }
+
+/* Formula block (centered formula) */
+.fblock {
+  background:var(--white);
+  border:1px solid var(--indigo-200);
+  border-radius:var(--radius-sm);
+  padding:10px 16px;
+  text-align:center;
+  margin:10px 0;
+  font-size:15px;
+  overflow-x:auto;
+}
+.concl-box {
+  background:linear-gradient(135deg, var(--green-50), var(--cyan-50));
+  border:1.5px solid #a7f3d0;
+  border-radius:var(--radius-md);
+  padding:12px 18px; margin:14px 0;
+  font-weight:700; text-align:center;
+  color:var(--green-700); font-size:14.5px;
+}
+
+/* SVG chart wrap */
+.chart-wrap {
+  text-align:center;
+  margin:16px 0;
+  background:var(--amber-50);
+  border:1.5px solid var(--amber-100);
+  border-radius:var(--radius-md);
+  padding:12px;
+  overflow-x:auto;
+}
+.chart-wrap svg { max-width:100%; height:auto; display:inline-block; }
+
+/* ==========================================================
+   APPLET / CANVAS VIEWER
+   ========================================================== */
+.viewer-layout {
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:22px; align-items:start;
+  margin-top:14px;
+}
+.canvas-wrap {
+  background:#f0f4ff;
+  border-radius:var(--radius-md);
+  border:1.5px solid var(--indigo-200);
+  overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  padding:8px;
+}
+canvas { display:block; max-width:100%; }
+@media (min-width:781px) {
+  .canvas-wrap {
+    height:min(60vh, 540px);
+    min-height:380px;
+  }
+  canvas#appletCanvas {
+    width:auto; max-width:100%;
+    height:100%; max-height:100%;
+    aspect-ratio:540/380;
+  }
+}
+.ctrl-panel {
+  background:var(--slate-100);
+  border-radius:var(--radius-md);
+  padding:14px 16px;
+  border:1.5px solid var(--border);
+}
+.ctrl-panel h4 {
+  font-family:var(--font-head); font-weight:700; font-size:13.5px;
+  color:var(--slate-900); margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+  padding-bottom:8px; border-bottom:1px dashed var(--border);
+}
+.ctrl-panel h4 i { color:var(--cyan-600); font-size:13px; }
+.ctrl-group { margin-bottom:11px; }
+.a-row {
+  display:flex; align-items:baseline; justify-content:space-between;
+  margin-bottom:4px;
+}
+.lbl-inline {
+  font-size:10.5px; font-weight:800; color:var(--slate-500);
+  letter-spacing:.04em; text-transform:uppercase;
+}
+.a-big {
+  font-family:var(--font-head);
+  font-size:22px; font-weight:700; color:var(--indigo-700);
+  line-height:1;
+}
+.ctrl-group input[type="range"] {
+  width:100%; accent-color:var(--indigo-700); cursor:pointer;
+}
+.range-ticks {
+  display:flex; justify-content:space-between;
+  font-size:9.5px; color:var(--slate-400); margin-top:3px;
+  font-weight:700;
+}
+.fn-label {
+  text-align:center; font-size:12px; color:var(--slate-700);
+  font-weight:700; margin-bottom:6px;
+  padding:5px 8px; background:var(--white);
+  border-radius:var(--radius-sm); border:1px solid var(--border);
+}
+.radio-set { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.radio-set.cols-3 { grid-template-columns:1fr 1fr 1fr; }
+.radio-set.cols-5 { grid-template-columns:repeat(5, 1fr); }
+.radio-set label {
+  display:flex; align-items:center; justify-content:center; gap:5px;
+  padding:7px 6px; border-radius:var(--radius-sm);
+  border:1.5px solid var(--border); font-size:12px;
+  font-weight:700; cursor:pointer; background:var(--white);
+  color:var(--slate-700);
+  transition:all .18s; text-align:center;
+}
+.radio-set input { display:none; }
+.radio-set label.checked {
+  border-color:var(--indigo-700); background:var(--indigo-50);
+  color:var(--indigo-700);
+}
+.info-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:6px; margin-top:8px;
+}
+.info-mini {
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); padding:7px 9px;
+  text-align:center;
+}
+.info-mini.span-2 { grid-column:span 2; text-align:left; }
+.info-mini .ip-label {
+  font-size:9.5px; font-weight:800; color:var(--slate-400);
+  text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px;
+}
+.info-mini .ip-val {
+  font-family:var(--font-head); font-size:13px;
+  color:var(--indigo-700); font-weight:700;
+  line-height:1.3; word-break:break-all;
+}
+.info-mini.span-2 .ip-val { font-family:var(--font-body); font-size:13px; font-weight:700; }
+
+/* ==========================================================
+   DRAG & DROP
+   ========================================================== */
+.chip-bank {
+  display:flex; flex-wrap:wrap; gap:8px;
+  margin-bottom:16px;
+  padding:12px 14px;
+  background:var(--indigo-50);
+  border:1.5px dashed var(--indigo-200);
+  border-radius:var(--radius-md);
+  min-height:56px;
+}
+.chip {
+  background:var(--indigo-700); color:#fff;
+  border-radius:999px; padding:7px 16px;
+  font-size:14.5px; font-weight:700; cursor:grab;
+  user-select:none; transition:all .18s;
+  box-shadow:0 2px 10px rgba(67,56,202,.22);
+  touch-action:none;
+}
+.chip:hover { transform:scale(1.06) translateY(-2px); box-shadow:0 6px 18px rgba(67,56,202,.35); }
+.chip.dragging { opacity:.6; cursor:grabbing; }
+.chip.selected { background:var(--cyan-600); box-shadow:0 0 0 4px rgba(8,145,178,.25); }
+.chip.used { opacity:.3; cursor:not-allowed; pointer-events:none; }
+
+.dnd-cols-head {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin-bottom:6px;
+}
+.dnd-col-title {
+  font-family:var(--font-head); font-weight:700; font-size:14.5px;
+  padding:7px 14px; border-radius:var(--radius-sm); text-align:center;
+  letter-spacing:.01em;
+}
+.dnd-col-title.mu   { background:var(--indigo-100); color:var(--indigo-700); border:1.5px solid var(--indigo-200); }
+.dnd-col-title.loga { background:var(--cyan-100); color:var(--cyan-700); border:1.5px solid var(--cyan-100); }
+
+.dnd-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 12px; }
+.drop-item { display:flex; flex-direction:column; gap:5px; }
+.drop-q { font-size:14px; font-weight:700; color:var(--slate-700); line-height:1.4; min-height:24px; }
+.drop-z {
+  min-height:44px; border:2px dashed var(--slate-300);
+  border-radius:var(--radius-sm); display:flex;
+  align-items:center; justify-content:center;
+  font-size:14px; font-weight:700; color:var(--slate-400);
+  background:var(--white); transition:all .18s;
+  padding:6px 10px; text-align:center;
+}
+.drop-z.drag-over { border-color:var(--cyan-600); background:var(--cyan-50); color:var(--cyan-600); }
+.drop-z.filled    { border-style:solid; border-color:var(--indigo-200); background:var(--indigo-50); color:var(--indigo-700); }
+.drop-z.correct   { border-color:var(--green-600); background:var(--green-100); color:var(--green-700); border-style:solid; }
+.drop-z.wrong     { border-color:var(--red-600); background:var(--red-100); color:var(--red-700); border-style:solid; }
+
+.dnd-btns { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 22px; border-radius:var(--radius-md);
+  font-size:14.5px; font-weight:800; border:none; cursor:pointer;
+  font-family:var(--font-body); transition:all .2s;
+}
+.btn-primary   { background:var(--indigo-700); color:#fff; }
+.btn-primary:hover   { background:var(--indigo-900); transform:translateY(-2px); box-shadow:0 4px 14px rgba(67,56,202,.3); }
+.btn-secondary { background:var(--slate-200); color:var(--slate-700); }
+.btn-secondary:hover { background:var(--slate-300); }
+
+.dnd-result {
+  padding:11px 16px; border-radius:var(--radius-md);
+  font-weight:700; font-size:14.5px; display:none; margin-top:12px;
+  display:none;
+}
+.dnd-result.show { display:flex; align-items:center; gap:8px; }
+.dnd-result.ok   { background:var(--green-100); color:var(--green-700); border:1.5px solid #6ee7b7; }
+.dnd-result.fail { background:var(--red-100); color:var(--red-700); border:1.5px solid #fca5a5; }
+
+/* ==========================================================
+   ACCORDION
+   ========================================================== */
+.acc {
+  border:1.5px solid var(--border); border-radius:var(--radius-md);
+  overflow:hidden; margin-bottom:14px;
+  background:var(--white);
+}
+.acc-btn {
+  width:100%; background:var(--slate-100);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:15px 22px; border:none; cursor:pointer;
+  font-size:14px; font-weight:700; color:var(--slate-900);
+  text-align:left; transition:all .18s; gap:10px;
+  font-family:var(--font-body);
+}
+.acc-btn:hover { background:var(--indigo-50); color:var(--indigo-700); }
+.acc-btn.open  { background:var(--indigo-50); color:var(--indigo-700); }
+.acc-badge {
+  display:inline-block; padding:2px 9px;
+  border-radius:999px; font-size:11px; font-weight:800;
+  background:var(--indigo-700); color:#fff;
+  margin-right:8px;
+}
+.acc-btn.open .acc-badge { background:var(--indigo-900); }
+.acc-arrow { transition:transform .3s; font-size:12px; flex-shrink:0; }
+.acc-btn.open .acc-arrow { transform:rotate(180deg); }
+.acc-title-text { flex:1; }
+.acc-body {
+  max-height:0; overflow:hidden;
+  transition:max-height .55s cubic-bezier(.4,0,.2,1);
+  background:var(--white);
+}
+.acc-body.open { max-height:2200px; }
+.acc-inner { padding:22px 26px; }
+.step { display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+.sn {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--indigo-700); color:#fff;
+  font-size:13px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.sc { flex:1; padding-top:4px; font-size:14.5px; }
+.sc strong:first-child {
+  display:block; font-size:11px; color:var(--slate-500); font-weight:800;
+  margin-bottom:4px; text-transform:uppercase; letter-spacing:.04em;
+}
+
+/* ==========================================================
+   FLASHCARDS
+   ========================================================== */
+.fc-grid {
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:16px; margin-top:14px;
+}
+.fc { perspective:900px; height:175px; cursor:pointer; }
+.fc-inner {
+  width:100%; height:100%; position:relative;
+  transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.fc.flipped .fc-inner { transform:rotateY(180deg); }
+.fc-front, .fc-back {
+  position:absolute; inset:0;
+  -webkit-backface-visibility:hidden; backface-visibility:hidden;
+  border-radius:var(--radius-md); padding:18px 16px;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center; text-align:center;
+}
+.fc-front {
+  background:linear-gradient(135deg, var(--indigo-700) 0%, var(--violet-600) 100%);
+  color:#fff; font-weight:700; font-size:13.5px; line-height:1.5;
+  box-shadow:var(--shadow);
+}
+.fc-front .fc-icon { font-size:22px; margin-bottom:8px; opacity:.9; }
+.fc-q { font-size:13.5px; line-height:1.45; }
+.fc-hint { font-size:10px; opacity:.7; margin-top:9px; font-weight:600; }
+.fc-back {
+  background:var(--cyan-50);
+  border:1.5px solid var(--cyan-100);
+  color:var(--cyan-700);
+  transform:rotateY(180deg);
+  font-weight:700; font-size:14px; line-height:1.5;
+}
+.fc-back-note { font-size:11px; color:var(--slate-500); font-weight:600; margin-top:8px; }
+
+/* ==========================================================
+   QUIZ
+   ========================================================== */
+.quiz-prog {
+  display:flex; align-items:center; gap:14px; margin-bottom:18px;
+}
+.qp-track {
+  flex:1; height:8px; background:var(--slate-100);
+  border-radius:999px; overflow:hidden;
+}
+.qp-fill {
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--red-600), var(--violet-600));
+  border-radius:999px; transition:width .45s;
+}
+.qp-text { font-size:13px; font-weight:800; color:var(--slate-500); white-space:nowrap; }
+
+.q-card {
+  border:1.5px solid var(--border); border-radius:var(--radius-md);
+  padding:20px 22px; margin-bottom:16px;
+  background:var(--white); transition:box-shadow .2s;
+}
+.q-card:hover { box-shadow:var(--shadow-sm); }
+.q-head {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.q-num {
+  display:inline-block; padding:3px 10px; border-radius:999px;
+  background:var(--indigo-100); color:var(--indigo-700);
+  font-size:11.5px; font-weight:800;
+  letter-spacing:.04em; text-transform:uppercase;
+}
+.q-lvl {
+  display:inline-block; padding:3px 10px; border-radius:999px;
+  font-size:11px; font-weight:800; letter-spacing:.03em;
+}
+.q-lvl.nb { background:var(--green-100); color:var(--green-700); }
+.q-lvl.th { background:#dbeafe; color:#1d4ed8; }
+.q-lvl.vd { background:var(--violet-100); color:var(--violet-700); }
+.q-lvl.vc { background:var(--red-100); color:var(--red-700); }
+.q-text {
+  font-weight:700; color:var(--slate-900);
+  margin-bottom:14px; line-height:1.55; font-size:14.5px;
+}
+.q-opts {
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;
+}
+.q-opt {
+  padding:12px 10px; border-radius:var(--radius-sm);
+  border:1.5px solid var(--border); background:var(--white);
+  font-size:13.5px; font-weight:600; color:var(--slate-700);
+  text-align:center; transition:all .18s; cursor:pointer; line-height:1.45;
+  display:flex; align-items:center; justify-content:center;
+  min-height:60px; font-family:var(--font-body);
+}
+.q-opt-inner {
+  display:inline-block; text-align:center;
+  width:100%; word-spacing:normal;
+}
+.q-opt-inner mjx-container {
+  display:inline-block !important;
+  vertical-align:-0.15em; margin:0 1px;
+}
+.q-opt:hover:not(.locked) {
+  border-color:var(--indigo-500); color:var(--indigo-700);
+  background:var(--indigo-50); transform:translateY(-1px);
+}
+.q-opt.correct { background:var(--green-100); border-color:var(--green-600); color:var(--green-700); }
+.q-opt.wrong   { background:var(--red-100); border-color:var(--red-600); color:var(--red-700); }
+.q-opt.locked  { cursor:not-allowed; }
+.q-opt.locked:hover { transform:none; }
+.q-explain {
+  margin-top:14px; padding:13px 16px;
+  border-radius:var(--radius-sm);
+  background:var(--amber-50); border:1.5px solid var(--amber-100);
+  font-size:13px; color:#78350f; line-height:1.7; display:none;
+}
+.q-explain.show { display:block; }
+.q-explain-title {
+  font-weight:800; color:#92400e; margin-bottom:5px;
+  display:flex; align-items:center; gap:6px; font-size:13px;
+}
+
+/* ==========================================================
+   SCORE BAR (slide-up)
+   ========================================================== */
+.score-bar {
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:var(--white); border-top:2px solid var(--indigo-200);
+  padding:10px 28px;
+  display:flex; align-items:center; gap:16px;
+  box-shadow:0 -6px 30px rgba(49,46,129,.12);
+  transform:translateY(100%); transition:transform .35s;
+}
+.score-bar.show { transform:translateY(0); }
+.score-label { font-weight:800; font-size:13.5px; color:var(--slate-900); white-space:nowrap; }
+.score-label i { color:var(--indigo-700); margin-right:6px; }
+.score-track {
+  flex:1; height:10px; background:var(--slate-100);
+  border-radius:999px; overflow:hidden; max-width:480px;
+}
+.score-fill {
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--indigo-700), var(--cyan-600));
+  border-radius:999px; transition:width .45s;
+}
+.score-count {
+  font-family:var(--font-head);
+  font-size:22px; font-weight:700; color:var(--indigo-700);
+  white-space:nowrap;
+}
+.score-stars { font-size:15px; }
+
+/* ==========================================================
+   UTILITIES
+   ========================================================== */
+ul.check-list { list-style:none; padding:0; margin:6px 0; }
+ul.check-list li { padding:3px 0 3px 24px; position:relative; font-size:14px; }
+ul.check-list li::before {
+  content:"\f00c"; font-family:"Font Awesome 6 Free"; font-weight:900;
+  position:absolute; left:0; color:var(--green-600); font-size:12px; top:5px;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width:1024px) {
+  .fc-grid { grid-template-columns:repeat(2, 1fr); }
+  .q-opts  { grid-template-columns:repeat(2, 1fr); }
+}
+@media (max-width:780px) {
+  .hero { padding:48px 18px 64px; }
+  .card { padding:22px 18px; }
+  .sec-icon { width:46px; height:46px; font-size:18px; }
+  .g2 { grid-template-columns:1fr; }
+  .viewer-layout { grid-template-columns:1fr; }
+  .canvas-wrap { height:auto !important; padding:6px; }
+  canvas#appletCanvas { width:100% !important; height:auto !important; aspect-ratio:540/380; }
+  .dnd-cols-head, .dnd-grid { grid-template-columns:1fr; }
+  .nav { padding:8px 14px; }
+}
+@media (max-width:600px) {
+  body { font-size:14.5px; }
+  .fc-grid { grid-template-columns:1fr; }
+  .q-opts  { grid-template-columns:1fr; }
+  .sec-title { gap:12px; padding-bottom:14px; margin-bottom:18px; }
+  .sec-title h2 { font-size:17px; }
+  .sec-icon { width:42px; height:42px; font-size:16px; }
+  .acc-inner { padding:16px 18px; }
+  .score-bar { padding:8px 14px; gap:10px; }
+  .score-label { font-size:12.5px; }
+  .score-count { font-size:18px; }
+  body.has-score-bar { padding-bottom:60px; }
+  .chip { font-size:13.5px; padding:6px 13px; }
+  .hero h1 { font-size:1.5rem; }
+  .hero-sub { font-size:.92rem; }
+}
+@media (max-width:380px) {
+  main { padding:24px 10px 50px; }
+  .card { padding:18px 14px; }
+  .radio-set.cols-5 { grid-template-columns:repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== HERO ======================== -->
+<header class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><i class="fa-solid fa-graduation-cap"></i> Toán 11</div>
+    <h1>Phương trình &amp; Bất phương trình Mũ và Lôgarit</h1>
+    <p class="hero-sub">Bài giảng e-learning tương tác: lý thuyết — đồ thị động — game kéo thả — flashcards — trắc nghiệm rèn luyện.</p>
+    <div class="hero-tags">
+      <span class="hero-tag"><i class="fa-solid fa-car"></i> Khấu hao ô tô</span>
+      <span class="hero-tag"><i class="fa-solid fa-chart-line"></i> Đồ thị động</span>
+      <span class="hero-tag"><i class="fa-solid fa-gamepad"></i> Game DnD</span>
+      <span class="hero-tag"><i class="fa-solid fa-clone"></i> Flashcards 3D</span>
+      <span class="hero-tag"><i class="fa-solid fa-clipboard-check"></i> 10 câu trắc nghiệm</span>
+    </div>
+  </div>
+</header>
+
+<!-- ======================== STICKY NAV ======================== -->
+<div class="nav-wrap">
+  <nav class="nav" id="mainNav">
+    <a class="nav-link" href="#s-1"><i class="fa-solid fa-car"></i> Khởi động</a>
+    <a class="nav-link" href="#s-2"><i class="fa-solid fa-book"></i> Lý thuyết</a>
+    <a class="nav-link" href="#s-3"><i class="fa-solid fa-chart-line"></i> Đồ thị</a>
+    <a class="nav-link" href="#s-4"><i class="fa-solid fa-gamepad"></i> Game</a>
+    <a class="nav-link" href="#s-5"><i class="fa-solid fa-list-ol"></i> Ví dụ</a>
+    <a class="nav-link" href="#s-6"><i class="fa-solid fa-clone"></i> Flashcards</a>
+    <a class="nav-link" href="#s-7"><i class="fa-solid fa-clipboard-check"></i> Trắc nghiệm</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ======================== SECTION 1: KHỞI ĐỘNG ======================== -->
+<section class="card c-amber" id="s-1">
+  <div class="sec-title">
+    <div class="sec-icon ic-amber"><i class="fa-solid fa-car"></i></div>
+    <div>
+      <div class="sec-label">Phần 1 · Khởi động</div>
+      <h2>Bài toán Khấu hao Ô tô</h2>
+    </div>
+  </div>
+
+  <p>Một chiếc ô tô mua mới trị giá <strong>780 triệu đồng</strong>. Mỗi năm, giá trị xe giảm <strong>9,5%</strong> so với đầu năm đó. Giá trị xe sau $t$ năm được mô tả bởi:</p>
+
+  <div class="fblock">$$V(t) = 780 \cdot (0{,}905)^t \quad \text{(triệu đồng)}$$</div>
+
+  <div class="chart-wrap">
+    <svg viewBox="0 0 530 275" xmlns="http://www.w3.org/2000/svg" style="max-width:530px;">
+      <line x1="62" y1="50" x2="502" y2="50" stroke="#fde68a" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="62" y1="100" x2="502" y2="100" stroke="#fde68a" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="62" y1="150" x2="502" y2="150" stroke="#fde68a" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="62" y1="168" x2="502" y2="168" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" opacity=".85"/>
+      <line x1="106" y1="30" x2="106" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="150" y1="30" x2="150" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="194" y1="30" x2="194" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="238" y1="30" x2="238" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="282" y1="30" x2="282" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="326" y1="30" x2="326" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="370" y1="30" x2="370" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="414" y1="30" x2="414" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="458" y1="30" x2="458" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="502" y1="30" x2="502" y2="245" stroke="#fde68a" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="62" y1="245" x2="508" y2="245" stroke="#92400e" stroke-width="2"/>
+      <line x1="62" y1="22" x2="62" y2="249" stroke="#92400e" stroke-width="2"/>
+      <polygon points="508,242 518,245 508,248" fill="#92400e"/>
+      <polygon points="59,22 62,12 65,22" fill="#92400e"/>
+      <text x="516" y="249" font-size="12" fill="#92400e" font-family="serif" font-style="italic">t</text>
+      <text x="54" y="18" font-size="12" fill="#92400e" font-family="serif" font-style="italic">V</text>
+      <text x="55" y="249" font-size="10" fill="#92400e" text-anchor="end">0</text>
+      <text x="55" y="172" font-size="10" fill="#d97706" text-anchor="end" font-weight="700">300</text>
+      <line x1="59" y1="168" x2="65" y2="168" stroke="#92400e" stroke-width="1.5"/>
+      <text x="55" y="104" font-size="10" fill="#92400e" text-anchor="end">500</text>
+      <line x1="59" y1="100" x2="65" y2="100" stroke="#92400e" stroke-width="1.5"/>
+      <text x="55" y="54" font-size="10" fill="#92400e" text-anchor="end">780</text>
+      <line x1="59" y1="50" x2="65" y2="50" stroke="#92400e" stroke-width="1.5"/>
+      <text x="62" y="259" font-size="10" fill="#92400e" text-anchor="middle">0</text>
+      <text x="106" y="259" font-size="10" fill="#92400e" text-anchor="middle">1</text>
+      <line x1="106" y1="242" x2="106" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <text x="194" y="259" font-size="10" fill="#92400e" text-anchor="middle">3</text>
+      <line x1="194" y1="242" x2="194" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <text x="282" y="259" font-size="10" fill="#92400e" text-anchor="middle">5</text>
+      <line x1="282" y1="242" x2="282" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <text x="370" y="259" font-size="10" fill="#92400e" text-anchor="middle">7</text>
+      <line x1="370" y1="242" x2="370" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <text x="458" y="259" font-size="10" fill="#92400e" text-anchor="middle">9</text>
+      <line x1="458" y1="242" x2="458" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <text x="475" y="259" font-size="10" fill="#dc2626" text-anchor="middle" font-weight="700">≈9,57</text>
+      <line x1="475" y1="242" x2="475" y2="248" stroke="#dc2626" stroke-width="1.8"/>
+      <text x="502" y="259" font-size="10" fill="#92400e" text-anchor="middle">10</text>
+      <line x1="502" y1="242" x2="502" y2="248" stroke="#92400e" stroke-width="1.5"/>
+      <polyline points="62,50 106,68 150,85 194,100 238,114 282,127 326,138 370,148 414,157 458,165 502,172"
+        fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="475" y="168" width="27" height="77" fill="#fef2f2" opacity=".7"/>
+      <line x1="475" y1="168" x2="475" y2="245" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <circle cx="475" cy="168" r="5" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+      <text x="72" y="47" font-size="10" fill="#b45309" font-weight="700">V(0) = 780</text>
+      <text x="72" y="163" font-size="10" fill="#d97706" font-weight="700">V = 300 triệu</text>
+      <text x="268" y="20" font-size="11" fill="#92400e" font-weight="700" text-anchor="middle">Biểu đồ giá trị xe theo thời gian</text>
+      <text x="490" y="215" font-size="9" fill="#dc2626" text-anchor="middle" transform="rotate(-90 490 215)">t ≥ 9,57</text>
+    </svg>
+  </div>
+
+  <div class="box box-am">
+    <i class="fa-solid fa-circle-question"></i>
+    <div class="box-body">
+      <strong>Câu hỏi khởi động</strong>
+      <p>Sau bao nhiêu năm sử dụng thì giá trị chiếc xe còn lại <em>không quá 300 triệu đồng</em>?</p>
+      <p style="margin-top:6px;">Tức là ta cần giải bất phương trình: $780 \cdot (0{,}905)^t \le 300$</p>
+      <p style="margin-top:6px; font-size:13px; opacity:.85;"><i class="fa-solid fa-arrow-down"></i> Lời giải chi tiết ở <strong>Phần 5 · Ví dụ 3</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 2: LÝ THUYẾT ======================== -->
+<section class="card c-indigo" id="s-2">
+  <div class="sec-title">
+    <div class="sec-icon ic-indigo"><i class="fa-solid fa-book"></i></div>
+    <div>
+      <div class="sec-label">Phần 2 · Lý thuyết trọng tâm</div>
+      <h2>Phương trình &amp; Bất phương trình Mũ — Lôgarit</h2>
+    </div>
+  </div>
+
+  <div class="box box-re">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <div class="box-body">
+      <strong>Hai bẫy sai lầm cần tránh!</strong>
+      <p><strong>① Điều kiện xác định:</strong> Với PT/BPT lôgarit, luôn bắt đầu bằng việc đặt <em>lõi lôgarit $&gt; 0$</em>.</p>
+      <p><strong>② Hướng chiều bất đẳng thức:</strong> Khi $a &gt; 1$ <span class="monotag mt-up">Đồng biến — giữ chiều</span> · Khi $0 &lt; a &lt; 1$ <span class="monotag mt-dn">Nghịch biến — đảo chiều</span></p>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; color:var(--indigo-900); margin:18px 0 10px;"><i class="fa-solid fa-circle-dot" style="color:var(--indigo-500);"></i> 2.1 · Phương trình cơ bản</h3>
+  <div class="g2">
+    <div class="tc">
+      <h3><span class="chip-lab cl-ind">PT Mũ</span> $a^x = b$ ($0 &lt; a \neq 1$)</h3>
+      <div class="tc-row"><span class="lbl">Khi $b &gt; 0$</span><span class="val">$x = \log_a b$ <span class="monotag mt-up">1 nghiệm</span></span></div>
+      <div class="tc-row"><span class="lbl">Khi $b \le 0$</span><span class="val"><span class="monotag mt-dn">Vô nghiệm</span></span></div>
+      <div class="tc-row"><span class="lbl">Đồng cơ số</span><span class="val">$a^u = a^v \Leftrightarrow u = v$</span></div>
+    </div>
+    <div class="tc tc-cy">
+      <h3><span class="chip-lab cl-cy">PT Lôgarit</span> $\log_a x = b$ ($0 &lt; a \neq 1$)</h3>
+      <div class="tc-row"><span class="lbl">Mọi $b \in \mathbb{R}$</span><span class="val">$x = a^b$ <span class="monotag mt-up">1 nghiệm</span></span></div>
+      <div class="tc-row"><span class="lbl">Vì sao</span><span class="val">$a^b &gt; 0$ luôn đúng</span></div>
+      <div class="tc-row"><span class="lbl">Đồng cơ số</span><span class="val">$\log_a u = \log_a v \Leftrightarrow u = v &gt; 0$</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; color:var(--indigo-900); margin:18px 0 10px;"><i class="fa-solid fa-circle-dot" style="color:var(--indigo-500);"></i> 2.2 · Bất phương trình cơ bản</h3>
+  <div class="g2">
+    <div class="tc">
+      <h3><span class="chip-lab cl-ind">BPT Mũ</span> $a^x &gt; b$</h3>
+      <div class="tc-row"><span class="lbl">$b \le 0$</span><span class="val">$x \in \mathbb{R}$</span></div>
+      <div class="tc-row"><span class="lbl">$b &gt; 0$, $a &gt; 1$</span><span class="val">$x &gt; \log_a b$ <span class="monotag mt-up">Giữ chiều</span></span></div>
+      <div class="tc-row"><span class="lbl">$b &gt; 0$, $0 &lt; a &lt; 1$</span><span class="val">$x &lt; \log_a b$ <span class="monotag mt-dn">Đảo chiều</span></span></div>
+    </div>
+    <div class="tc tc-cy">
+      <h3><span class="chip-lab cl-cy">BPT Lôgarit</span> $\log_a x &gt; b$</h3>
+      <div class="tc-row"><span class="lbl">$a &gt; 1$</span><span class="val">$x &gt; a^b$ <span class="monotag mt-up">Giữ chiều</span></span></div>
+      <div class="tc-row"><span class="lbl">$0 &lt; a &lt; 1$</span><span class="val">$0 &lt; x &lt; a^b$ <span class="monotag mt-dn">Đảo + kẹp 0</span></span></div>
+      <div class="tc-row"><span class="lbl">Đồng cơ số</span><span class="val">đối chiếu với ĐKXĐ</span></div>
+    </div>
+  </div>
+
+  <div class="box box-in">
+    <i class="fa-solid fa-bullseye"></i>
+    <div class="box-body">
+      <strong>4 bước giải PT/BPT Mũ và Lôgarit</strong>
+      <ul class="check-list">
+        <li>Bước 1: Đặt điều kiện xác định (với lôgarit: lõi $&gt; 0$).</li>
+        <li>Bước 2: Biến đổi về cùng cơ số hoặc lấy lôgarit hai vế.</li>
+        <li>Bước 3: Giải PT/BPT đại số (chú ý <em>đảo chiều</em> nếu $0 &lt; a &lt; 1$).</li>
+        <li>Bước 4: Kết hợp với ĐKXĐ, kết luận tập nghiệm.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 3: APPLET ======================== -->
+<section class="card c-cyan" id="s-3">
+  <div class="sec-title">
+    <div class="sec-icon ic-cyan"><i class="fa-solid fa-chart-line"></i></div>
+    <div>
+      <div class="sec-label">Phần 3 · Đồ thị tương tác</div>
+      <h2>Khám phá trực quan PT/BPT Mũ — Lôgarit</h2>
+    </div>
+  </div>
+
+  <p>Kéo thanh trượt để thay đổi cơ số $a$ và đường ngang $y = b$. Chọn dấu để xem điểm giao (nghiệm PT) hoặc vùng thỏa mãn (BPT).</p>
+
+  <div class="viewer-layout">
+    <div class="canvas-wrap">
+      <canvas id="appletCanvas" width="540" height="380"></canvas>
+    </div>
+    <aside class="ctrl-panel">
+      <h4><i class="fa-solid fa-sliders"></i> Bảng điều khiển</h4>
+
+      <div class="ctrl-group">
+        <div class="lbl-inline" style="margin-bottom:5px;">Loại hàm số</div>
+        <div class="radio-set" id="rgFn">
+          <label class="checked" data-val="exp"><input type="radio" name="fn" value="exp" checked> $y = a^x$</label>
+          <label data-val="log"><input type="radio" name="fn" value="log"> $y = \log_a x$</label>
+        </div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="a-row">
+          <span class="lbl-inline">Cơ số $a$</span>
+          <span class="a-big" id="vA">2,00</span>
+        </div>
+        <input type="range" id="slA" min="0.2" max="3.0" step="0.05" value="2.0">
+        <div class="range-ticks"><span>0,2</span><span>1,0</span><span>2,0</span><span>3,0</span></div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="a-row">
+          <span class="lbl-inline">Giá trị $b$</span>
+          <span class="a-big" id="vB">4,0</span>
+        </div>
+        <input type="range" id="slB" min="-2" max="8" step="0.1" value="4">
+        <div class="range-ticks"><span>−2</span><span>0</span><span>4</span><span>8</span></div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="lbl-inline" style="margin-bottom:5px;">Dấu PT / BPT</div>
+        <div class="radio-set cols-5" id="rgSign">
+          <label class="checked" data-val="eq"><input type="radio" name="sign" value="eq" checked>$=$</label>
+          <label data-val="gt"><input type="radio" name="sign" value="gt">$&gt;$</label>
+          <label data-val="lt"><input type="radio" name="sign" value="lt">$&lt;$</label>
+          <label data-val="ge"><input type="radio" name="sign" value="ge">$\ge$</label>
+          <label data-val="le"><input type="radio" name="sign" value="le">$\le$</label>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-mini">
+          <div class="ip-label">Tính đơn điệu</div>
+          <div class="ip-val" id="ipMono">Đồng biến</div>
+        </div>
+        <div class="info-mini">
+          <div class="ip-label">Điểm giao $x_0$</div>
+          <div class="ip-val" id="ipX0">2,000</div>
+        </div>
+        <div class="info-mini span-2">
+          <div class="ip-label">Tập nghiệm</div>
+          <div class="ip-val" id="ipSol">x = 2,000</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="box box-cy" style="margin-top:14px;">
+    <i class="fa-solid fa-lightbulb"></i>
+    <div class="box-body">
+      Điểm giao đỏ là <strong>nghiệm phương trình</strong>; vùng tô xanh-cyan là <strong>miền $x$ thỏa mãn bất phương trình</strong>. Thử với $a = 0{,}5$ (nghịch biến) để quan sát hiện tượng <em>đảo chiều</em>!
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 4: GAME DnD ======================== -->
+<section class="card c-violet" id="s-4">
+  <div class="sec-title">
+    <div class="sec-icon ic-violet"><i class="fa-solid fa-gamepad"></i></div>
+    <div>
+      <div class="sec-label">Phần 4 · Game Kéo - Thả</div>
+      <h2>Điền vế tương đương của bất phương trình</h2>
+    </div>
+  </div>
+
+  <p>Kéo (hoặc nhấn chọn rồi nhấn ô trống) để ghép vế phải đúng cho mỗi tương đương. Chú ý <strong>đảo chiều</strong> và <strong>kẹp 0</strong> khi cơ số $0 &lt; a &lt; 1$.</p>
+
+  <div class="chip-bank" id="chipBank">
+    <div class="chip" id="c1" data-val="ans1" draggable="true">$x &gt; 3$</div>
+    <div class="chip" id="c2" data-val="ans2" draggable="true">$x &lt; 3$</div>
+    <div class="chip" id="c3" data-val="ans3" draggable="true">$x &gt; 9$</div>
+    <div class="chip" id="c4" data-val="ans4" draggable="true">$0 &lt; x &lt; 0{,}25$</div>
+  </div>
+
+  <div class="dnd-cols-head">
+    <div class="dnd-col-title mu"><i class="fa-solid fa-superscript"></i> PT / BPT Mũ</div>
+    <div class="dnd-col-title loga"><i class="fa-solid fa-percent"></i> PT / BPT Lôgarit</div>
+  </div>
+
+  <div class="dnd-grid">
+    <div class="drop-item">
+      <div class="drop-q">① $2^x &gt; 8 \Leftrightarrow \dots$</div>
+      <div class="drop-z" id="dz1" data-q="dq1" data-ans="ans1">thả vào đây</div>
+    </div>
+    <div class="drop-item">
+      <div class="drop-q">③ $\log_3 x &gt; 2 \Leftrightarrow \dots$</div>
+      <div class="drop-z" id="dz3" data-q="dq3" data-ans="ans3">thả vào đây</div>
+    </div>
+    <div class="drop-item">
+      <div class="drop-q">② $(0{,}5)^x &gt; 0{,}125 \Leftrightarrow \dots$</div>
+      <div class="drop-z" id="dz2" data-q="dq2" data-ans="ans2">thả vào đây</div>
+    </div>
+    <div class="drop-item">
+      <div class="drop-q">④ $\log_{0{,}5} x &gt; 2 \Leftrightarrow \dots$</div>
+      <div class="drop-z" id="dz4" data-q="dq4" data-ans="ans4">thả vào đây</div>
+    </div>
+  </div>
+
+  <div class="dnd-btns">
+    <button class="btn btn-primary" onclick="checkDnd()"><i class="fa-solid fa-circle-check"></i> Kiểm tra</button>
+    <button class="btn btn-secondary" onclick="resetDnd()"><i class="fa-solid fa-rotate-left"></i> Làm lại</button>
+  </div>
+  <div class="dnd-result" id="dndResult"></div>
+</section>
+
+<!-- ======================== SECTION 5: VÍ DỤ ACCORDION ======================== -->
+<section class="card c-green" id="s-5">
+  <div class="sec-title">
+    <div class="sec-icon ic-green"><i class="fa-solid fa-list-ol"></i></div>
+    <div>
+      <div class="sec-label">Phần 5 · Ví dụ phân tích</div>
+      <h2>Lời giải chi tiết từng bước</h2>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 1</span> PT mũ đồng cơ số: $3^{x+1} = \dfrac{1}{3^{1-2x}}$</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <div class="step">
+          <div class="sn">1</div>
+          <div class="sc">
+            <strong>Biến đổi vế phải về lũy thừa cơ số 3</strong>
+            $$\frac{1}{3^{1-2x}} = 3^{-(1-2x)} = 3^{2x-1}$$
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">2</div>
+          <div class="sc">
+            <strong>Đồng cơ số $a = 3 \neq 1$, đồng nhất số mũ</strong>
+            $$3^{x+1} = 3^{2x-1} \Leftrightarrow x + 1 = 2x - 1 \Leftrightarrow x = 2$$
+          </div>
+        </div>
+        <div class="concl-box">✅ Nghiệm duy nhất: $x = 2$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 2</span> PT lôgarit có ĐKXĐ: $\log_3(x+1) = \log_3(x^2 - 1)$</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <div class="step">
+          <div class="sn">1</div>
+          <div class="sc">
+            <strong>Điều kiện xác định</strong>
+            $$\begin{cases} x + 1 &gt; 0 \\ x^2 - 1 &gt; 0 \end{cases} \Leftrightarrow \begin{cases} x &gt; -1 \\ x &gt; 1 \text{ hoặc } x &lt; -1 \end{cases} \Leftrightarrow x &gt; 1$$
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">2</div>
+          <div class="sc">
+            <strong>Đồng cơ số, đồng nhất đối số</strong>
+            $$x + 1 = x^2 - 1 \Leftrightarrow x^2 - x - 2 = 0 \Leftrightarrow (x-2)(x+1) = 0$$
+            Suy ra $x = 2$ hoặc $x = -1$.
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">3</div>
+          <div class="sc">
+            <strong>Đối chiếu với điều kiện $x &gt; 1$</strong>
+            $x = 2$ ✅ &nbsp;|&nbsp; $x = -1$ ❌
+          </div>
+        </div>
+        <div class="concl-box">✅ Nghiệm duy nhất: $x = 2$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 3</span> Bài toán khởi động: $780 \cdot (0{,}905)^t \le 300$</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body">
+      <div class="acc-inner">
+        <div class="step">
+          <div class="sn">1</div>
+          <div class="sc">
+            <strong>Chia hai vế cho $780 &gt; 0$ (không đổi chiều)</strong>
+            $$(0{,}905)^t \le \frac{300}{780} = \frac{5}{13}$$
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">2</div>
+          <div class="sc">
+            <strong>Lấy lôgarit tự nhiên hai vế</strong>
+            $$t \cdot \ln(0{,}905) \le \ln\!\left(\frac{5}{13}\right)$$
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">3</div>
+          <div class="sc">
+            <strong>Đảo chiều vì $\ln(0{,}905) &lt; 0$</strong>
+            $$t \ge \frac{\ln 5 - \ln 13}{\ln 0{,}905} \approx \frac{-0{,}9555}{-0{,}0998} \approx 9{,}57 \text{ (năm)}$$
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn">4</div>
+          <div class="sc">
+            <strong>Diễn giải thực tế</strong>
+            Chiếc xe cần ít nhất <strong>9,57 năm</strong> (xấp xỉ 9 năm 7 tháng) thì giá trị mới giảm xuống không quá 300 triệu đồng.
+          </div>
+        </div>
+        <div class="concl-box">✅ Tập nghiệm: $t \ge 9{,}57$ năm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 6: FLASHCARDS ======================== -->
+<section class="card c-violet" id="s-6">
+  <div class="sec-title">
+    <div class="sec-icon ic-violet"><i class="fa-solid fa-clone"></i></div>
+    <div>
+      <div class="sec-label">Phần 6 · Thẻ ghi nhớ 3D</div>
+      <h2>Bốn câu hỏi cốt lõi cần thuộc lòng</h2>
+    </div>
+  </div>
+
+  <div class="fc-grid">
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div>
+          <div class="fc-q">Phương trình $a^x = -5$ có bao nhiêu nghiệm?</div>
+          <div class="fc-hint">Nhấn để xem đáp án</div>
+        </div>
+        <div class="fc-back">
+          <div><strong>Vô nghiệm!</strong></div>
+          <div class="fc-back-note">Vì $a^x &gt; 0$ với mọi $x \in \mathbb{R}$.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div>
+          <div class="fc-q">Bước đầu tiên khi giải PT / BPT lôgarit là gì?</div>
+          <div class="fc-hint">Nhấn để xem đáp án</div>
+        </div>
+        <div class="fc-back">
+          <div><strong>Tìm ĐKXĐ!</strong></div>
+          <div class="fc-back-note">Đặt lõi lôgarit $&gt; 0$ trước khi giải.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div>
+          <div class="fc-q">Khi $0 &lt; a &lt; 1$, giải BPT cần lưu ý gì?</div>
+          <div class="fc-hint">Nhấn để xem đáp án</div>
+        </div>
+        <div class="fc-back">
+          <div><strong>Phải đảo chiều!</strong></div>
+          <div class="fc-back-note">Hàm nghịch biến: $a^u &gt; a^v \Leftrightarrow u &lt; v$.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div>
+          <div class="fc-q">$\log_a u = \log_a v$ tương đương điều kiện nào?</div>
+          <div class="fc-hint">Nhấn để xem đáp án</div>
+        </div>
+        <div class="fc-back">
+          <div><strong>$u = v$ và $u &gt; 0$</strong></div>
+          <div class="fc-back-note">($u = v &gt; 0$ tự động đảm bảo $v &gt; 0$)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 7: QUIZ ======================== -->
+<section class="card c-red" id="s-7">
+  <div class="sec-title">
+    <div class="sec-icon ic-red"><i class="fa-solid fa-clipboard-check"></i></div>
+    <div>
+      <div class="sec-label">Phần 7 · Trắc nghiệm rèn luyện</div>
+      <h2>10 câu hỏi từ nhận biết đến vận dụng cao</h2>
+    </div>
+  </div>
+
+  <div class="quiz-prog">
+    <span class="qp-text" id="qpText">0 / 10 câu</span>
+    <div class="qp-track"><div class="qp-fill" id="qpFill"></div></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-head"><span class="q-num">Câu 1</span><span class="q-lvl nb">Nhận biết</span></div>
+    <div class="q-text">Phương trình $2^x = 32$ có nghiệm là:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$x = 4$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q1')"><span class="q-opt-inner">$x = 5$</span></div>
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$x = 16$</span></div>
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$x = 6$</span></div>
+    </div>
+    <div class="q-explain" id="eq1">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $32 = 2^5$ nên $2^x = 2^5 \Leftrightarrow x = 5$.
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-head"><span class="q-num">Câu 2</span><span class="q-lvl nb">Nhận biết</span></div>
+    <div class="q-text">Phương trình $\log_3 x = 4$ có nghiệm là:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = 12$</span></div>
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = 64$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = 81$</span></div>
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = 27$</span></div>
+    </div>
+    <div class="q-explain" id="eq2">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $\log_3 x = 4 \Leftrightarrow x = 3^4 = 81$.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-head"><span class="q-num">Câu 3</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Tập nghiệm của bất phương trình $3^x &gt; 27$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q3')"><span class="q-opt-inner">$x &gt; 3$</span></div>
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$x &lt; 3$</span></div>
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$x &gt; 9$</span></div>
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$x &gt; \dfrac{1}{3}$</span></div>
+    </div>
+    <div class="q-explain" id="eq3">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $3^x &gt; 27 = 3^3$. Vì cơ số $3 &gt; 1$ (đồng biến), giữ nguyên chiều: $x &gt; 3$.
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-head"><span class="q-num">Câu 4</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Bất phương trình $(0{,}5)^x \le 16$ có tập nghiệm là:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$x \le 4$</span></div>
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$x &lt; -4$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q4')"><span class="q-opt-inner">$x \ge -4$</span></div>
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$x \le -4$</span></div>
+    </div>
+    <div class="q-explain" id="eq4">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $(0{,}5)^x \le 16 = (0{,}5)^{-4}$. Cơ số $0{,}5 &lt; 1$ (nghịch biến) → đảo chiều: $x \ge -4$.
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-head"><span class="q-num">Câu 5</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Tập nghiệm của bất phương trình $\log_2(x-1) &gt; 3$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q5')"><span class="q-opt-inner">$x &gt; 9$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$x &gt; 4$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$x &gt; 7$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$x &gt; 5$</span></div>
+    </div>
+    <div class="q-explain" id="eq5">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      ĐKXĐ: $x &gt; 1$. BPT: $\log_2(x-1) &gt; 3 = \log_2 8 \Rightarrow x - 1 &gt; 8 \Rightarrow x &gt; 9$.
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-head"><span class="q-num">Câu 6</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Tập nghiệm của bất phương trình $\log_{0{,}5}(x+2) &gt; 1$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$x &gt; -1{,}5$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q6')"><span class="q-opt-inner">$-2 &lt; x &lt; -1{,}5$</span></div>
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$x &gt; 0$</span></div>
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$x &lt; -1{,}5$</span></div>
+    </div>
+    <div class="q-explain" id="eq6">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      ĐKXĐ: $x &gt; -2$. BPT: $\log_{0{,}5}(x+2) &gt; \log_{0{,}5}(0{,}5)$. Cơ số $&lt; 1$ → đảo: $x + 2 &lt; 0{,}5 \Rightarrow x &lt; -1{,}5$. Kết hợp ĐKXĐ: $-2 &lt; x &lt; -1{,}5$.
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-head"><span class="q-num">Câu 7</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text"><i class="fa-solid fa-piggy-bank" style="color:var(--violet-600);"></i> Gửi 50 triệu đồng, lãi suất 6%/năm (lãi kép). Ít nhất bao nhiêu năm để có 100 triệu? (Biết $\ln 2 \approx 0{,}693$; $\ln 1{,}06 \approx 0{,}0583$)</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">10 năm</span></div>
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">11 năm</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q7')"><span class="q-opt-inner">12 năm</span></div>
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">13 năm</span></div>
+    </div>
+    <div class="q-explain" id="eq7">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $A = 50 \cdot (1{,}06)^t \ge 100 \Rightarrow (1{,}06)^t \ge 2 \Rightarrow t \ge \dfrac{\ln 2}{\ln 1{,}06} \approx \dfrac{0{,}693}{0{,}0583} \approx 11{,}9$. Vì $t$ nguyên: $t \ge 12$ năm.
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-head"><span class="q-num">Câu 8</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text"><i class="fa-solid fa-virus" style="color:var(--violet-600);"></i> Vi khuẩn: $N(t) = 500 e^{0{,}4t}$. Sau bao nhiêu giờ thì số vi khuẩn đạt 5000? (Biết $\ln 10 \approx 2{,}303$)</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">≈ 4,5 giờ</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q8')"><span class="q-opt-inner">≈ 5,76 giờ</span></div>
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">≈ 6,5 giờ</span></div>
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">≈ 7 giờ</span></div>
+    </div>
+    <div class="q-explain" id="eq8">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $500 e^{0{,}4t} = 5000 \Rightarrow e^{0{,}4t} = 10 \Rightarrow 0{,}4t = \ln 10 \approx 2{,}303 \Rightarrow t \approx 5{,}76$ giờ.
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-head"><span class="q-num">Câu 9</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text"><i class="fa-solid fa-temperature-low" style="color:var(--violet-600);"></i> Định luật Newton: $T(t) = 25 + 70 e^{-0{,}5t}$ (°C). Sau bao nhiêu phút thì $T = 60°C$? (Biết $\ln 2 \approx 0{,}693$)</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">≈ 1 phút</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q9')"><span class="q-opt-inner">≈ 1,39 phút</span></div>
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">≈ 2 phút</span></div>
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">≈ 3 phút</span></div>
+    </div>
+    <div class="q-explain" id="eq9">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      $25 + 70 e^{-0{,}5t} = 60 \Rightarrow e^{-0{,}5t} = 0{,}5 \Rightarrow -0{,}5t = -\ln 2 \Rightarrow t = 2 \ln 2 \approx 1{,}39$ phút.
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-head"><span class="q-num">Câu 10</span><span class="q-lvl vc">Vận dụng cao</span></div>
+    <div class="q-text"><i class="fa-solid fa-flask" style="color:var(--violet-600);"></i> Công thức pH: $\text{pH} = -\log_{10}[H^+]$. Nước chanh có $[H^+] = 10^{-3}$ mol/L. Khi pha loãng <strong>1000 lần</strong>, pH thay đổi thế nào?</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">Tăng thêm 1</span></div>
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">Giảm bớt 3</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q10')"><span class="q-opt-inner">Tăng thêm 3</span></div>
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">Tăng thêm 2</span></div>
+    </div>
+    <div class="q-explain" id="eq10">
+      <div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>
+      Ban đầu: $\text{pH}_0 = -\log(10^{-3}) = 3$. Sau pha loãng 1000 lần: $[H^+] = 10^{-6}$, $\text{pH} = 6$. Vậy pH tăng thêm $3$.
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<!-- ======================== SCORE BAR ======================== -->
+<div class="score-bar" id="scoreBar">
+  <span class="score-label"><i class="fa-solid fa-trophy"></i> Điểm</span>
+  <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+  <span class="score-count" id="scoreCount">0/10</span>
+  <span class="score-stars" id="scoreStars">⭐</span>
+</div>
+
+<!-- ============================================================
+   JAVASCRIPT
+   ============================================================ -->
+<script>
+/* ----- MathJax helper ----- */
+function mj(el) {
+  if (window.MathJax && MathJax.typesetPromise) {
+    return MathJax.typesetPromise(el ? [el] : [document.body]).catch(function(e){ console.warn(e); });
+  }
+  return Promise.resolve();
+}
+
+/* ----- ACCORDION ----- */
+function toggleAcc(btn) {
+  var body = btn.nextElementSibling;
+  var open = btn.classList.contains('open');
+  btn.classList.toggle('open', !open);
+  body.classList.toggle('open', !open);
+  if (!open) mj(body);
+}
+
+/* ----- STICKY NAV active state on scroll ----- */
+function initNav() {
+  var links = document.querySelectorAll('.nav-link');
+  var sections = Array.prototype.map.call(links, function(a) {
+    return document.querySelector(a.getAttribute('href'));
+  });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var id = '#' + e.target.id;
+        links.forEach(function(a) {
+          a.classList.toggle('active', a.getAttribute('href') === id);
+        });
+        // scroll the nav so the active link is visible
+        var active = document.querySelector('.nav-link.active');
+        if (active) {
+          var nav = document.querySelector('.nav');
+          var l = active.offsetLeft - nav.offsetWidth / 2 + active.offsetWidth / 2;
+          nav.scrollTo({ left: Math.max(0, l), behavior: 'smooth' });
+        }
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(function(s) { if (s) obs.observe(s); });
+}
+
+/* ----- RADIO SET visual sync ----- */
+function initRadios() {
+  document.querySelectorAll('.radio-set').forEach(function(group) {
+    var labels = group.querySelectorAll('label');
+    labels.forEach(function(lbl) {
+      lbl.addEventListener('click', function() {
+        labels.forEach(function(l) { l.classList.remove('checked'); });
+        lbl.classList.add('checked');
+        var input = lbl.querySelector('input');
+        if (input) {
+          input.checked = true;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+  });
+}
+
+/* ----- CANVAS APPLET ----- */
+var canvas = document.getElementById('appletCanvas');
+var ctx = canvas.getContext('2d');
+var LW = 540, LH = 380;
+var PAD = { l: 58, r: 18, t: 28, b: 32 };
+var MATH = { xMin: -5, xMax: 5, yMin: -3, yMax: 10 };
+var applet = { fn: 'exp', a: 2.0, b: 4.0, sign: 'eq' };
+
+function sc(mx, my) {
+  var dw = LW - PAD.l - PAD.r;
+  var dh = LH - PAD.t - PAD.b;
+  var sx = PAD.l + (mx - MATH.xMin) / (MATH.xMax - MATH.xMin) * dw;
+  var sy = LH - PAD.b - (my - MATH.yMin) / (MATH.yMax - MATH.yMin) * dh;
+  return [sx, sy];
+}
+
+function getIntersectX() {
+  var a = applet.a, b = applet.b;
+  if (applet.fn === 'exp') {
+    if (b > 0 && a > 0 && a !== 1) return Math.log(b) / Math.log(a);
+    return null;
+  }
+  if (a > 0 && a !== 1) return Math.pow(a, b);
+  return null;
+}
+
+function drawApplet() {
+  var a = applet.a, b = applet.b, fn = applet.fn, sign = applet.sign;
+  var dw = LW - PAD.l - PAD.r, dh = LH - PAD.t - PAD.b;
+
+  ctx.clearRect(0, 0, LW, LH);
+  ctx.fillStyle = '#f0f4ff';
+  ctx.fillRect(0, 0, LW, LH);
+
+  // Grid
+  for (var xi = Math.ceil(MATH.xMin); xi <= MATH.xMax; xi++) {
+    var gx = sc(xi, 0)[0];
+    ctx.beginPath();
+    ctx.moveTo(gx, PAD.t);
+    ctx.lineTo(gx, LH - PAD.b);
+    ctx.strokeStyle = xi === 0 ? '#1e293b' : '#c7d2fe';
+    ctx.lineWidth = xi === 0 ? 1.8 : 1;
+    ctx.setLineDash([]);
+    ctx.stroke();
+    if (xi !== 0) {
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Nunito, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(xi, gx, LH - PAD.b + 14);
+    }
+  }
+  for (var yi = Math.ceil(MATH.yMin); yi <= MATH.yMax; yi++) {
+    var gy = sc(0, yi)[1];
+    ctx.beginPath();
+    ctx.moveTo(PAD.l, gy);
+    ctx.lineTo(LW - PAD.r, gy);
+    ctx.strokeStyle = yi === 0 ? '#1e293b' : '#c7d2fe';
+    ctx.lineWidth = yi === 0 ? 1.8 : 1;
+    ctx.setLineDash([]);
+    ctx.stroke();
+    if (yi !== 0 && gy > PAD.t && gy < LH - PAD.b) {
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Nunito, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(yi, PAD.l - 6, gy + 4);
+    }
+  }
+
+  // Axis labels
+  ctx.fillStyle = '#1e293b';
+  ctx.font = 'italic 13px Merriweather, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('x', LW - 8, sc(0, 0)[1] + 5);
+  ctx.textAlign = 'right';
+  ctx.fillText('y', PAD.l - 8, PAD.t - 6);
+
+  // BPT shading
+  var x0 = getIntersectX();
+  if (sign !== 'eq') {
+    ctx.save();
+    ctx.fillStyle = 'rgba(8, 145, 178, 0.16)';
+    function shadeRegion(fromPx, toPx) {
+      if (fromPx >= toPx) return;
+      ctx.fillRect(
+        Math.max(fromPx, PAD.l), PAD.t,
+        Math.min(toPx, LW - PAD.r) - Math.max(fromPx, PAD.l),
+        dh
+      );
+    }
+    if (fn === 'exp') {
+      if (b <= 0) {
+        if (sign === 'gt' || sign === 'ge') ctx.fillRect(PAD.l, PAD.t, dw, dh);
+      } else if (x0 !== null) {
+        var x0px = sc(x0, 0)[0];
+        var shadeRight = (sign === 'gt' || sign === 'ge') ? (a > 1) : (a < 1);
+        if (shadeRight) shadeRegion(x0px, LW - PAD.r);
+        else shadeRegion(PAD.l, x0px);
+      }
+    } else if (x0 !== null && x0 > 0) {
+      var x0px = sc(x0, 0)[0];
+      var z0px = sc(0, 0)[0];
+      var isGt = (sign === 'gt' || sign === 'ge');
+      if (a > 1) {
+        if (isGt) shadeRegion(x0px, LW - PAD.r);
+        else shadeRegion(z0px, x0px);
+      } else {
+        if (isGt) shadeRegion(z0px, x0px);
+        else shadeRegion(x0px, LW - PAD.r);
+      }
+    }
+    ctx.restore();
+  }
+
+  // Curve
+  ctx.strokeStyle = '#4338ca';
+  ctx.lineWidth = 2.8;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  var started = false;
+  var steps = 500;
+  for (var i = 0; i <= steps; i++) {
+    var mx = MATH.xMin + i * (MATH.xMax - MATH.xMin) / steps;
+    var my;
+    if (fn === 'exp') {
+      if (a <= 0 || a === 1) break;
+      my = Math.pow(a, mx);
+    } else {
+      if (mx <= 1e-10 || a <= 0 || a === 1) { started = false; continue; }
+      my = Math.log(mx) / Math.log(a);
+    }
+    if (!isFinite(my) || my > MATH.yMax * 2 || my < MATH.yMin * 2) { started = false; continue; }
+    var p = sc(mx, my);
+    if (!started) { ctx.moveTo(p[0], p[1]); started = true; }
+    else ctx.lineTo(p[0], p[1]);
+  }
+  ctx.stroke();
+
+  // y = b line
+  var bpy = sc(0, b)[1];
+  if (bpy > PAD.t - 5 && bpy < LH - PAD.b + 5) {
+    ctx.strokeStyle = '#d97706';
+    ctx.lineWidth = 1.8;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.moveTo(PAD.l, bpy);
+    ctx.lineTo(LW - PAD.r, bpy);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#b45309';
+    ctx.font = 'bold 11px Nunito, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('y = ' + b.toFixed(1), LW - PAD.r - 4, bpy - 4);
+  }
+
+  // Intersection
+  if (x0 !== null) {
+    var ix = sc(x0, b)[0];
+    var iy = sc(x0, b)[1];
+    var inView = ix >= PAD.l && ix <= LW - PAD.r && iy >= PAD.t && iy <= LH - PAD.b;
+    if (inView) {
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(ix, PAD.t);
+      ctx.lineTo(ix, LH - PAD.b);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#dc2626';
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(ix, iy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#dc2626';
+      ctx.font = 'bold 11px Nunito, sans-serif';
+      ctx.textAlign = 'left';
+      var lbl = '(' + x0.toFixed(2) + '; ' + b.toFixed(1) + ')';
+      ctx.fillText(lbl, Math.min(ix + 8, LW - PAD.r - 90), Math.max(iy - 7, PAD.t + 12));
+    }
+  }
+  updateAppletInfo(x0);
+}
+
+function updateAppletInfo(x0) {
+  var a = applet.a, b = applet.b, fn = applet.fn, sign = applet.sign;
+  var monoEl = document.getElementById('ipMono');
+  var x0El = document.getElementById('ipX0');
+  var solEl = document.getElementById('ipSol');
+
+  // Monotonicity
+  if (a === 1) { monoEl.textContent = '—'; }
+  else if (a > 1) { monoEl.textContent = 'Đồng biến'; }
+  else { monoEl.textContent = 'Nghịch biến'; }
+
+  // x0
+  if (x0 === null || !isFinite(x0)) { x0El.textContent = '∅'; }
+  else { x0El.textContent = x0.toFixed(3).replace('.', ','); }
+
+  // Solution text
+  var signMap = { gt: '>', lt: '<', ge: '≥', le: '≤', eq: '=' };
+  var s = signMap[sign];
+  var txt = '';
+  function fmt(n) { return n.toFixed(3).replace('.', ','); }
+
+  if (fn === 'exp') {
+    if (sign === 'eq') {
+      if (b <= 0) txt = 'Vô nghiệm';
+      else if (a === 1) txt = (b === 1 ? 'Vô số nghiệm' : 'Vô nghiệm');
+      else txt = 'x = ' + fmt(x0);
+    } else if (sign === 'gt' || sign === 'ge') {
+      if (b <= 0) txt = 'x ∈ ℝ';
+      else if (x0 !== null) txt = a > 1 ? ('x ' + s + ' ' + fmt(x0)) : ('x ' + (s === '>' ? '<' : '≤') + ' ' + fmt(x0));
+    } else {
+      if (b <= 0) txt = 'Vô nghiệm';
+      else if (x0 !== null) txt = a > 1 ? ('x ' + s + ' ' + fmt(x0)) : ('x ' + (s === '<' ? '>' : '≥') + ' ' + fmt(x0));
+    }
+  } else {
+    if (sign === 'eq') {
+      txt = x0 !== null ? ('x = ' + fmt(x0)) : '∅';
+    } else if (sign === 'gt' || sign === 'ge') {
+      if (x0 !== null && x0 > 0) txt = a > 1 ? ('x ' + s + ' ' + fmt(x0)) : ('0 < x < ' + fmt(x0));
+    } else {
+      if (x0 !== null && x0 > 0) txt = a > 1 ? ('0 < x ' + s + ' ' + fmt(x0)) : ('x > ' + fmt(x0));
+    }
+  }
+  solEl.textContent = txt || '—';
+}
+
+/* ----- APPLET events ----- */
+function initApplet() {
+  document.getElementById('slA').addEventListener('input', function() {
+    applet.a = parseFloat(this.value);
+    document.getElementById('vA').textContent = applet.a.toFixed(2).replace('.', ',');
+    drawApplet();
+  });
+  document.getElementById('slB').addEventListener('input', function() {
+    applet.b = parseFloat(this.value);
+    document.getElementById('vB').textContent = applet.b.toFixed(1).replace('.', ',');
+    drawApplet();
+  });
+  document.querySelectorAll('input[name="fn"]').forEach(function(r) {
+    r.addEventListener('change', function() { applet.fn = this.value; drawApplet(); });
+  });
+  document.querySelectorAll('input[name="sign"]').forEach(function(r) {
+    r.addEventListener('change', function() { applet.sign = this.value; drawApplet(); });
+  });
+}
+
+/* ----- DRAG & DROP ----- */
+var dropState = {}, chipPlaced = {}, selectedChip = null;
+var chipText = { c1: '$x > 3$', c2: '$x &lt; 3$', c3: '$x > 9$', c4: '$0 &lt; x &lt; 0{,}25$' };
+
+function initDnd() {
+  document.querySelectorAll('.chip').forEach(function(chip) {
+    chip.addEventListener('dragstart', function(e) {
+      if (chip.classList.contains('used')) { e.preventDefault(); return; }
+      e.dataTransfer.setData('text/plain', chip.id);
+      chip.classList.add('dragging');
+    });
+    chip.addEventListener('dragend', function() { chip.classList.remove('dragging'); });
+    chip.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (chip.classList.contains('used')) return;
+      if (selectedChip && selectedChip !== chip) selectedChip.classList.remove('selected');
+      if (selectedChip === chip) { chip.classList.remove('selected'); selectedChip = null; }
+      else { chip.classList.add('selected'); selectedChip = chip; }
+    });
+  });
+  document.querySelectorAll('.drop-z').forEach(function(zone) {
+    zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      var chipId = e.dataTransfer.getData('text/plain');
+      if (chipId) placeChip(chipId, zone.id);
+    });
+    zone.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (selectedChip) {
+        placeChip(selectedChip.id, zone.id);
+        selectedChip.classList.remove('selected');
+        selectedChip = null;
+      } else if (dropState[zone.id]) {
+        returnChip(dropState[zone.id]);
+      }
+    });
+  });
+  document.addEventListener('click', function() {
+    if (selectedChip) { selectedChip.classList.remove('selected'); selectedChip = null; }
+  });
+}
+
+function placeChip(chipId, zoneId) {
+  if (chipPlaced[chipId]) clearZone(chipPlaced[chipId]);
+  if (dropState[zoneId]) returnChip(dropState[zoneId]);
+
+  var chip = document.getElementById(chipId);
+  var zone = document.getElementById(zoneId);
+  if (!chip || !zone) return;
+  chip.classList.add('used');
+  chip.setAttribute('draggable', 'false');
+  zone.innerHTML = chipText[chipId] || chipId;
+  zone.classList.add('filled');
+  zone.classList.remove('correct', 'wrong', 'drag-over');
+  dropState[zoneId] = chipId;
+  chipPlaced[chipId] = zoneId;
+  mj(zone);
+}
+
+function clearZone(zoneId) {
+  var zone = document.getElementById(zoneId);
+  if (!zone) return;
+  zone.innerHTML = 'thả vào đây';
+  zone.classList.remove('filled', 'correct', 'wrong');
+  var cid = dropState[zoneId];
+  if (cid) delete chipPlaced[cid];
+  delete dropState[zoneId];
+}
+
+function returnChip(chipId) {
+  var chip = document.getElementById(chipId);
+  if (chip) { chip.classList.remove('used'); chip.setAttribute('draggable', 'true'); }
+  var zid = chipPlaced[chipId];
+  if (zid) clearZone(zid);
+}
+
+function checkDnd() {
+  var correct = 0, total = 4;
+  document.querySelectorAll('.drop-z').forEach(function(zone) {
+    var expected = zone.dataset.ans;
+    var placed = dropState[zone.id];
+    zone.classList.remove('correct', 'wrong');
+    if (!placed) return;
+    var chip = document.getElementById(placed);
+    if (chip && chip.dataset.val === expected) { zone.classList.add('correct'); correct++; }
+    else { zone.classList.add('wrong'); }
+  });
+  var res = document.getElementById('dndResult');
+  res.classList.remove('ok', 'fail');
+  res.classList.add('show', correct === total ? 'ok' : 'fail');
+  if (correct === total) {
+    res.innerHTML = '<i class="fa-solid fa-trophy"></i> Tuyệt vời! Bạn đã làm đúng cả ' + correct + '/' + total + ' câu.';
+  } else {
+    res.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Bạn đúng ' + correct + '/' + total + '. Hãy xem lại các ô có viền đỏ và thử lại!';
+  }
+}
+
+function resetDnd() {
+  ['c1','c2','c3','c4'].forEach(function(cid) {
+    var chip = document.getElementById(cid);
+    if (chip) { chip.classList.remove('used','selected','dragging'); chip.setAttribute('draggable','true'); }
+  });
+  ['dz1','dz2','dz3','dz4'].forEach(function(zid) {
+    var zone = document.getElementById(zid);
+    if (zone) { zone.innerHTML = 'thả vào đây'; zone.classList.remove('filled','correct','wrong','drag-over'); }
+  });
+  dropState = {}; chipPlaced = {}; selectedChip = null;
+  var res = document.getElementById('dndResult');
+  res.classList.remove('show','ok','fail');
+  res.innerHTML = '';
+}
+
+/* ----- QUIZ ----- */
+var qScore = 0, qAnswered = 0, qTotal = 10;
+
+function pick(optEl, qId) {
+  var card = document.getElementById(qId);
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+
+  var isOk = optEl.dataset.correct === 'true';
+  card.querySelectorAll('.q-opt').forEach(function(o) {
+    o.classList.add('locked');
+    o.onclick = null;
+    if (!isOk && o.dataset.correct === 'true') o.classList.add('correct');
+  });
+  if (isOk) { optEl.classList.add('correct'); qScore++; }
+  else optEl.classList.add('wrong');
+
+  qAnswered++;
+  showScoreBar();
+  updateScore();
+
+  var exp = document.getElementById('e' + qId);
+  if (exp) {
+    exp.classList.add('show');
+    mj(exp);
+    setTimeout(function() {
+      try { exp.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+    }, 220);
+  }
+}
+
+function showScoreBar() {
+  var bar = document.getElementById('scoreBar');
+  if (!bar.classList.contains('show')) {
+    bar.classList.add('show');
+    document.body.classList.add('has-score-bar');
+  }
+}
+
+function updateScore() {
+  var pct = (qScore / qTotal) * 100;
+  document.getElementById('scoreFill').style.width = pct + '%';
+  document.getElementById('scoreCount').textContent = qScore + '/' + qTotal;
+  document.getElementById('scoreStars').textContent = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+  var ap = (qAnswered / qTotal) * 100;
+  document.getElementById('qpFill').style.width = ap + '%';
+  document.getElementById('qpText').textContent = qAnswered + ' / ' + qTotal + ' câu';
+}
+
+/* ----- INIT ----- */
+window.addEventListener('DOMContentLoaded', function() {
+  initRadios();
+  initApplet();
+  initDnd();
+  initNav();
+  drawApplet();
+});
+
+window.addEventListener('load', function() {
+  // Re-draw applet once fonts may have loaded
+  setTimeout(drawApplet, 100);
+});
+</script>
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+<button class="theme-toggle" id="hcToggle" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<button class="to-top" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>

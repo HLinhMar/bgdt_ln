@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đường Parabol – Toán 10</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']], processEscapes: true, tags: 'none' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: { typeset: false, ready() { MathJax.startup.defaultReady(); MathJax.startup.promise.then(function() { MathJax.typesetPromise([document.body]); }); } }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+:root {
+  --indigo-900:#312e81; --indigo-700:#4338ca; --indigo-500:#6366f1;
+  --indigo-200:#c7d2fe; --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  --amber-700:#b45309; --amber-600:#d97706; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  --green-700:#047857; --green-600:#059669; --green-100:#d1fae5; --green-50:#ecfdf5;
+  --red-700:#b91c1c; --red-600:#dc2626; --red-100:#fee2e2; --red-50:#fef2f2;
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1;
+  --slate-200:#e2e8f0; --slate-100:#f1f5f9;
+  --bg:#f8fafc; --white:#ffffff; --border:#e2e8f0;
+  --shadow-lg:0 8px 32px rgba(49,46,129,.12);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); font-size:15.5px; line-height:1.65; color:var(--slate-700); background:var(--bg); -webkit-font-smoothing:antialiased; }
+body.has-score-bar { padding-bottom:70px; }
+h1, h2, h3, h4 { font-family:var(--font-head); color:var(--slate-900); line-height:1.3; }
+p { margin:8px 0; }
+a { color:var(--indigo-700); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.hero { position:relative; background:linear-gradient(135deg, var(--indigo-900) 0%, #6d28d9 55%, var(--cyan-700) 100%); color:#fff; padding:64px 24px 84px; overflow:hidden; text-align:center; }
+.hero-grid-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size:48px 48px; pointer-events:none; }
+.hero-blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; pointer-events:none; }
+.hero-blob-1 { width:340px; height:340px; background:#22d3ee; top:-100px; left:-80px; }
+.hero-blob-2 { width:380px; height:380px; background:#c4b5fd; bottom:-140px; right:-90px; }
+.hero-inner { position:relative; z-index:2; max-width:880px; margin:0 auto; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.28); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); padding:6px 16px; border-radius:999px; font-size:12.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-bottom:18px; }
+.hero-badge i { font-size:11px; }
+.hero h1 { color:#fff; font-weight:700; font-size:clamp(1.55rem, 3.6vw, 2.55rem); letter-spacing:-.01em; line-height:1.25; margin-bottom:10px; }
+.hero-sub { font-size:clamp(.95rem, 1.6vw, 1.08rem); opacity:.92; max-width:680px; margin:0 auto 22px; }
+.hero-tags { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; }
+.hero-tag { background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.25); padding:5px 14px; border-radius:999px; font-size:.78rem; font-weight:600; }
+
+.nav-wrap { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); -webkit-backdrop-filter:saturate(180%) blur(10px); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); }
+.nav { max-width:1080px; margin:0 auto; padding:10px 16px; display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+.nav::-webkit-scrollbar { height:4px; }
+.nav::-webkit-scrollbar-thumb { background:var(--indigo-200); border-radius:2px; }
+.nav-link { display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:999px; font-size:13px; font-weight:700; color:var(--slate-500); white-space:nowrap; border:1.5px solid transparent; transition:all .18s; }
+.nav-link i { font-size:11px; opacity:.85; }
+.nav-link:hover { background:var(--indigo-50); color:var(--indigo-700); text-decoration:none; }
+.nav-link.active { background:var(--indigo-700); color:#fff; border-color:var(--indigo-700); box-shadow:0 4px 12px rgba(67,56,202,.25); }
+.nav-link.active i { opacity:1; }
+
+main { max-width:1080px; margin:0 auto; padding:32px 16px 60px; }
+.card { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:28px 32px; margin-bottom:28px; border-left:5px solid var(--indigo-700); position:relative; }
+.c-amber  { border-left-color:var(--amber-600); }
+.c-indigo { border-left-color:var(--indigo-700); }
+.c-cyan   { border-left-color:var(--cyan-600); }
+.c-violet { border-left-color:var(--violet-600); }
+.c-green  { border-left-color:var(--green-600); }
+.c-red    { border-left-color:var(--red-600); }
+.sec-title { display:flex; align-items:center; gap:16px; margin-bottom:22px; padding-bottom:18px; border-bottom:1.5px dashed var(--border); }
+.sec-icon { width:54px; height:54px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:22px; color:#fff; flex-shrink:0; box-shadow:var(--shadow-sm); }
+.ic-amber  { background:linear-gradient(135deg, var(--amber-600), #ea580c); }
+.ic-indigo { background:linear-gradient(135deg, var(--indigo-700), var(--indigo-500)); }
+.ic-cyan   { background:linear-gradient(135deg, var(--cyan-600), var(--cyan-400)); }
+.ic-violet { background:linear-gradient(135deg, var(--violet-600), #a78bfa); }
+.ic-green  { background:linear-gradient(135deg, var(--green-600), #34d399); }
+.ic-red    { background:linear-gradient(135deg, var(--red-600), #fb7185); }
+.sec-label { font-size:11.5px; font-weight:800; color:var(--slate-500); letter-spacing:.08em; text-transform:uppercase; margin-bottom:2px; }
+.sec-title h2 { font-size:clamp(1.15rem, 2.1vw, 1.4rem); font-weight:700; color:var(--slate-900); line-height:1.3; }
+
+.box { border-radius:var(--radius-md); padding:15px 20px; margin:16px 0; border:1.5px solid; display:flex; gap:12px; align-items:flex-start; }
+.box i { font-size:17px; flex-shrink:0; margin-top:2px; }
+.box .box-body { flex:1; }
+.box .box-body strong:first-child { display:block; margin-bottom:4px; font-size:14.5px; }
+.box-in { background:var(--indigo-50); border-color:var(--indigo-200); color:var(--indigo-900); }
+.box-in i { color:var(--indigo-700); }
+.box-am { background:var(--amber-50); border-color:var(--amber-100); color:#78350f; }
+.box-am i { color:var(--amber-600); }
+.box-gr { background:var(--green-50); border-color:#a7f3d0; color:#064e3b; }
+.box-gr i { color:var(--green-600); }
+.box-cy { background:var(--cyan-50); border-color:var(--cyan-100); color:#164e63; }
+.box-cy i { color:var(--cyan-600); }
+.box-re { background:var(--red-50); border-color:#fecaca; color:#7f1d1d; }
+.box-re i { color:var(--red-600); }
+
+.intro-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:16px; }
+.intro-card { background:var(--amber-50); border:1.5px solid var(--amber-100); border-radius:var(--radius-md); padding:18px 18px; transition:all .2s; }
+.intro-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+.intro-ic { width:42px; height:42px; border-radius:var(--radius-sm); background:linear-gradient(135deg, var(--amber-600), var(--orange-600)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:10px; }
+.intro-card h3 { font-size:14.5px; color:#78350f; margin-bottom:6px; }
+.intro-card p { font-size:13.5px; margin:0; color:#6b4f1d; }
+
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:14px 0; }
+.tc { background:var(--indigo-50); border-radius:var(--radius-md); padding:20px 22px; border:1.5px solid var(--indigo-200); }
+.tc h3 { font-family:var(--font-head); font-size:14.5px; color:var(--indigo-900); margin-bottom:14px; padding-bottom:11px; border-bottom:1.5px solid var(--indigo-200); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.tc.tc-cy { background:var(--cyan-50); border-color:var(--cyan-100); }
+.tc.tc-cy h3 { color:#164e63; border-bottom-color:var(--cyan-100); }
+.chip-lab { border-radius:999px; padding:2px 10px; font-size:11px; font-weight:800; white-space:nowrap; }
+.cl-ind { background:var(--indigo-700); color:#fff; }
+.cl-cy  { background:var(--cyan-600); color:#fff; }
+.tc-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; gap:10px; border-bottom:1px dashed var(--slate-200); }
+.tc-row:last-child { border-bottom:none; }
+.tc-row .lbl { font-weight:700; font-size:12.5px; color:var(--slate-500); flex-shrink:0; }
+.tc-row .val { font-weight:700; color:var(--slate-900); text-align:right; font-size:13.5px; }
+.monotag { display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:800; padding:3px 10px; border-radius:999px; }
+.mt-up { background:var(--green-100); color:var(--green-700); }
+.mt-dn { background:var(--red-100); color:var(--red-700); }
+.fblock { background:var(--white); border:1px solid var(--indigo-200); border-radius:var(--radius-sm); padding:10px 16px; text-align:center; margin:10px 0; font-size:15px; overflow-x:auto; }
+.concl-box { background:linear-gradient(135deg, var(--green-50), var(--cyan-50)); border:1.5px solid #a7f3d0; border-radius:var(--radius-md); padding:12px 18px; margin:14px 0; font-weight:700; text-align:center; color:var(--green-700); font-size:14.5px; }
+.chart-wrap { text-align:center; margin:16px 0; background:var(--indigo-50); border:1.5px solid var(--indigo-200); border-radius:var(--radius-md); padding:14px; overflow-x:auto; }
+.chart-wrap svg { max-width:100%; height:auto; display:inline-block; }
+.chart-cap { font-size:12.5px; color:var(--slate-500); font-weight:700; margin-top:6px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; background:var(--white); border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm); font-size:13.5px; }
+thead th { background:var(--indigo-700); color:#fff; font-weight:700; }
+th, td { padding:11px 14px; text-align:left; border-bottom:1px solid var(--border); }
+tbody tr:nth-child(even) { background:var(--indigo-50); }
+tbody tr:last-child td { border-bottom:none; }
+
+.viewer-layout { display:grid; grid-template-columns:1fr 300px; gap:22px; align-items:start; margin-top:14px; }
+.canvas-wrap { background:#f0f4ff; border-radius:var(--radius-md); border:1.5px solid var(--indigo-200); overflow:hidden; display:flex; align-items:center; justify-content:center; padding:8px; }
+canvas { display:block; max-width:100%; }
+@media (min-width:781px) {
+  .canvas-wrap { height:min(62vh, 540px); min-height:380px; }
+  canvas#appletCanvas { width:auto; max-width:100%; height:100%; max-height:100%; aspect-ratio:560/400; }
+}
+.ctrl-panel { background:var(--slate-100); border-radius:var(--radius-md); padding:14px 16px; border:1.5px solid var(--border); }
+.ctrl-panel h4 { font-family:var(--font-head); font-weight:700; font-size:13.5px; color:var(--slate-900); margin-bottom:10px; display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:1px dashed var(--border); }
+.ctrl-panel h4 i { color:var(--cyan-600); font-size:13px; }
+.ctrl-group { margin-bottom:11px; }
+.a-row { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px; }
+.lbl-inline { font-size:10.5px; font-weight:800; color:var(--slate-500); letter-spacing:.04em; text-transform:uppercase; }
+.a-big { font-family:var(--font-head); font-size:22px; font-weight:700; color:var(--indigo-700); line-height:1; }
+.ctrl-group input[type="range"] { width:100%; accent-color:var(--indigo-700); cursor:pointer; }
+.range-ticks { display:flex; justify-content:space-between; font-size:9.5px; color:var(--slate-500); margin-top:3px; font-weight:700; }
+.toggle-row { display:flex; align-items:center; gap:8px; margin:8px 0 4px; font-size:12.5px; font-weight:700; color:var(--slate-700); }
+.toggle-row input { width:16px; height:16px; accent-color:var(--cyan-600); cursor:pointer; }
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; }
+.info-mini { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:7px 9px; text-align:center; }
+.info-mini.span-2 { grid-column:span 2; text-align:left; }
+.info-mini .ip-label { font-size:9.5px; font-weight:800; color:var(--slate-500); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
+.info-mini .ip-val { font-family:var(--font-head); font-size:13px; color:var(--indigo-700); font-weight:700; line-height:1.3; word-break:break-word; }
+.info-mini.span-2 .ip-val { font-family:var(--font-body); font-size:13px; font-weight:700; }
+.info-mini.hl { background:var(--green-50); border-color:#a7f3d0; }
+.info-mini.hl .ip-val { color:var(--green-700); }
+
+.chip-bank { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; padding:12px 14px; background:var(--indigo-50); border:1.5px dashed var(--indigo-200); border-radius:var(--radius-md); min-height:56px; }
+.chip { background:var(--indigo-700); color:#fff; border-radius:999px; padding:7px 16px; font-size:14.5px; font-weight:700; cursor:grab; user-select:none; transition:all .18s; box-shadow:0 2px 10px rgba(67,56,202,.22); touch-action:none; }
+.chip:hover { transform:scale(1.06) translateY(-2px); box-shadow:0 6px 18px rgba(67,56,202,.35); }
+.chip.dragging { opacity:.6; cursor:grabbing; }
+.chip.selected { background:var(--cyan-600); box-shadow:0 0 0 4px rgba(8,145,178,.25); }
+.chip.used { opacity:.3; cursor:not-allowed; pointer-events:none; }
+.dnd-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; }
+.drop-item { display:flex; align-items:center; gap:10px; background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:10px 14px; }
+.drop-q { font-size:14px; font-weight:700; color:var(--slate-700); flex:1; line-height:1.4; }
+.drop-z { min-width:96px; min-height:42px; border:2px dashed var(--slate-300); border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--slate-400); background:var(--white); transition:all .18s; padding:6px 10px; text-align:center; }
+.drop-z.drag-over { border-color:var(--cyan-600); background:var(--cyan-50); color:var(--cyan-600); }
+.drop-z.filled    { border-style:solid; border-color:var(--indigo-200); background:var(--indigo-50); color:var(--indigo-700); }
+.drop-z.correct   { border-color:var(--green-600); background:var(--green-100); color:var(--green-700); border-style:solid; }
+.drop-z.wrong     { border-color:var(--red-600); background:var(--red-100); color:var(--red-700); border-style:solid; }
+.dnd-btns { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:9px 22px; border-radius:var(--radius-md); font-size:14.5px; font-weight:800; border:none; cursor:pointer; font-family:var(--font-body); transition:all .2s; }
+.btn-primary { background:var(--indigo-700); color:#fff; }
+.btn-primary:hover { background:var(--indigo-900); transform:translateY(-2px); box-shadow:0 4px 14px rgba(67,56,202,.3); }
+.btn-secondary { background:var(--slate-200); color:var(--slate-700); }
+.btn-secondary:hover { background:var(--slate-300); }
+.dnd-result { padding:11px 16px; border-radius:var(--radius-md); font-weight:700; font-size:14.5px; display:none; margin-top:12px; }
+.dnd-result.show { display:flex; align-items:center; gap:8px; }
+.dnd-result.ok   { background:var(--green-100); color:var(--green-700); border:1.5px solid #6ee7b7; }
+.dnd-result.fail { background:var(--red-100); color:var(--red-700); border:1.5px solid #fca5a5; }
+
+.acc { border:1.5px solid var(--border); border-radius:var(--radius-md); overflow:hidden; margin-bottom:14px; background:var(--white); }
+.acc-btn { width:100%; background:var(--slate-100); display:flex; align-items:center; justify-content:space-between; padding:15px 22px; border:none; cursor:pointer; font-size:14px; font-weight:700; color:var(--slate-900); text-align:left; transition:all .18s; gap:10px; font-family:var(--font-body); }
+.acc-btn:hover { background:var(--indigo-50); color:var(--indigo-700); }
+.acc-btn.open  { background:var(--indigo-50); color:var(--indigo-700); }
+.acc-badge { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11px; font-weight:800; background:var(--indigo-700); color:#fff; margin-right:8px; }
+.acc-btn.open .acc-badge { background:var(--indigo-900); }
+.acc-arrow { transition:transform .3s; font-size:12px; flex-shrink:0; }
+.acc-btn.open .acc-arrow { transform:rotate(180deg); }
+.acc-title-text { flex:1; }
+.acc-body { max-height:0; overflow:hidden; transition:max-height .55s cubic-bezier(.4,0,.2,1); background:var(--white); }
+.acc-body.open { max-height:2600px; }
+.acc-inner { padding:22px 26px; }
+.step { display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+.sn { width:32px; height:32px; border-radius:50%; background:var(--indigo-700); color:#fff; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.sc { flex:1; padding-top:4px; font-size:14.5px; }
+.sc strong:first-child { display:block; font-size:11px; color:var(--slate-500); font-weight:800; margin-bottom:4px; text-transform:uppercase; letter-spacing:.04em; }
+
+.fc-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:14px; }
+.fc { perspective:900px; height:175px; cursor:pointer; }
+.fc-inner { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .6s cubic-bezier(.4,0,.2,1); }
+.fc.flipped .fc-inner { transform:rotateY(180deg); }
+.fc-front, .fc-back { position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden; border-radius:var(--radius-md); padding:18px 16px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.fc-front { background:linear-gradient(135deg, var(--indigo-700) 0%, var(--violet-600) 100%); color:#fff; font-weight:700; font-size:13.5px; line-height:1.5; box-shadow:var(--shadow); }
+.fc-front .fc-icon { font-size:22px; margin-bottom:8px; opacity:.9; }
+.fc-q { font-size:13.5px; line-height:1.45; }
+.fc-hint { font-size:10px; opacity:.7; margin-top:9px; font-weight:600; }
+.fc-back { background:var(--cyan-50); border:1.5px solid var(--cyan-100); color:var(--cyan-700); transform:rotateY(180deg); font-weight:700; font-size:14px; line-height:1.5; }
+.fc-back-note { font-size:11px; color:var(--slate-500); font-weight:600; margin-top:8px; }
+
+.quiz-prog { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.qp-track { flex:1; height:8px; background:var(--slate-100); border-radius:999px; overflow:hidden; }
+.qp-fill { height:100%; width:0%; background:linear-gradient(90deg, var(--red-600), var(--violet-600)); border-radius:999px; transition:width .45s; }
+.qp-text { font-size:13px; font-weight:800; color:var(--slate-500); white-space:nowrap; }
+.q-card { border:1.5px solid var(--border); border-radius:var(--radius-md); padding:20px 22px; margin-bottom:16px; background:var(--white); transition:box-shadow .2s; }
+.q-card:hover { box-shadow:var(--shadow-sm); }
+.q-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.q-num { display:inline-block; padding:3px 10px; border-radius:999px; background:var(--indigo-100); color:var(--indigo-700); font-size:11.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+.q-lvl { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:.03em; }
+.q-lvl.nb { background:var(--green-100); color:var(--green-700); }
+.q-lvl.th { background:#dbeafe; color:#1d4ed8; }
+.q-lvl.vd { background:var(--violet-100); color:var(--violet-700); }
+.q-lvl.vc { background:var(--red-100); color:var(--red-700); }
+.q-text { font-weight:700; color:var(--slate-900); margin-bottom:14px; line-height:1.55; font-size:14.5px; }
+.q-opts { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; }
+.q-opt { padding:12px 10px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--white); font-size:13.5px; font-weight:600; color:var(--slate-700); text-align:center; transition:all .18s; cursor:pointer; line-height:1.45; display:flex; align-items:center; justify-content:center; min-height:60px; font-family:var(--font-body); }
+.q-opt-inner { display:inline-block; text-align:center; width:100%; }
+.q-opt-inner mjx-container { display:inline-block !important; vertical-align:-0.15em; margin:0 1px; }
+.q-opt:hover:not(.locked) { border-color:var(--indigo-500); color:var(--indigo-700); background:var(--indigo-50); transform:translateY(-1px); }
+.q-opt.correct { background:var(--green-100); border-color:var(--green-600); color:var(--green-700); }
+.q-opt.wrong   { background:var(--red-100); border-color:var(--red-600); color:var(--red-700); }
+.q-opt.locked  { cursor:not-allowed; }
+.q-opt.locked:hover { transform:none; }
+.q-explain { margin-top:14px; padding:13px 16px; border-radius:var(--radius-sm); background:var(--amber-50); border:1.5px solid var(--amber-100); font-size:13px; color:#78350f; line-height:1.7; display:none; }
+.q-explain.show { display:block; }
+.q-explain-title { font-weight:800; color:#92400e; margin-bottom:5px; display:flex; align-items:center; gap:6px; font-size:13px; }
+
+.score-bar { position:fixed; bottom:0; left:0; right:0; z-index:200; background:var(--white); border-top:2px solid var(--indigo-200); padding:10px 28px; display:flex; align-items:center; gap:16px; box-shadow:0 -6px 30px rgba(49,46,129,.12); transform:translateY(100%); transition:transform .35s; }
+.score-bar.show { transform:translateY(0); }
+.score-label { font-weight:800; font-size:13.5px; color:var(--slate-900); white-space:nowrap; }
+.score-label i { color:var(--indigo-700); margin-right:6px; }
+.score-track { flex:1; height:10px; background:var(--slate-100); border-radius:999px; overflow:hidden; max-width:480px; }
+.score-fill { height:100%; width:0%; background:linear-gradient(90deg, var(--indigo-700), var(--cyan-600)); border-radius:999px; transition:width .45s; }
+.score-count { font-family:var(--font-head); font-size:22px; font-weight:700; color:var(--indigo-700); white-space:nowrap; }
+.score-stars { font-size:15px; }
+
+ul.check-list { list-style:none; padding:0; margin:6px 0; }
+ul.check-list li { padding:3px 0 3px 24px; position:relative; font-size:14px; }
+ul.check-list li::before { content:"\f00c"; font-family:"Font Awesome 6 Free"; font-weight:900; position:absolute; left:0; color:var(--green-600); font-size:12px; top:5px; }
+footer { text-align:center; padding:30px 16px 40px; color:var(--slate-500); font-size:13px; }
+footer strong { color:var(--slate-700); }
+
+@media (max-width:1024px) { .fc-grid { grid-template-columns:repeat(2, 1fr); } .q-opts { grid-template-columns:repeat(2, 1fr); } .intro-grid { grid-template-columns:1fr; } }
+@media (max-width:780px) {
+  .hero { padding:48px 18px 64px; } .card { padding:22px 18px; } .sec-icon { width:46px; height:46px; font-size:18px; }
+  .g2 { grid-template-columns:1fr; } .viewer-layout { grid-template-columns:1fr; }
+  .canvas-wrap { height:auto !important; padding:6px; } canvas#appletCanvas { width:100% !important; height:auto !important; aspect-ratio:560/400; }
+  .dnd-grid { grid-template-columns:1fr; } .nav { padding:8px 14px; }
+}
+@media (max-width:600px) {
+  body { font-size:14.5px; } .fc-grid { grid-template-columns:1fr; } .q-opts { grid-template-columns:1fr; }
+  .sec-title { gap:12px; padding-bottom:14px; margin-bottom:18px; } .sec-title h2 { font-size:17px; }
+  .sec-icon { width:42px; height:42px; font-size:16px; } .acc-inner { padding:16px 18px; }
+  .score-bar { padding:8px 14px; gap:10px; } .score-label { font-size:12.5px; } .score-count { font-size:18px; }
+  body.has-score-bar { padding-bottom:60px; } .chip { font-size:13.5px; padding:6px 13px; }
+  .hero h1 { font-size:1.5rem; } .hero-sub { font-size:.92rem; }
+}
+@media (max-width:380px) { main { padding:24px 10px 50px; } .card { padding:18px 14px; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; scroll-behavior:auto !important; } .fc-inner { transition:none !important; } }
+
+.theme-toggle { position:fixed; top:14px; right:14px; z-index:300; width:44px; height:44px; border-radius:50%; border:none; background:var(--indigo-700); color:#fff; cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg); display:flex; align-items:center; justify-content:center; transition:transform .2s; }
+.theme-toggle:hover { transform:scale(1.08); }
+.theme-toggle:focus-visible { outline:3px solid var(--amber-600); outline-offset:2px; }
+body.hc { --slate-700:#0f172a; --slate-500:#334155; --slate-400:#475569; --border:#64748b; }
+body.hc .card { border:1.5px solid #475569; border-left-width:6px; }
+body.hc .q-opt, body.hc .drop-z, body.hc .tc, body.hc .box, body.hc .acc, body.hc .info-mini, body.hc table { border-width:2px; }
+body.hc .nav-link { color:#1e293b; }
+body.hc .sec-label, body.hc .qp-text, body.hc .lbl-inline, body.hc .info-mini .ip-label, body.hc .range-ticks, body.hc .fc-back-note, body.hc .chart-cap, body.hc footer { color:#334155; }
+body.hc .fc-hint { opacity:1; }
+body.hc .q-text, body.hc .drop-q, body.hc p { color:#0f172a; }
+a:focus-visible, button:focus-visible, .q-opt:focus-visible, .fc:focus-visible, .drop-z:focus-visible, .chip:focus-visible { outline:3px solid var(--amber-600); outline-offset:2px; border-radius:var(--radius-sm); }
+
+.to-top { position:fixed; bottom:18px; right:16px; z-index:210; width:46px; height:46px; border-radius:50%; border:none; background:var(--indigo-700); color:#fff; font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transform:translateY(10px); transition:opacity .25s, transform .25s; display:flex; align-items:center; justify-content:center; }
+.to-top.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top { bottom:74px; }
+.qp-reset { border:1.5px solid var(--border); background:var(--white); color:var(--slate-500); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .18s; }
+.qp-reset:hover { background:var(--red-50); color:var(--red-600); border-color:var(--red-600); }
+.quiz-summary { margin-top:18px; padding:22px 24px; border-radius:var(--radius-md); background:linear-gradient(135deg, var(--indigo-50), var(--cyan-50)); border:1.5px solid var(--indigo-200); }
+.qs-head { font-family:var(--font-head); font-weight:700; font-size:15px; color:var(--indigo-900); display:flex; align-items:center; gap:8px; }
+.qs-head i { color:var(--indigo-700); }
+.qs-score { font-family:var(--font-head); font-size:34px; font-weight:700; color:var(--indigo-700); margin:6px 0 2px; }
+.qs-stars { font-size:20px; }
+.qs-msg { font-weight:700; color:var(--slate-700); margin-bottom:12px; }
+.qs-table { width:100%; margin:4px 0; font-size:13.5px; }
+.qs-table thead th { background:var(--indigo-700); color:#fff; }
+
+.preset-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:14px; }
+.preset-label { font-size:12.5px; font-weight:800; color:var(--slate-500); }
+.preset-label i { color:var(--cyan-600); }
+.preset-btn { border:1.5px solid var(--cyan-100); background:var(--cyan-50); color:var(--cyan-700); border-radius:999px; padding:6px 14px; font-size:13px; font-weight:700; cursor:pointer; font-family:var(--font-body); transition:all .18s; }
+.preset-btn:hover { background:var(--cyan-600); color:#fff; border-color:var(--cyan-600); transform:translateY(-1px); }
+.guide-box { margin-top:14px; padding:16px 18px; border-radius:var(--radius-md); background:var(--cyan-50); border:1.5px solid var(--cyan-100); }
+.guide-title { font-family:var(--font-head); font-weight:700; font-size:14px; color:#164e63; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.guide-box details { background:var(--white); border:1px solid var(--cyan-100); border-radius:var(--radius-sm); padding:8px 14px; margin-bottom:8px; }
+.guide-box details[open] { box-shadow:var(--shadow-sm); }
+.guide-box summary { cursor:pointer; font-weight:700; color:var(--slate-700); font-size:13.5px; }
+.guide-box summary:hover { color:var(--cyan-700); }
+.guide-box details p { font-size:13.5px; margin:8px 0 2px; color:var(--slate-700); }
+
+.hint-btn { margin-bottom:12px; border:1.5px solid var(--amber-100); background:var(--amber-50); color:var(--amber-700); border-radius:var(--radius-sm); padding:6px 14px; font-size:12.5px; font-weight:800; cursor:pointer; font-family:var(--font-body); transition:all .18s; display:inline-flex; align-items:center; gap:6px; }
+.hint-btn:hover { background:var(--amber-600); color:#fff; border-color:var(--amber-600); }
+.hint-btn:disabled { opacity:.5; cursor:default; }
+.q-hint { margin-bottom:12px; padding:10px 14px; border-radius:var(--radius-sm); background:var(--amber-50); border:1px dashed var(--amber-600); color:#78350f; font-size:13px; }
+.q-hint i { color:var(--amber-600); margin-right:4px; }
+
+.print-btn { position:fixed; top:66px; right:14px; z-index:300; width:44px; height:44px; border-radius:50%; border:none; background:var(--cyan-600); color:#fff; cursor:pointer; font-size:16px; box-shadow:var(--shadow-lg); display:flex; align-items:center; justify-content:center; transition:transform .2s; }
+.print-btn:hover { transform:scale(1.08); }
+.print-btn:focus-visible { outline:3px solid var(--amber-600); outline-offset:2px; }
+@media print {
+  .nav-wrap, .theme-toggle, .print-btn, .to-top, .score-bar,
+  .hero-blob, .hero-grid-bg, .hero-sub, .hero-tags, .hero-badge,
+  .hint-btn, .q-hint, .qp-reset, .quiz-prog, .quiz-summary, .q-explain,
+  #s-3, #s-4, #s-6 { display:none !important; }
+  body { background:#fff !important; color:#000; font-size:12pt; padding:0; }
+  .hero { background:#fff !important; color:#000 !important; padding:6px 0 10px; border-bottom:2px solid #000; }
+  .hero h1 { color:#000; font-size:20pt; }
+  main { padding:6px 0; max-width:100%; }
+  .card { box-shadow:none; border:1px solid #999; border-left:3px solid #333; break-inside:avoid; page-break-inside:avoid; margin-bottom:12px; }
+  .sec-icon { background:#eee !important; color:#000 !important; box-shadow:none; }
+  .acc-body { max-height:none !important; overflow:visible !important; }
+  .q-opt { border:1px solid #444 !important; background:#fff !important; color:#000 !important; }
+  .q-opts { grid-template-columns:repeat(2,1fr); }
+  a { color:#000; text-decoration:none; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="hcToggle" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<!-- ======================== HERO ======================== -->
+<header class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><i class="fa-solid fa-graduation-cap"></i> Toán 10 · Chân trời sáng tạo</div>
+    <h1>Đường Parabol — Phương trình chính tắc</h1>
+    <p class="hero-sub">Bài giảng e-learning tương tác: định nghĩa — đồ thị động với tiêu điểm &amp; đường chuẩn — game ghép yếu tố — flashcards 3D — 10 câu trắc nghiệm có phản hồi.</p>
+    <div class="hero-tags">
+      <span class="hero-tag"><i class="fa-solid fa-satellite-dish"></i> Anten chảo</span>
+      <span class="hero-tag"><i class="fa-solid fa-sliders"></i> Applet p &amp; M động</span>
+      <span class="hero-tag"><i class="fa-solid fa-gamepad"></i> Game ghép yếu tố</span>
+      <span class="hero-tag"><i class="fa-solid fa-clone"></i> Flashcards 3D</span>
+      <span class="hero-tag"><i class="fa-solid fa-clipboard-check"></i> 10 câu trắc nghiệm</span>
+    </div>
+  </div>
+</header>
+
+<!-- ======================== STICKY NAV ======================== -->
+<div class="nav-wrap">
+  <nav class="nav" id="mainNav">
+    <a class="nav-link" href="#s-1"><i class="fa-solid fa-rocket"></i> Khởi động</a>
+    <a class="nav-link" href="#s-2"><i class="fa-solid fa-book"></i> Lý thuyết</a>
+    <a class="nav-link" href="#s-3"><i class="fa-solid fa-chart-line"></i> Đồ thị động</a>
+    <a class="nav-link" href="#s-4"><i class="fa-solid fa-gamepad"></i> Game</a>
+    <a class="nav-link" href="#s-5"><i class="fa-solid fa-list-ol"></i> Ví dụ</a>
+    <a class="nav-link" href="#s-mm"><i class="fa-solid fa-sitemap"></i> Sơ đồ</a>
+    <a class="nav-link" href="#s-6"><i class="fa-solid fa-clone"></i> Flashcards</a>
+    <a class="nav-link" href="#s-7"><i class="fa-solid fa-clipboard-check"></i> Trắc nghiệm</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ======================== SECTION 1: KHỞI ĐỘNG ======================== -->
+<section class="card c-amber" id="s-1">
+  <div class="sec-title">
+    <div class="sec-icon ic-amber"><i class="fa-solid fa-rocket"></i></div>
+    <div>
+      <div class="sec-label">Phần 1 · Khởi động</div>
+      <h2>Parabol — đường cong của ánh sáng và chuyển động</h2>
+    </div>
+  </div>
+
+  <p>Parabol xuất hiện ở khắp nơi và mang một <strong>tính chất quang học</strong> kỳ diệu: mọi tia song song với trục đều phản xạ về đúng <em>một điểm</em> — tiêu điểm.</p>
+
+  <div class="intro-grid">
+    <div class="intro-card">
+      <div class="intro-ic"><i class="fa-solid fa-basketball"></i></div>
+      <h3>Chuyển động ném</h3>
+      <p>Bỏ qua sức cản không khí, quỹ đạo vật ném xiên (quả bóng, tia nước đài phun) luôn là một đường <strong>parabol</strong>.</p>
+    </div>
+    <div class="intro-card">
+      <div class="intro-ic"><i class="fa-solid fa-satellite-dish"></i></div>
+      <h3>Anten chảo &amp; viễn thông</h3>
+      <p>Chảo thu sóng dạng <em>paraboloid</em>: mọi tín hiệu song song chiếu tới đều <strong>hội tụ tại tiêu điểm</strong> — nơi đặt bộ thu.</p>
+    </div>
+    <div class="intro-card">
+      <div class="intro-ic"><i class="fa-solid fa-car-side"></i></div>
+      <h3>Đèn pha ô tô</h3>
+      <p>Đặt bóng đèn tại tiêu điểm chóa parabol, ánh sáng phản xạ thành <strong>chùm tia song song</strong> chiếu đi rất xa.</p>
+    </div>
+  </div>
+
+  <div class="box box-am" style="margin-top:18px;">
+    <i class="fa-solid fa-circle-question"></i>
+    <div class="box-body">
+      <strong>Bài toán mở đầu (giải ở Phần 5 · Ví dụ 3)</strong>
+      <p>Một chảo anten có mặt cắt là parabol, <strong>đường kính miệng 8 dm</strong> và <strong>sâu 2 dm</strong>. Cần đặt bộ thu tín hiệu (tiêu điểm) cách đỉnh chảo bao nhiêu để bắt sóng tốt nhất?</p>
+    </div>
+  </div>
+
+  <div class="box box-cy">
+    <i class="fa-solid fa-arrows-left-right-to-line"></i>
+    <div class="box-body">
+      <strong>Ý tưởng cốt lõi</strong>
+      <p>Một điểm thuộc parabol luôn <strong>cách đều</strong> tiêu điểm $F$ và đường chuẩn $\Delta$: $MF = d(M, \Delta)$. Hãy quan sát quy luật này trong <strong>Phần 3 · Đồ thị động</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 2: LÝ THUYẾT ======================== -->
+<section class="card c-indigo" id="s-2">
+  <div class="sec-title">
+    <div class="sec-icon ic-indigo"><i class="fa-solid fa-book"></i></div>
+    <div>
+      <div class="sec-label">Phần 2 · Lý thuyết trọng tâm</div>
+      <h2>Định nghĩa & Phương trình chính tắc</h2>
+    </div>
+  </div>
+
+  <div class="box box-in">
+    <i class="fa-solid fa-pen-nib"></i>
+    <div class="box-body">
+      <strong>Định nghĩa</strong>
+      <p>Cho điểm $F$ cố định và đường thẳng $\Delta$ cố định không đi qua $F$. Đường <strong>parabol</strong> là tập hợp các điểm $M$ cách đều $F$ và $\Delta$: $MF = d(M, \Delta)$.</p>
+      <p>$F$ là <strong>tiêu điểm</strong>; $\Delta$ là <strong>đường chuẩn</strong>; khoảng cách từ $F$ đến $\Delta$ là <strong>tham số tiêu</strong> $p &gt; 0$.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; color:var(--indigo-900); margin:18px 0 10px;"><i class="fa-solid fa-circle-dot" style="color:var(--indigo-500);"></i> 2.1 · Phương trình chính tắc</h3>
+  <p>Chọn hệ trục $Oxy$ với $O$ là trung điểm đoạn vuông góc từ $F$ tới $\Delta$, trục $Ox$ đi qua $F$. Khi đó:</p>
+
+  <div class="fblock">$$(P):\ y^2 = 2px \qquad (p &gt; 0)$$</div>
+
+  <div class="g2">
+    <div class="tc">
+      <h3><span class="chip-lab cl-ind">Đặc điểm nhận diện</span></h3>
+      <div class="tc-row"><span class="lbl">Bậc của biến</span><span class="val">$y$ bậc 2, $x$ bậc 1</span></div>
+      <div class="tc-row"><span class="lbl">Đỉnh</span><span class="val">$O(0;0)$</span></div>
+      <div class="tc-row"><span class="lbl">Trục đối xứng</span><span class="val">trục $Ox$ ($y = 0$)</span></div>
+      <div class="tc-row"><span class="lbl">Dạng mở</span><span class="val">mở sang phải ($x \ge 0$)</span></div>
+    </div>
+    <div class="tc tc-cy">
+      <h3><span class="chip-lab cl-cy">Tiêu điểm &amp; đường chuẩn</span></h3>
+      <div class="tc-row"><span class="lbl">Tiêu điểm</span><span class="val">$F\left(\dfrac{p}{2}; 0\right)$</span></div>
+      <div class="tc-row"><span class="lbl">Đường chuẩn</span><span class="val">$\Delta: x = -\dfrac{p}{2}$</span></div>
+      <div class="tc-row"><span class="lbl">Bán kính qua tiêu</span><span class="val">$MF = x_M + \dfrac{p}{2}$</span></div>
+      <div class="tc-row"><span class="lbl">Tâm sai</span><span class="val">$e = 1$</span></div>
+    </div>
+  </div>
+
+  <div class="box box-re">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <div class="box-body">
+      <strong>Ba bẫy sai lầm thường gặp</strong>
+      <p><strong>① Nhầm với hàm $y = ax^2$:</strong> đó là parabol trục đứng học ở THCS; dạng <em>chính tắc</em> lớp 10 là $y^2 = 2px$ (trục $Ox$).</p>
+      <p><strong>② Quên điều kiện $p &gt; 0$:</strong> hệ số của $x$ phải dương thì mới là dạng chính tắc.</p>
+      <p><strong>③ Lẫn $p$ và $\dfrac{p}{2}$:</strong> tiêu điểm là $\left(\dfrac{p}{2};0\right)$, đường chuẩn $x=-\dfrac{p}{2}$ — không phải $\pm p$.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; color:var(--indigo-900); margin:18px 0 10px;"><i class="fa-solid fa-circle-dot" style="color:var(--indigo-500);"></i> 2.2 · Các yếu tố hình học</h3>
+
+  <div class="chart-wrap">
+    <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;" role="img" aria-labelledby="svgTitle svgDesc">
+      <title id="svgTitle">Sơ đồ các yếu tố của đường parabol</title>
+      <desc id="svgDesc">Parabol đỉnh O mở sang phải, trục đối xứng là trục hoành. Tiêu điểm F nằm bên phải đỉnh; đường chuẩn là đường thẳng đứng bên trái. Một điểm M trên parabol cách đều tiêu điểm F và đường chuẩn.</desc>
+      <!-- axes -->
+      <line x1="30" y1="160" x2="490" y2="160" stroke="#94a3b8" stroke-width="1.6"/>
+      <line x1="150" y1="20" x2="150" y2="300" stroke="#94a3b8" stroke-width="1.6"/>
+      <polygon points="490,160 480,155 480,165" fill="#94a3b8"/>
+      <text x="495" y="164" font-size="13" fill="#64748b" font-style="italic" font-family="serif">x</text>
+      <text x="156" y="22" font-size="13" fill="#64748b" font-style="italic" font-family="serif">y</text>
+      <!-- directrix x = -p/2 -->
+      <line x1="100" y1="30" x2="100" y2="290" stroke="#0891b2" stroke-width="2" stroke-dasharray="6,4"/>
+      <text x="74" y="46" font-size="13" fill="#0e7490" font-style="italic" font-family="serif">Δ</text>
+      <!-- parabola: vertex at (150,160), opens right -->
+      <path d="M340,40 Q150,40 150,160 Q150,280 340,280" fill="none" stroke="#4338ca" stroke-width="2.6"/>
+      <!-- vertex O -->
+      <circle cx="150" cy="160" r="4" fill="#4338ca"/>
+      <text x="132" y="180" font-size="12" fill="#4338ca" font-style="italic" font-family="serif">O</text>
+      <!-- focus -->
+      <rect x="196" y="156" width="8" height="8" fill="#dc2626"/>
+      <text x="200" y="180" font-size="12" fill="#dc2626" font-style="italic" font-family="serif">F(p/2;0)</text>
+      <!-- point M and equal distances -->
+      <circle cx="300" cy="78" r="4.5" fill="#7c3aed"/>
+      <text x="306" y="74" font-size="13" fill="#7c3aed" font-style="italic" font-family="serif">M</text>
+      <line x1="300" y1="78" x2="200" y2="160" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="4,3"/>
+      <line x1="300" y1="78" x2="100" y2="78" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="4,3"/>
+      <rect x="100" y="78" width="10" height="10" fill="none" stroke="#94a3b8" stroke-width="1"/>
+      <text x="150" y="60" font-size="11" fill="#7c3aed" font-weight="700">MF = d(M, Δ)</text>
+    </svg>
+    <div class="chart-cap">Hình 1. Parabol đỉnh $O$, tiêu điểm $F$, đường chuẩn $\Delta$ và tính chất cách đều.</div>
+  </div>
+
+  <table>
+    <thead><tr><th>Yếu tố</th><th>Ký hiệu / Tọa độ</th><th>Ý nghĩa</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tham số tiêu</strong></td><td>$p &gt; 0$</td><td>Khoảng cách từ tiêu điểm $F$ đến đường chuẩn $\Delta$</td></tr>
+      <tr><td><strong>Tiêu điểm</strong></td><td>$F\left(\dfrac{p}{2}; 0\right)$</td><td>Điểm "lõi" của parabol trên trục $Ox$</td></tr>
+      <tr><td><strong>Đường chuẩn</strong></td><td>$\Delta: x = -\dfrac{p}{2}$</td><td>Đường thẳng đứng đối xứng với $F$ qua $Oy$</td></tr>
+      <tr><td><strong>Đỉnh</strong></td><td>$O(0;0)$</td><td>Gốc tọa độ — đỉnh của parabol chính tắc</td></tr>
+      <tr><td><strong>Trục đối xứng</strong></td><td>$Ox$ ($y = 0$)</td><td>Nửa trên và nửa dưới đối xứng nhau</td></tr>
+      <tr><td><strong>Tâm sai</strong></td><td>$e = 1$</td><td>Đặc trưng riêng của mọi parabol</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ======================== SECTION 3: APPLET ======================== -->
+<section class="card c-cyan" id="s-3">
+  <div class="sec-title">
+    <div class="sec-icon ic-cyan"><i class="fa-solid fa-chart-line"></i></div>
+    <div>
+      <div class="sec-label">Phần 3 · Đồ thị tương tác</div>
+      <h2>Phòng thí nghiệm Parabol</h2>
+    </div>
+  </div>
+
+  <p>Kéo thanh trượt để đổi tham số tiêu $p$ và vị trí điểm $M$ trên parabol. Quan sát hai khoảng cách: tới tiêu điểm $MF$ và tới đường chuẩn $d(M,\Delta)$ — <strong>chúng luôn bằng nhau!</strong></p>
+
+  <div class="viewer-layout">
+    <div class="canvas-wrap">
+      <canvas id="appletCanvas" width="560" height="400"></canvas>
+    </div>
+    <aside class="ctrl-panel">
+      <h4><i class="fa-solid fa-sliders"></i> Bảng điều khiển</h4>
+
+      <div class="ctrl-group">
+        <div class="a-row"><span class="lbl-inline">Tham số tiêu $p$</span><span class="a-big" id="vP">4,0</span></div>
+        <input type="range" id="slP" min="1" max="6" step="0.1" value="4">
+        <div class="range-ticks"><span>1</span><span>3,5</span><span>6</span></div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="a-row"><span class="lbl-inline">Vị trí $M$ ($y_M$)</span><span class="a-big" id="vY">3,0</span></div>
+        <input type="range" id="slY" min="-5" max="5" step="0.1" value="3">
+        <div class="range-ticks"><span>−5</span><span>0</span><span>5</span></div>
+      </div>
+
+      <div class="toggle-row"><input type="checkbox" id="ckDir" checked><label for="ckDir">Hiện đường chuẩn $\Delta$</label></div>
+      <div class="toggle-row"><input type="checkbox" id="ckString" checked><label for="ckString">Hiện $MF$ và $d(M,\Delta)$</label></div>
+
+      <div class="info-grid">
+        <div class="info-mini span-2"><div class="ip-label">Phương trình (P)</div><div class="ip-val" id="ipEq">y² = 8 x</div></div>
+        <div class="info-mini"><div class="ip-label">Tiêu điểm F</div><div class="ip-val" id="ipF">(2,00; 0)</div></div>
+        <div class="info-mini"><div class="ip-label">Đường chuẩn</div><div class="ip-val" id="ipDir">x = −2,00</div></div>
+        <div class="info-mini"><div class="ip-label">MF</div><div class="ip-val" id="ipMF">—</div></div>
+        <div class="info-mini"><div class="ip-label">d(M, Δ)</div><div class="ip-val" id="ipDist">—</div></div>
+        <div class="info-mini span-2 hl"><div class="ip-label">MF = d(M, Δ) ?</div><div class="ip-val" id="ipEqual">—</div></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="preset-row">
+    <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Mẫu nhanh:</span>
+    <button class="preset-btn" onclick="setPreset(2,3)">Parabol hẹp ($p=2$)</button>
+    <button class="preset-btn" onclick="setPreset(4,3)">Vừa ($p=4$)</button>
+    <button class="preset-btn" onclick="setPreset(6,3)">Rộng ($p=6$)</button>
+  </div>
+
+  <div class="guide-box">
+    <div class="guide-title"><i class="fa-solid fa-flask-vial"></i> Phiếu khám phá — kéo thanh trượt rồi tự trả lời (bấm để xem gợi ý)</div>
+    <details>
+      <summary>① Tăng dần $p$. Bề rộng parabol và vị trí tiêu điểm thay đổi thế nào?</summary>
+      <p>$p$ lớn thì parabol <strong>mở rộng</strong> hơn và tiêu điểm $F\left(\dfrac{p}{2};0\right)$ <strong>rời xa</strong> đỉnh $O$ hơn.</p>
+    </details>
+    <details>
+      <summary>② Kéo điểm $M$ dọc parabol. So sánh $MF$ và $d(M,\Delta)$?</summary>
+      <p>Luôn bằng nhau! $MF = d(M,\Delta)$ với mọi vị trí của $M$ — đúng định nghĩa parabol (xem ô "MF = d(M, Δ)").</p>
+    </details>
+    <details>
+      <summary>③ Đưa $M$ về đỉnh $O$ ($y_M = 0$). Khi đó $MF$ bằng bao nhiêu?</summary>
+      <p>$MF = \dfrac{p}{2}$ — đúng bằng khoảng cách từ đỉnh tới tiêu điểm (và cũng tới đường chuẩn).</p>
+    </details>
+  </div>
+
+  <div class="box box-cy" style="margin-top:14px;">
+    <i class="fa-solid fa-lightbulb"></i>
+    <div class="box-body">
+      Ô vuông đỏ là <strong>tiêu điểm $F$</strong>, đường xanh đứt nét bên trái là <strong>đường chuẩn $\Delta$</strong>, chấm tròn tím là <strong>điểm $M$</strong>. Hai đoạn tím (tới $F$ và tới $\Delta$) luôn dài bằng nhau!
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 4: GAME DnD ======================== -->
+<section class="card c-violet" id="s-4">
+  <div class="sec-title">
+    <div class="sec-icon ic-violet"><i class="fa-solid fa-gamepad"></i></div>
+    <div>
+      <div class="sec-label">Phần 4 · Game Kéo - Thả</div>
+      <h2>Ghép yếu tố của parabol $y^2 = 8x$</h2>
+    </div>
+  </div>
+
+  <p>Cho parabol $(P): y^2 = 8x$. Kéo (hoặc nhấn chọn rồi nhấn ô trống) để điền đúng giá trị cho mỗi yếu tố.</p>
+
+  <div class="chip-bank" id="chipBank">
+    <div class="chip" id="c1" data-val="va" draggable="true">$4$</div>
+    <div class="chip" id="c2" data-val="vb" draggable="true">$(2;0)$</div>
+    <div class="chip" id="c3" data-val="vc" draggable="true">$x = -2$</div>
+    <div class="chip" id="c4" data-val="vd" draggable="true">$O(0;0)$</div>
+    <div class="chip" id="c5" data-val="x1" draggable="true">$(4;0)$</div>
+    <div class="chip" id="c6" data-val="x2" draggable="true">$x = -4$</div>
+  </div>
+
+  <div class="dnd-grid">
+    <div class="drop-item"><div class="drop-q">① Tham số tiêu $p$</div><div class="drop-z" id="dz1" data-ans="va">thả</div></div>
+    <div class="drop-item"><div class="drop-q">② Tiêu điểm $F$</div><div class="drop-z" id="dz2" data-ans="vb">thả</div></div>
+    <div class="drop-item"><div class="drop-q">③ Đường chuẩn $\Delta$</div><div class="drop-z" id="dz3" data-ans="vc">thả</div></div>
+    <div class="drop-item"><div class="drop-q">④ Đỉnh</div><div class="drop-z" id="dz4" data-ans="vd">thả</div></div>
+  </div>
+
+  <div class="dnd-btns">
+    <button class="btn btn-primary" onclick="checkDnd()"><i class="fa-solid fa-circle-check"></i> Kiểm tra</button>
+    <button class="btn btn-secondary" onclick="resetDnd()"><i class="fa-solid fa-rotate-left"></i> Làm lại</button>
+  </div>
+  <div class="dnd-result" id="dndResult"></div>
+
+  <div class="box box-in" style="margin-top:16px;">
+    <i class="fa-solid fa-key"></i>
+    <div class="box-body">
+      <strong>Gợi ý</strong>
+      <p>$y^2 = 8x \Rightarrow 2p = 8 \Rightarrow p = 4$; tiêu điểm $F\left(\dfrac{p}{2};0\right) = (2;0)$; đường chuẩn $x = -\dfrac{p}{2} = -2$; đỉnh $O(0;0)$. (Hai thẻ $(4;0)$ và $x=-4$ là thẻ gây nhiễu!)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 5: VÍ DỤ ACCORDION ======================== -->
+<section class="card c-green" id="s-5">
+  <div class="sec-title">
+    <div class="sec-icon ic-green"><i class="fa-solid fa-list-ol"></i></div>
+    <div>
+      <div class="sec-label">Phần 5 · Ví dụ phân tích</div>
+      <h2>Lời giải chi tiết từng bước</h2>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 1</span> Đọc yếu tố từ phương trình: $y^2 = 12x$</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="step"><div class="sn">1</div><div class="sc"><strong>Tìm tham số tiêu p</strong>Đối chiếu $y^2 = 2px$: $2p = 12 \Rightarrow p = 6$.</div></div>
+      <div class="step"><div class="sn">2</div><div class="sc"><strong>Tiêu điểm</strong>$F\left(\dfrac{p}{2}; 0\right) = F(3; 0)$.</div></div>
+      <div class="step"><div class="sn">3</div><div class="sc"><strong>Đường chuẩn</strong>$\Delta: x = -\dfrac{p}{2} = -3$.</div></div>
+      <div class="concl-box">✅ $p=6,\ F(3;0),\ \Delta: x=-3$</div>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 2</span> Lập phương trình parabol đi qua $M(2;4)$</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="step"><div class="sn">1</div><div class="sc"><strong>Dạng phương trình</strong>Gọi $(P): y^2 = 2px$ với $p &gt; 0$.</div></div>
+      <div class="step"><div class="sn">2</div><div class="sc"><strong>Thế tọa độ M(2;4)</strong>$$4^2 = 2p \cdot 2 \Leftrightarrow 16 = 4p \Leftrightarrow p = 4$$</div></div>
+      <div class="step"><div class="sn">3</div><div class="sc"><strong>Kết luận</strong>$2p = 8$.</div></div>
+      <div class="concl-box">✅ $(P): y^2 = 8x$</div>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      <span class="acc-title-text"><span class="acc-badge">VD 3</span> Bài toán mở đầu: đặt bộ thu của chảo anten</span>
+      <i class="fa-solid fa-chevron-down acc-arrow"></i>
+    </button>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="step"><div class="sn">1</div><div class="sc"><strong>Mô hình hóa</strong>Đặt đỉnh chảo tại $O$, trục đối xứng là $Ox$: $(P): y^2 = 2px$. Miệng chảo đường kính $8$ dm nên mép trên cách trục $4$ dm; chảo sâu $2$ dm. Vậy điểm mép $(2; 4)$ thuộc parabol.</div></div>
+      <div class="step"><div class="sn">2</div><div class="sc"><strong>Tìm p</strong>$$4^2 = 2p \cdot 2 \Rightarrow 16 = 4p \Rightarrow p = 4$$</div></div>
+      <div class="step"><div class="sn">3</div><div class="sc"><strong>Vị trí tiêu điểm</strong>$F\left(\dfrac{p}{2}; 0\right) = (2; 0)$: bộ thu đặt trên trục, <strong>cách đỉnh chảo 2 dm</strong>.</div></div>
+      <div class="concl-box">✅ Đặt bộ thu cách đỉnh chảo $2$ dm (tại tiêu điểm $F$)</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ======================== SECTION: MINDMAP ======================== -->
+<section class="card c-indigo" id="s-mm">
+  <div class="sec-title">
+    <div class="sec-icon ic-indigo"><i class="fa-solid fa-sitemap"></i></div>
+    <div>
+      <div class="sec-label">Tổng kết · Sơ đồ tư duy</div>
+      <h2>Bản đồ kiến thức Đường Parabol</h2>
+    </div>
+  </div>
+
+  <p>Toàn bộ bài học gói gọn trong một sơ đồ: từ <strong>định nghĩa</strong> đến <strong>phương trình</strong>, <strong>các yếu tố</strong> và <strong>ứng dụng</strong>.</p>
+
+  <div class="chart-wrap" style="background:var(--slate-100); border-color:var(--border);">
+    <svg viewBox="0 0 780 450" xmlns="http://www.w3.org/2000/svg" style="max-width:780px;" role="img" aria-labelledby="mmTitle mmDesc">
+      <title id="mmTitle">Sơ đồ tư duy tổng kết về đường parabol</title>
+      <desc id="mmDesc">Nút trung tâm Đường Parabol toả ra bốn nhánh: Định nghĩa (cách đều tiêu điểm và đường chuẩn), Phương trình chính tắc, Các yếu tố hình học, và Ứng dụng thực tế.</desc>
+
+      <path d="M320,212 Q288,150 255,108" fill="none" stroke="#4338ca" stroke-width="2.5"/>
+      <path d="M460,212 Q500,150 525,108" fill="none" stroke="#7c3aed" stroke-width="2.5"/>
+      <path d="M320,258 Q288,320 255,362" fill="none" stroke="#0891b2" stroke-width="2.5"/>
+      <path d="M460,258 Q500,320 525,362" fill="none" stroke="#d97706" stroke-width="2.5"/>
+      <circle cx="320" cy="212" r="3.5" fill="#4338ca"/>
+      <circle cx="460" cy="212" r="3.5" fill="#7c3aed"/>
+      <circle cx="320" cy="258" r="3.5" fill="#0891b2"/>
+      <circle cx="460" cy="258" r="3.5" fill="#d97706"/>
+
+      <rect x="305" y="205" width="170" height="60" rx="16" fill="#312e81"/>
+      <text x="390" y="232" text-anchor="middle" font-family="Merriweather, serif" font-size="17" font-weight="700" fill="#ffffff">ĐƯỜNG PARABOL</text>
+      <text x="390" y="251" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#c7d2fe">Toán 10 · GDPT 2018</text>
+
+      <rect x="20" y="40" width="235" height="120" rx="12" fill="#eef2ff" stroke="#4338ca" stroke-width="2"/>
+      <text x="36" y="68" font-family="Merriweather, serif" font-size="15" font-weight="700" fill="#312e81">① ĐỊNH NGHĨA</text>
+      <text x="36" y="92"  font-family="sans-serif" font-size="12.5" fill="#334155">• MF = d(M, Δ) (cách đều)</text>
+      <text x="36" y="114" font-family="sans-serif" font-size="12.5" fill="#334155">• F: tiêu điểm · Δ: đường chuẩn</text>
+      <text x="36" y="136" font-family="sans-serif" font-size="12.5" fill="#334155">• Tâm sai e = 1</text>
+
+      <rect x="525" y="40" width="235" height="120" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+      <text x="541" y="68" font-family="Merriweather, serif" font-size="15" font-weight="700" fill="#5b21b6">② YẾU TỐ HÌNH HỌC</text>
+      <text x="541" y="92"  font-family="sans-serif" font-size="12.5" fill="#334155">• Tiêu điểm F(p/2; 0)</text>
+      <text x="541" y="114" font-family="sans-serif" font-size="12.5" fill="#334155">• Đường chuẩn x = −p/2</text>
+      <text x="541" y="136" font-family="sans-serif" font-size="12.5" fill="#334155">• Đỉnh O · trục đối xứng Ox</text>
+
+      <rect x="20" y="310" width="235" height="120" rx="12" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+      <text x="36" y="338" font-family="Merriweather, serif" font-size="15" font-weight="700" fill="#0e7490">③ PHƯƠNG TRÌNH</text>
+      <text x="36" y="362" font-family="sans-serif" font-size="12.5" fill="#334155">• y² = 2px (p &gt; 0)</text>
+      <text x="36" y="384" font-family="sans-serif" font-size="12.5" fill="#334155">• y bậc 2, x bậc 1</text>
+      <text x="36" y="406" font-family="sans-serif" font-size="12.5" fill="#334155">• MF = x_M + p/2</text>
+
+      <rect x="525" y="310" width="235" height="120" rx="12" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+      <text x="541" y="338" font-family="Merriweather, serif" font-size="15" font-weight="700" fill="#b45309">④ ỨNG DỤNG</text>
+      <text x="541" y="362" font-family="sans-serif" font-size="12.5" fill="#334155">• Anten chảo · đèn pha</text>
+      <text x="541" y="384" font-family="sans-serif" font-size="12.5" fill="#334155">• Chuyển động ném</text>
+      <text x="541" y="406" font-family="sans-serif" font-size="12.5" fill="#334155">• Cầu treo, cổng parabol</text>
+    </svg>
+    <div class="chart-cap">Hình 2. Sơ đồ tư duy tổng kết bài Đường Parabol.</div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 6: FLASHCARDS ======================== -->
+<section class="card c-violet" id="s-6">
+  <div class="sec-title">
+    <div class="sec-icon ic-violet"><i class="fa-solid fa-clone"></i></div>
+    <div>
+      <div class="sec-label">Phần 6 · Thẻ ghi nhớ 3D</div>
+      <h2>Sáu điều cốt lõi cần thuộc lòng</h2>
+    </div>
+  </div>
+
+  <div class="fc-grid">
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Phương trình chính tắc của parabol?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$y^2 = 2px$</strong></div><div class="fc-back-note">với $p &gt; 0$</div></div>
+    </div></div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Tọa độ tiêu điểm $F$?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$F\left(\dfrac{p}{2}; 0\right)$</strong></div><div class="fc-back-note">nằm trên trục $Ox$</div></div>
+    </div></div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Phương trình đường chuẩn $\Delta$?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$x = -\dfrac{p}{2}$</strong></div><div class="fc-back-note">đường thẳng đứng bên trái $Oy$</div></div>
+    </div></div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Tính chất định nghĩa của điểm $M$ trên parabol?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$MF = d(M, \Delta)$</strong></div><div class="fc-back-note">cách đều tiêu điểm và đường chuẩn</div></div>
+    </div></div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Bán kính qua tiêu $MF$ tính theo hoành độ $x_M$?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$MF = x_M + \dfrac{p}{2}$</strong></div><div class="fc-back-note">vì $MF = d(M,\Delta)$</div></div>
+    </div></div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-icon"><i class="fa-solid fa-circle-question"></i></div><div class="fc-q">Tâm sai của parabol bằng bao nhiêu?</div><div class="fc-hint">Nhấn để xem</div></div>
+      <div class="fc-back"><div><strong>$e = 1$</strong></div><div class="fc-back-note">Elip $e&lt;1$, Hypebol $e&gt;1$, Parabol $e=1$</div></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 7: QUIZ ======================== -->
+<section class="card c-red" id="s-7">
+  <div class="sec-title">
+    <div class="sec-icon ic-red"><i class="fa-solid fa-clipboard-check"></i></div>
+    <div>
+      <div class="sec-label">Phần 7 · Trắc nghiệm rèn luyện</div>
+      <h2>10 câu từ nhận biết đến vận dụng cao</h2>
+    </div>
+  </div>
+
+  <div class="quiz-prog">
+    <span class="qp-text" id="qpText">0 / 10 câu</span>
+    <div class="qp-track"><div class="qp-fill" id="qpFill"></div></div>
+    <button class="qp-reset" id="qpReset" onclick="resetQuiz()" aria-label="Làm lại từ đầu" title="Làm lại từ đầu"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-head"><span class="q-num">Câu 1</span><span class="q-lvl nb">Nhận biết</span></div>
+    <div class="q-text">Cho parabol $y^2 = 12x$. Tọa độ tiêu điểm $F$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q1')"><span class="q-opt-inner">$(3; 0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$(6; 0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$(12; 0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q1')"><span class="q-opt-inner">$(0; 3)$</span></div>
+    </div>
+    <div class="q-explain" id="eq1"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>$2p = 12 \Rightarrow p = 6$. Tiêu điểm $F\left(\dfrac{p}{2};0\right) = (3;0)$.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-head"><span class="q-num">Câu 2</span><span class="q-lvl nb">Nhận biết</span></div>
+    <div class="q-text">Cho parabol $y^2 = 8x$. Phương trình đường chuẩn $\Delta$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = -2$</span></div>
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = -4$</span></div>
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$y = -2$</span></div>
+      <div class="q-opt" onclick="pick(this,'q2')"><span class="q-opt-inner">$x = 2$</span></div>
+    </div>
+    <div class="q-explain" id="eq2"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>$2p = 8 \Rightarrow p = 4$. Đường chuẩn $x = -\dfrac{p}{2} = -2$.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-head"><span class="q-num">Câu 3</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Parabol có tiêu điểm $F(5;0)$ có phương trình chính tắc là:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$y^2 = 10x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$y^2 = 5x$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q3')"><span class="q-opt-inner">$y^2 = 20x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q3')"><span class="q-opt-inner">$x^2 = 20y$</span></div>
+    </div>
+    <div class="q-explain" id="eq3"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>$\dfrac{p}{2} = 5 \Rightarrow p = 10$. Phương trình $y^2 = 2px = 20x$.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-head"><span class="q-num">Câu 4</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Phương trình nào sau đây là phương trình chính tắc của một parabol?</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$y = x^2$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q4')"><span class="q-opt-inner">$y^2 = 5x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$y^2 = -4x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q4')"><span class="q-opt-inner">$x^2 = 2y$</span></div>
+    </div>
+    <div class="q-explain" id="eq4"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>Dạng chính tắc là $y^2 = 2px$ với $p &gt; 0$. Chỉ $y^2 = 5x$ thỏa ($2p = 5 &gt; 0$). $y^2 = -4x$ có hệ số âm; $y=x^2$ và $x^2=2y$ là parabol trục đứng.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-head"><span class="q-num">Câu 5</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Parabol $(P): y^2 = 2px$ đi qua điểm $M(2; 4)$. Phương trình của $(P)$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q5')"><span class="q-opt-inner">$y^2 = 8x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$y^2 = 4x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$y^2 = 16x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q5')"><span class="q-opt-inner">$y^2 = 2x$</span></div>
+    </div>
+    <div class="q-explain" id="eq5"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>Thế $M(2;4)$: $4^2 = 2p \cdot 2 \Rightarrow 16 = 4p \Rightarrow 2p = 8$. Vậy $y^2 = 8x$.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-head"><span class="q-num">Câu 6</span><span class="q-lvl th">Thông hiểu</span></div>
+    <div class="q-text">Cho parabol $y^2 = 8x$ và điểm $M$ thuộc $(P)$ có hoành độ $x_M = 3$. Khoảng cách $MF$ bằng:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q6')"><span class="q-opt-inner">$5$</span></div>
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$3$</span></div>
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$7$</span></div>
+      <div class="q-opt" onclick="pick(this,'q6')"><span class="q-opt-inner">$4$</span></div>
+    </div>
+    <div class="q-explain" id="eq6"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>$2p = 8 \Rightarrow p = 4,\ \dfrac{p}{2} = 2$. Bán kính qua tiêu $MF = x_M + \dfrac{p}{2} = 3 + 2 = 5$.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-head"><span class="q-num">Câu 7</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text">Parabol (đỉnh $O$, dạng chính tắc) có đường chuẩn $x = -3$. Phương trình của parabol là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q7')"><span class="q-opt-inner">$y^2 = 12x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">$y^2 = 6x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">$y^2 = 3x$</span></div>
+      <div class="q-opt" onclick="pick(this,'q7')"><span class="q-opt-inner">$y^2 = 9x$</span></div>
+    </div>
+    <div class="q-explain" id="eq7"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>Đường chuẩn $x = -\dfrac{p}{2} = -3 \Rightarrow p = 6$. Phương trình $y^2 = 2px = 12x$.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-head"><span class="q-num">Câu 8</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text"><i class="fa-solid fa-satellite-dish" style="color:var(--violet-600);"></i> Một chảo anten parabol có đường kính miệng $8$ dm và sâu $2$ dm. Bộ thu (tiêu điểm) cần đặt cách đỉnh chảo bao nhiêu?</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q8')"><span class="q-opt-inner">$2$ dm</span></div>
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">$1$ dm</span></div>
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">$4$ dm</span></div>
+      <div class="q-opt" onclick="pick(this,'q8')"><span class="q-opt-inner">$8$ dm</span></div>
+    </div>
+    <div class="q-explain" id="eq8"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>Đặt $y^2 = 2px$, mép chảo là điểm $(2; 4)$: $16 = 4p \Rightarrow p = 4$. Tiêu điểm $F\left(\dfrac{p}{2};0\right) = (2;0)$, tức cách đỉnh $2$ dm.</div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-head"><span class="q-num">Câu 9</span><span class="q-lvl vd">Vận dụng</span></div>
+    <div class="q-text"><i class="fa-solid fa-water" style="color:var(--violet-600);"></i> Parabol $y^2 = 2px$ đi qua điểm $M(1; 2)$. Khi đó tham số tiêu $p$ và tiêu điểm $F$ là:</div>
+    <div class="q-opts">
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q9')"><span class="q-opt-inner">$p=2,\ F(1;0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">$p=4,\ F(2;0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">$p=2,\ F(2;0)$</span></div>
+      <div class="q-opt" onclick="pick(this,'q9')"><span class="q-opt-inner">$p=1,\ F(0;1)$</span></div>
+    </div>
+    <div class="q-explain" id="eq9"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>Thế $M(1;2)$: $2^2 = 2p \cdot 1 \Rightarrow 4 = 2p \Rightarrow p = 2$. Tiêu điểm $F\left(\dfrac{p}{2};0\right) = (1;0)$.</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-head"><span class="q-num">Câu 10</span><span class="q-lvl vc">Vận dụng cao</span></div>
+    <div class="q-text"><i class="fa-solid fa-compass-drafting" style="color:var(--violet-600);"></i> Cho parabol $y^2 = 4x$ và điểm $M$ thuộc $(P)$ có $MF = 4$. Hoành độ của $M$ bằng:</div>
+    <div class="q-opts">
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">$4$</span></div>
+      <div class="q-opt" data-correct="true" onclick="pick(this,'q10')"><span class="q-opt-inner">$3$</span></div>
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">$2$</span></div>
+      <div class="q-opt" onclick="pick(this,'q10')"><span class="q-opt-inner">$5$</span></div>
+    </div>
+    <div class="q-explain" id="eq10"><div class="q-explain-title"><i class="fa-solid fa-lightbulb"></i> Giải thích</div>$2p = 4 \Rightarrow p = 2,\ \dfrac{p}{2} = 1$. Từ $MF = x_M + \dfrac{p}{2} = 4 \Rightarrow x_M = 4 - 1 = 3$.</div>
+  </div>
+
+  <div class="quiz-summary" id="quizSummary" role="status" aria-live="polite" style="display:none;"></div>
+
+</section>
+
+</main>
+
+<div class="score-bar" id="scoreBar">
+  <span class="score-label"><i class="fa-solid fa-trophy"></i> Điểm</span>
+  <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+  <span class="score-count" id="scoreCount">0/10</span>
+  <span class="score-stars" id="scoreStars">⭐</span>
+</div>
+
+<button class="to-top" id="toTop" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+<script>
+function mj(el) {
+  if (window.MathJax && MathJax.typesetPromise) { return MathJax.typesetPromise(el ? [el] : [document.body]).catch(function(e){ console.warn(e); }); }
+  return Promise.resolve();
+}
+
+function toggleAcc(btn) {
+  var body = btn.nextElementSibling;
+  var open = btn.classList.contains('open');
+  btn.classList.toggle('open', !open);
+  body.classList.toggle('open', !open);
+  if (!open) mj(body);
+}
+
+function initNav() {
+  var links = document.querySelectorAll('.nav-link');
+  var sections = Array.prototype.map.call(links, function(a) { return document.querySelector(a.getAttribute('href')); });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var id = '#' + e.target.id;
+        links.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === id); });
+        var active = document.querySelector('.nav-link.active');
+        if (active) { var nav = document.querySelector('.nav'); var l = active.offsetLeft - nav.offsetWidth / 2 + active.offsetWidth / 2; nav.scrollTo({ left: Math.max(0, l), behavior: 'smooth' }); }
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(function(s) { if (s) obs.observe(s); });
+}
+
+/* ----- CANVAS APPLET (Parabol) ----- */
+var canvas = document.getElementById('appletCanvas');
+var ctx = canvas.getContext('2d');
+var LW = 560, LH = 400;
+var PAD = { l: 30, r: 30, t: 26, b: 30 };
+var MATH = { xMin: -3, xMax: 9, yMin: -4.5, yMax: 4.5 };
+var applet = { p: 4.0, yM: 3.0, showDir: true, showString: true };
+
+function scX(mx) { var dw = LW - PAD.l - PAD.r; return PAD.l + (mx - MATH.xMin) / (MATH.xMax - MATH.xMin) * dw; }
+function scY(my) { var dh = LH - PAD.t - PAD.b; return LH - PAD.b - (my - MATH.yMin) / (MATH.yMax - MATH.yMin) * dh; }
+function fmt(n, d) { return n.toFixed(d == null ? 2 : d).replace('.', ','); }
+function dist(P, Q) { return Math.sqrt((P[0]-Q[0])*(P[0]-Q[0]) + (P[1]-Q[1])*(P[1]-Q[1])); }
+
+function drawApplet() {
+  var p = applet.p, half = p / 2;
+  ctx.clearRect(0, 0, LW, LH);
+  ctx.fillStyle = '#f0f4ff'; ctx.fillRect(0, 0, LW, LH);
+
+  ctx.font = '11px Nunito, sans-serif';
+  for (var xi = Math.ceil(MATH.xMin); xi <= MATH.xMax; xi++) {
+    var gx = scX(xi);
+    ctx.beginPath(); ctx.moveTo(gx, PAD.t); ctx.lineTo(gx, LH - PAD.b);
+    ctx.strokeStyle = xi === 0 ? '#1e293b' : '#c7d2fe'; ctx.lineWidth = xi === 0 ? 1.8 : 1; ctx.setLineDash([]); ctx.stroke();
+    if (xi !== 0) { ctx.fillStyle = '#64748b'; ctx.textAlign = 'center'; ctx.fillText(xi, gx, scY(0) + 14); }
+  }
+  for (var yi = Math.ceil(MATH.yMin); yi <= MATH.yMax; yi++) {
+    var gy = scY(yi);
+    ctx.beginPath(); ctx.moveTo(PAD.l, gy); ctx.lineTo(LW - PAD.r, gy);
+    ctx.strokeStyle = yi === 0 ? '#1e293b' : '#c7d2fe'; ctx.lineWidth = yi === 0 ? 1.8 : 1; ctx.setLineDash([]); ctx.stroke();
+    if (yi !== 0) { ctx.fillStyle = '#64748b'; ctx.textAlign = 'right'; ctx.fillText(yi, scX(0) - 6, gy + 4); }
+  }
+  ctx.fillStyle = '#1e293b'; ctx.font = 'italic 13px Merriweather, serif';
+  ctx.textAlign = 'left'; ctx.fillText('x', LW - PAD.r + 6, scY(0) + 5);
+  ctx.textAlign = 'center'; ctx.fillText('y', scX(0) + 10, PAD.t - 6);
+
+  // Directrix x = -p/2
+  if (applet.showDir) {
+    ctx.strokeStyle = '#0891b2'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+    ctx.beginPath(); ctx.moveTo(scX(-half), PAD.t); ctx.lineTo(scX(-half), LH - PAD.b); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#0e7490'; ctx.font = 'italic 13px Merriweather, serif'; ctx.textAlign = 'center';
+    ctx.fillText('Δ', scX(-half), PAD.t + 12);
+  }
+
+  // Parabola y^2 = 2px  ->  x = y^2/(2p)
+  ctx.strokeStyle = '#4338ca'; ctx.lineWidth = 2.8; ctx.setLineDash([]);
+  ctx.beginPath(); var started = false;
+  for (var y = MATH.yMin; y <= MATH.yMax + 1e-9; y += 0.03) {
+    var x = (y * y) / (2 * p);
+    if (x > MATH.xMax) { started = false; continue; }
+    var px = scX(x), py = scY(y);
+    if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Focus square, vertex
+  var F = [half, 0];
+  ctx.fillStyle = '#dc2626'; var s = 9; ctx.fillRect(scX(F[0]) - s/2, scY(F[1]) - s/2, s, s);
+  ctx.fillStyle = '#0e7490'; ctx.beginPath(); ctx.arc(scX(0), scY(0), 3.5, 0, Math.PI*2); ctx.fill();
+
+  // Point M
+  var yM = applet.yM, xM = (yM * yM) / (2 * p);
+  var M = [xM, yM], Mpx = scX(xM), Mpy = scY(yM);
+  var mf = dist(M, F);
+  var dDir = xM + half; // distance to directrix x=-p/2
+
+  if (applet.showString) {
+    // M to F (focal radius)
+    ctx.strokeStyle = '#7c3aed'; ctx.lineWidth = 2; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(Mpx, Mpy); ctx.lineTo(scX(F[0]), scY(F[1])); ctx.stroke();
+    // M to directrix (horizontal)
+    ctx.beginPath(); ctx.moveTo(Mpx, Mpy); ctx.lineTo(scX(-half), Mpy); ctx.stroke();
+    ctx.setLineDash([]);
+    // right-angle mark at directrix
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1;
+    ctx.strokeRect(scX(-half), Mpy - 8, 8, 8);
+  }
+
+  // Focus label
+  ctx.fillStyle = '#dc2626'; ctx.font = 'bold 12px Nunito, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('F', scX(F[0]) + 7, scY(0) + 16);
+
+  // M dot
+  ctx.fillStyle = '#7c3aed'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(Mpx, Mpy, 6, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#7c3aed'; ctx.font = 'bold 13px Merriweather, serif'; ctx.textAlign = 'left';
+  ctx.fillText('M', Mpx + 9, Mpy - 8);
+
+  // legend (shape key)
+  var lx = LW - 132, ly = PAD.t + 2;
+  ctx.font = '11px Nunito, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillStyle = '#dc2626'; ctx.fillRect(lx, ly + 1, 9, 9);
+  ctx.fillStyle = '#334155'; ctx.fillText('■ tiêu điểm F', lx + 13, ly + 9);
+  ctx.fillStyle = '#7c3aed'; ctx.beginPath(); ctx.arc(lx + 4.5, ly + 22, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#334155'; ctx.fillText('● điểm M', lx + 13, ly + 25);
+
+  updateAppletInfo(p, mf, dDir);
+}
+
+function updateAppletInfo(p, mf, dDir) {
+  document.getElementById('ipEq').textContent = 'y² = ' + fmt(2*p, 1) + ' x';
+  document.getElementById('ipF').textContent = '(' + fmt(p/2, 2) + '; 0)';
+  document.getElementById('ipDir').textContent = 'x = −' + fmt(p/2, 2);
+  document.getElementById('ipMF').textContent = fmt(mf, 2);
+  document.getElementById('ipDist').textContent = fmt(dDir, 2);
+  document.getElementById('ipEqual').textContent = (Math.abs(mf - dDir) < 1e-6 ? 'Bằng nhau ✓ (= ' + fmt(mf, 2) + ')' : 'lệch ' + fmt(Math.abs(mf-dDir),3));
+}
+
+function initApplet() {
+  document.getElementById('slP').addEventListener('input', function() {
+    applet.p = parseFloat(this.value);
+    document.getElementById('vP').textContent = fmt(applet.p, 1);
+    drawApplet();
+  });
+  document.getElementById('slY').addEventListener('input', function() {
+    applet.yM = parseFloat(this.value);
+    document.getElementById('vY').textContent = fmt(applet.yM, 1);
+    drawApplet();
+  });
+  document.getElementById('ckDir').addEventListener('change', function() { applet.showDir = this.checked; drawApplet(); });
+  document.getElementById('ckString').addEventListener('change', function() { applet.showString = this.checked; drawApplet(); });
+}
+
+function setPreset(p, yM) {
+  applet.p = p; applet.yM = yM;
+  document.getElementById('slP').value = p;
+  document.getElementById('slY').value = yM;
+  document.getElementById('vP').textContent = fmt(p, 1);
+  document.getElementById('vY').textContent = fmt(yM, 1);
+  drawApplet();
+}
+
+/* ----- DRAG & DROP ----- */
+var dropState = {}, chipPlaced = {}, selectedChip = null;
+var chipText = { c1:'$4$', c2:'$(2;0)$', c3:'$x = -2$', c4:'$O(0;0)$', c5:'$(4;0)$', c6:'$x = -4$' };
+
+function initDnd() {
+  document.querySelectorAll('.chip').forEach(function(chip) {
+    chip.addEventListener('dragstart', function(e) {
+      if (chip.classList.contains('used')) { e.preventDefault(); return; }
+      e.dataTransfer.setData('text/plain', chip.id); chip.classList.add('dragging');
+    });
+    chip.addEventListener('dragend', function() { chip.classList.remove('dragging'); });
+    chip.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (chip.classList.contains('used')) return;
+      if (selectedChip && selectedChip !== chip) selectedChip.classList.remove('selected');
+      if (selectedChip === chip) { chip.classList.remove('selected'); selectedChip = null; }
+      else { chip.classList.add('selected'); selectedChip = chip; }
+    });
+  });
+  document.querySelectorAll('.drop-z').forEach(function(zone) {
+    zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      var chipId = e.dataTransfer.getData('text/plain');
+      if (chipId) placeChip(chipId, zone.id);
+    });
+    zone.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (selectedChip) { placeChip(selectedChip.id, zone.id); selectedChip.classList.remove('selected'); selectedChip = null; }
+      else if (dropState[zone.id]) { returnChip(dropState[zone.id]); }
+    });
+  });
+  document.addEventListener('click', function() { if (selectedChip) { selectedChip.classList.remove('selected'); selectedChip = null; } });
+}
+
+function placeChip(chipId, zoneId) {
+  if (chipPlaced[chipId]) clearZone(chipPlaced[chipId]);
+  if (dropState[zoneId]) returnChip(dropState[zoneId]);
+  var chip = document.getElementById(chipId);
+  var zone = document.getElementById(zoneId);
+  if (!chip || !zone) return;
+  chip.classList.add('used'); chip.setAttribute('draggable', 'false');
+  zone.innerHTML = chipText[chipId] || chipId;
+  zone.classList.add('filled'); zone.classList.remove('correct', 'wrong', 'drag-over');
+  dropState[zoneId] = chipId; chipPlaced[chipId] = zoneId;
+  mj(zone);
+}
+function clearZone(zoneId) {
+  var zone = document.getElementById(zoneId);
+  if (!zone) return;
+  zone.innerHTML = 'thả'; zone.classList.remove('filled', 'correct', 'wrong');
+  var cid = dropState[zoneId];
+  if (cid) delete chipPlaced[cid];
+  delete dropState[zoneId];
+}
+function returnChip(chipId) {
+  var chip = document.getElementById(chipId);
+  if (chip) { chip.classList.remove('used'); chip.setAttribute('draggable', 'true'); }
+  var zid = chipPlaced[chipId];
+  if (zid) clearZone(zid);
+}
+function checkDnd() {
+  var correct = 0, total = 4;
+  document.querySelectorAll('.drop-z').forEach(function(zone) {
+    var expected = zone.dataset.ans;
+    var placed = dropState[zone.id];
+    zone.classList.remove('correct', 'wrong');
+    if (!placed) return;
+    var chip = document.getElementById(placed);
+    if (chip && chip.dataset.val === expected) { zone.classList.add('correct'); correct++; }
+    else { zone.classList.add('wrong'); }
+  });
+  var res = document.getElementById('dndResult');
+  res.classList.remove('ok', 'fail');
+  res.classList.add('show', correct === total ? 'ok' : 'fail');
+  if (correct === total) res.innerHTML = '<i class="fa-solid fa-trophy"></i> Tuyệt vời! Bạn đã ghép đúng cả ' + correct + '/' + total + ' yếu tố.';
+  else res.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Bạn đúng ' + correct + '/' + total + '. Hãy xem lại các ô viền đỏ và thử lại!';
+}
+function resetDnd() {
+  ['c1','c2','c3','c4','c5','c6'].forEach(function(cid) {
+    var chip = document.getElementById(cid);
+    if (chip) { chip.classList.remove('used','selected','dragging'); chip.setAttribute('draggable','true'); }
+  });
+  ['dz1','dz2','dz3','dz4'].forEach(function(zid) {
+    var zone = document.getElementById(zid);
+    if (zone) { zone.innerHTML = 'thả'; zone.classList.remove('filled','correct','wrong','drag-over'); }
+  });
+  dropState = {}; chipPlaced = {}; selectedChip = null;
+  var res = document.getElementById('dndResult');
+  res.classList.remove('show','ok','fail'); res.innerHTML = '';
+}
+
+/* ----- QUIZ ----- */
+var qScore = 0, qAnswered = 0, qTotal = 10;
+var STORE_KEY = 'parabol_quiz';
+var levelName = { nb:'Nhận biết', th:'Thông hiểu', vd:'Vận dụng', vc:'Vận dụng cao' };
+var levelTot = { nb:0, th:0, vd:0, vc:0 };
+var levelSc  = { nb:0, th:0, vd:0, vc:0 };
+
+function qLevel(card) {
+  var el = card.querySelector('.q-lvl');
+  if (!el) return null;
+  return ['nb','th','vd','vc'].filter(function(k){ return el.classList.contains(k); })[0] || null;
+}
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+
+var HINTS = {
+  q1: 'Tiêu điểm $F\\left(\\dfrac{p}{2};0\\right)$; tìm $p$ từ $2p$.',
+  q2: 'Đường chuẩn $x = -\\dfrac{p}{2}$; tìm $p$ từ $2p$.',
+  q3: 'Tiêu điểm cho $\\dfrac{p}{2}$; suy ra $p$ rồi viết $y^2 = 2px$.',
+  q4: 'Dạng chính tắc là $y^2 = 2px$ với hệ số dương.',
+  q5: 'Thế tọa độ $M$ vào $y^2 = 2px$ để tìm $2p$.',
+  q6: 'Bán kính qua tiêu: $MF = x_M + \\dfrac{p}{2}$.',
+  q7: 'Đường chuẩn $x = -\\dfrac{p}{2}$ cho $p$.',
+  q8: 'Mép chảo là điểm $(2;4)$ trên $y^2 = 2px$; tiêu điểm cách đỉnh $\\dfrac{p}{2}$.',
+  q9: 'Thế $M(1;2)$ tìm $p$, rồi $F\\left(\\dfrac{p}{2};0\\right)$.',
+  q10: 'Từ $MF = x_M + \\dfrac{p}{2}$ giải ra $x_M$.'
+};
+
+function injectHint(card) {
+  if (!HINTS[card.id]) return;
+  var qtext = card.querySelector('.q-text');
+  if (!qtext) return;
+  var hb = document.createElement('button');
+  hb.className = 'hint-btn'; hb.type = 'button';
+  hb.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Gợi ý';
+  hb.addEventListener('click', function() { showHint(card.id, hb); });
+  var hd = document.createElement('div');
+  hd.className = 'q-hint'; hd.id = 'h' + card.id; hd.style.display = 'none';
+  hd.innerHTML = '<i class="fa-solid fa-key"></i> ' + HINTS[card.id];
+  qtext.insertAdjacentElement('afterend', hb);
+  hb.insertAdjacentElement('afterend', hd);
+}
+function showHint(qId, btn) {
+  var h = document.getElementById('h' + qId);
+  if (h) { h.style.display = 'block'; mj(h); }
+  if (btn) { btn.disabled = true; }
+}
+
+function initQuiz() {
+  document.querySelectorAll('.q-card').forEach(function(card) {
+    var box = card.querySelector('.q-opts');
+    var opts = Array.prototype.slice.call(box.querySelectorAll('.q-opt'));
+    opts.forEach(function(o, idx) { if (!o.dataset.oid) o.dataset.oid = card.id + '-' + idx; });
+    shuffle(opts).forEach(function(o) { box.appendChild(o); });
+    var lv = qLevel(card); if (lv) levelTot[lv]++;
+    injectHint(card);
+  });
+  restoreProgress();
+}
+
+function pick(optEl, qId) {
+  var card = document.getElementById(qId);
+  if (card.dataset.done) return;
+  applyAnswer(card, optEl.dataset.correct === 'true', optEl.dataset.oid, true);
+  saveProgress();
+}
+
+function applyAnswer(card, isOk, oid, animate) {
+  card.dataset.done = '1';
+  var hb = card.querySelector('.hint-btn'); if (hb) hb.style.display = 'none';
+  card.querySelectorAll('.q-opt').forEach(function(o) {
+    o.classList.add('locked'); o.onclick = null;
+    if (o.dataset.correct === 'true') o.classList.add('correct');
+    if (!isOk && o.dataset.oid === oid) o.classList.add('wrong');
+  });
+  qAnswered++;
+  if (isOk) qScore++;
+  var lv = qLevel(card); if (lv && isOk) levelSc[lv]++;
+  showScoreBar(); updateScore();
+  var exp = document.getElementById('e' + card.id);
+  if (exp) {
+    exp.classList.add('show'); mj(exp);
+    if (animate) setTimeout(function(){ try { exp.scrollIntoView({behavior:'smooth',block:'nearest'}); } catch(e){} }, 220);
+  }
+  maybeShowSummary(animate);
+}
+
+function showScoreBar() {
+  var bar = document.getElementById('scoreBar');
+  if (!bar.classList.contains('show')) { bar.classList.add('show'); document.body.classList.add('has-score-bar'); }
+}
+function updateScore() {
+  var pct = (qScore / qTotal) * 100;
+  document.getElementById('scoreFill').style.width = pct + '%';
+  document.getElementById('scoreCount').textContent = qScore + '/' + qTotal;
+  document.getElementById('scoreStars').textContent = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+  var ap = (qAnswered / qTotal) * 100;
+  document.getElementById('qpFill').style.width = ap + '%';
+  document.getElementById('qpText').textContent = qAnswered + ' / ' + qTotal + ' câu';
+}
+
+function maybeShowSummary(animate) {
+  if (qAnswered < qTotal) return;
+  var pct = Math.round(qScore / qTotal * 100);
+  var stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+  var msg = pct >= 80 ? 'Xuất sắc! Bạn đã nắm vững bài Parabol.'
+          : pct >= 50 ? 'Khá tốt — hãy ôn lại vài chỗ còn sai.'
+          : 'Cần ôn lại lý thuyết và xem lại các ví dụ nhé!';
+  var rows = '', weak = [];
+  ['nb','th','vd','vc'].forEach(function(k) {
+    if (!levelTot[k]) return;
+    rows += '<tr><td>' + levelName[k] + '</td><td style="text-align:right;font-weight:800;">' + levelSc[k] + '/' + levelTot[k] + '</td></tr>';
+    if (levelSc[k] < levelTot[k]) weak.push(levelName[k].toLowerCase());
+  });
+  var advice = weak.length
+    ? '<p style="margin-top:10px;"><i class="fa-solid fa-circle-arrow-right"></i> Nên xem lại các câu mức: <strong>' + weak.join(', ') + '</strong>.</p>'
+    : '<p style="margin-top:10px;"><i class="fa-solid fa-circle-check"></i> Bạn làm đúng toàn bộ — tuyệt vời!</p>';
+  var el = document.getElementById('quizSummary');
+  el.innerHTML =
+    '<div class="qs-head"><i class="fa-solid fa-flag-checkered"></i> Kết quả của bạn</div>' +
+    '<div class="qs-score">' + qScore + '/' + qTotal + ' <span class="qs-stars">' + stars + '</span></div>' +
+    '<div class="qs-msg">' + msg + '</div>' +
+    '<table class="qs-table"><thead><tr><th>Mức độ</th><th style="text-align:right;">Số câu đúng</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    advice +
+    '<button class="btn btn-primary" style="margin-top:14px;" onclick="resetQuiz()"><i class="fa-solid fa-rotate-left"></i> Làm lại (đảo thứ tự đáp án)</button>';
+  el.style.display = 'block';
+  mj(el);
+  if (animate) setTimeout(function(){ try { el.scrollIntoView({behavior:'smooth',block:'start'}); } catch(e){} }, 260);
+}
+
+function saveProgress() {
+  var data = {};
+  document.querySelectorAll('.q-card').forEach(function(card) {
+    if (!card.dataset.done) return;
+    var picked = card.querySelector('.q-opt.wrong');
+    var correctOpt = card.querySelector('.q-opt[data-correct="true"]');
+    data[card.id] = { ok: !picked, oid: picked ? picked.dataset.oid : (correctOpt ? correctOpt.dataset.oid : '') };
+  });
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+}
+
+function restoreProgress() {
+  var raw; try { raw = localStorage.getItem(STORE_KEY); } catch (e) { raw = null; }
+  if (!raw) return;
+  var data; try { data = JSON.parse(raw); } catch (e) { return; }
+  Object.keys(data).forEach(function(qId) {
+    var card = document.getElementById(qId);
+    if (!card || card.dataset.done) return;
+    applyAnswer(card, !!data[qId].ok, data[qId].oid, false);
+  });
+}
+
+function resetQuiz() {
+  try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+  qScore = 0; qAnswered = 0; levelSc = { nb:0, th:0, vd:0, vc:0 };
+  document.querySelectorAll('.q-card').forEach(function(card) {
+    delete card.dataset.done;
+    var box = card.querySelector('.q-opts');
+    var opts = Array.prototype.slice.call(box.querySelectorAll('.q-opt'));
+    opts.forEach(function(o) {
+      o.classList.remove('correct','wrong','locked');
+      o.onclick = function() { pick(o, card.id); };
+    });
+    shuffle(opts).forEach(function(o){ box.appendChild(o); });
+    var exp = card.querySelector('.q-explain'); if (exp) exp.classList.remove('show');
+  });
+  var sm = document.getElementById('quizSummary'); if (sm) { sm.style.display = 'none'; sm.innerHTML = ''; }
+  updateScore();
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('scoreCount').textContent = '0/' + qTotal;
+  document.getElementById('scoreStars').textContent = '⭐';
+  try { document.getElementById('s-7').scrollIntoView({behavior:'smooth',block:'start'}); } catch(e){}
+}
+
+/* ----- ACCESSIBILITY: high-contrast toggle + keyboard support ----- */
+function initA11y() {
+  var tg = document.getElementById('hcToggle');
+  tg.addEventListener('click', function() {
+    var on = document.body.classList.toggle('hc');
+    tg.setAttribute('aria-pressed', on ? 'true' : 'false');
+    tg.setAttribute('aria-label', on ? 'Tắt chế độ tương phản cao' : 'Bật chế độ tương phản cao');
+    setTimeout(drawApplet, 30);
+  });
+  document.querySelectorAll('.fc').forEach(function(card) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', 'Thẻ ghi nhớ — nhấn để lật xem đáp án');
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
+    });
+  });
+  document.querySelectorAll('.q-opt').forEach(function(opt) {
+    opt.setAttribute('tabindex', '0');
+    opt.setAttribute('role', 'button');
+    opt.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ' ') && !opt.classList.contains('locked')) { e.preventDefault(); opt.click(); }
+    });
+  });
+  document.querySelectorAll('.drop-z, .chip').forEach(function(el) { el.setAttribute('tabindex', '0'); });
+  var pb = document.getElementById('printBtn');
+  if (pb) pb.addEventListener('click', function() { window.print(); });
+}
+
+/* ----- LEARNING UX: back-to-top ----- */
+function initBackToTop() {
+  var btn = document.getElementById('toTop');
+  if (!btn) return;
+  window.addEventListener('scroll', function() { btn.classList.toggle('show', window.scrollY > 600); });
+  btn.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+}
+
+/* ----- INIT ----- */
+window.addEventListener('DOMContentLoaded', function() {
+  initApplet(); initDnd(); initNav(); initA11y(); initQuiz(); initBackToTop(); drawApplet();
+});
+window.addEventListener('load', function() { setTimeout(drawApplet, 100); });
+</script>
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>

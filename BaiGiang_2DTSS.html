@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Hai Đường Thẳng Song Song – Toán 11</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<!-- FontAwesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<!-- MathJax 3 -->
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+
+<style>
+/* =============================================
+   CSS VARIABLES & DESIGN SYSTEM
+   ============================================= */
+:root {
+  /* Primary – Indigo */
+  --indigo-900: #312e81;
+  --indigo-700: #4338ca;
+  --indigo-600: #4f46e5;
+  --indigo-100: #e0e7ff;
+  --indigo-50:  #eef2ff;
+  /* Cyan */
+  --cyan-700: #0e7490;
+  --cyan-600: #0891b2;
+  --cyan-100: #cffafe;
+  --cyan-50:  #ecfeff;
+  /* Accents */
+  --amber-600: #d97706;
+  --amber-100: #fef3c7;
+  --amber-50:  #fffbeb;
+  --green-600: #059669;
+  --green-100: #d1fae5;
+  --green-50:  #ecfdf5;
+  --red-600:   #dc2626;
+  --red-100:   #fee2e2;
+  --red-50:    #fef2f2;
+  --orange-600:#ea580c;
+  --orange-100:#ffedd5;
+  /* Neutrals */
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-600: #475569;
+  --slate-400: #94a3b8;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50:  #f8fafc;
+  --white:     #ffffff;
+  /* Layout */
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --shadow-card: 0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  /* Typography */
+  --font-head: 'Merriweather', Georgia, serif;
+  --font-body: 'Nunito', 'Segoe UI', sans-serif;
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--slate-50);
+  color: var(--slate-800);
+  line-height: 1.7;
+  font-size: 16px;
+}
+h1,h2,h3,h4 { font-family: var(--font-head); line-height: 1.3; }
+p { margin-bottom: .75rem; }
+p:last-child { margin-bottom: 0; }
+ul,ol { padding-left: 1.5rem; }
+li { margin-bottom: .4rem; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* =============================================
+   HEADER HERO
+   ============================================= */
+#hero {
+  background: linear-gradient(135deg, var(--indigo-900) 0%, #5b21b6 50%, var(--indigo-700) 100%);
+  color: var(--white);
+  padding: 60px 24px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#hero .grid-bg {
+  position: absolute; inset: 0; opacity: .08;
+  background-image:
+    linear-gradient(var(--white) 1px, transparent 1px),
+    linear-gradient(90deg, var(--white) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+#hero .badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+  border-radius: 100px; padding: 6px 18px; font-size: .82rem;
+  font-weight: 600; letter-spacing: .03em; margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+#hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900;
+  margin-bottom: 16px; text-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+#hero .subtitle {
+  font-size: 1.1rem; opacity: .88; max-width: 600px; margin: 0 auto 28px;
+}
+#hero .tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+#hero .tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.13); border-radius: var(--radius-md);
+  padding: 7px 16px; font-size: .85rem; font-weight: 600;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* =============================================
+   STICKY NAVIGATION
+   ============================================= */
+#sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--slate-200);
+  box-shadow: 0 2px 12px rgba(49,46,129,.07);
+}
+#sticky-nav ul {
+  display: flex; list-style: none; padding: 0 16px;
+  overflow-x: auto; gap: 2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#sticky-nav ul::-webkit-scrollbar { display: none; }
+#sticky-nav li a {
+  display: flex; align-items: center; gap: 7px;
+  padding: 14px 18px; font-size: .87rem; font-weight: 600;
+  color: var(--slate-600); text-decoration: none; white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+#sticky-nav li a:hover { color: var(--indigo-700); }
+#sticky-nav li a.active {
+  color: var(--indigo-700); border-bottom-color: var(--indigo-700);
+}
+
+/* =============================================
+   MAIN CONTENT
+   ============================================= */
+#main { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* =============================================
+   CARD (SECTION)
+   ============================================= */
+.card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card); padding: 36px 40px; margin-bottom: 36px;
+  border-left: 5px solid var(--indigo-700);
+  /* Scroll reveal initial state */
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.card.revealed { opacity: 1; transform: none; }
+@media (max-width: 600px) { .card { padding: 24px 18px; } }
+
+/* Section header */
+.sec-header {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
+}
+.sec-icon {
+  width: 46px; height: 46px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem; flex-shrink: 0;
+}
+.sec-icon.indigo { background: var(--indigo-50); color: var(--indigo-700); }
+.sec-icon.cyan   { background: var(--cyan-50);   color: var(--cyan-700);   }
+.sec-icon.amber  { background: var(--amber-50);  color: var(--amber-600);  }
+.sec-icon.green  { background: var(--green-50);  color: var(--green-600);  }
+.sec-icon.red    { background: var(--red-50);    color: var(--red-600);    }
+.sec-icon.orange { background: var(--orange-100);color: var(--orange-600); }
+.sec-title { font-size: 1.4rem; font-weight: 700; color: var(--slate-900); }
+.sec-title small {
+  display: block; font-family: var(--font-body);
+  font-size: .82rem; font-weight: 600; color: var(--indigo-600);
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px;
+}
+
+/* Color variants for card left-border */
+.card.cyan   { border-left-color: var(--cyan-600); }
+.card.amber  { border-left-color: var(--amber-600); }
+.card.green  { border-left-color: var(--green-600); }
+.card.red    { border-left-color: var(--red-600); }
+.card.orange { border-left-color: var(--orange-600); }
+
+/* =============================================
+   CALLOUT BOXES
+   ============================================= */
+.box {
+  border-radius: var(--radius-md); padding: 16px 20px; margin: 16px 0;
+  display: flex; gap: 14px; align-items: flex-start;
+  border-left: 4px solid;
+}
+.box-icon { font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+.box-in  { background: var(--indigo-50); border-color: var(--indigo-700); }
+.box-in .box-icon { color: var(--indigo-700); }
+.box-cy  { background: var(--cyan-50);   border-color: var(--cyan-600);   }
+.box-cy .box-icon { color: var(--cyan-700); }
+.box-gr  { background: var(--green-50);  border-color: var(--green-600);  }
+.box-gr .box-icon { color: var(--green-600); }
+.box-am  { background: var(--amber-50);  border-color: var(--amber-600);  }
+.box-am .box-icon { color: var(--amber-600); }
+.warn    { background: var(--red-50);    border-color: var(--red-600);    }
+.warn .box-icon { color: var(--red-600); }
+.tip     { background: var(--orange-100);border-color: var(--orange-600); }
+.tip .box-icon  { color: var(--orange-600); }
+
+/* =============================================
+   GRID SYSTEM
+   ============================================= */
+.g2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.ga { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 20px; }
+@media (max-width:700px) { .g2,.g3,.ga { grid-template-columns: 1fr; } }
+
+/* =============================================
+   THEOREM BOXES
+   ============================================= */
+.theorem {
+  background: var(--indigo-50); border: 1.5px solid var(--indigo-100);
+  border-radius: var(--radius-md); padding: 18px 22px; margin: 16px 0;
+}
+.theorem-label {
+  font-size: .75rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--indigo-700); margin-bottom: 8px;
+}
+.theorem-body { font-weight: 500; }
+
+/* =============================================
+   SVG FIGURE WRAPPER
+   ============================================= */
+.fig-wrap {
+  background: var(--slate-50); border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md); padding: 16px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.fig-cap {
+  font-size: .82rem; color: var(--slate-600); margin-top: 8px;
+  text-align: center; font-style: italic;
+}
+
+/* =============================================
+   TABLE
+   ============================================= */
+.tbl-wrap { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--slate-200); margin: 16px 0; }
+.tbl-wrap table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.tbl-wrap th {
+  background: var(--indigo-700); color: var(--white);
+  padding: 12px 16px; font-weight: 700; text-align: left;
+}
+.tbl-wrap td { padding: 11px 16px; border-bottom: 1px solid var(--slate-100); }
+.tbl-wrap tr:nth-child(even) td { background: var(--slate-50); }
+.tbl-wrap tr:last-child td { border-bottom: none; }
+
+/* =============================================
+   ACCORDION
+   ============================================= */
+.acc-item { border: 1px solid var(--slate-200); border-radius: var(--radius-md); margin-bottom: 12px; overflow: hidden; }
+.acc-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; cursor: pointer; background: var(--slate-50);
+  font-weight: 700; font-size: .97rem; user-select: none;
+  transition: background .2s;
+}
+.acc-head:hover { background: var(--indigo-50); }
+.acc-head .acc-arr {
+  color: var(--indigo-700); transition: transform .3s;
+  font-size: .9rem;
+}
+.acc-item.open .acc-head { background: var(--indigo-50); color: var(--indigo-700); }
+.acc-item.open .acc-arr { transform: rotate(180deg); }
+.acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .5s cubic-bezier(.4,0,.2,1);
+}
+.acc-body-inner { padding: 20px 24px; border-top: 1px solid var(--slate-200); }
+
+/* Step-by-step */
+.steps { list-style: none; padding: 0; }
+.step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+.sn {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--indigo-700); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .82rem;
+}
+.step-content { flex: 1; }
+
+/* =============================================
+   FLASHCARDS
+   ============================================= */
+#flashcard-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+@media (max-width: 700px) {
+  #flashcard-grid { grid-template-columns: 1fr; }
+}
+.fc-scene {
+  perspective: 1000px; height: 180px; cursor: pointer;
+}
+.fc-card {
+  width: 100%; height: 100%; position: relative;
+  transform-style: preserve-3d; transition: transform .55s ease;
+}
+.fc-scene.flipped .fc-card { transform: rotateY(180deg); }
+.fc-front, .fc-back {
+  position: absolute; inset: 0; border-radius: var(--radius-md);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px; text-align: center; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow-card);
+}
+.fc-front {
+  background: linear-gradient(135deg, var(--indigo-900), var(--indigo-700));
+  color: var(--white);
+}
+.fc-front .fc-q { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+.fc-front .fc-hint { font-size: .78rem; opacity: .65; }
+.fc-back {
+  background: var(--green-50); border: 2px solid var(--green-100);
+  transform: rotateY(180deg);
+}
+.fc-back .fc-a { font-size: .97rem; font-weight: 600; color: var(--slate-800); }
+.fc-back .fc-label {
+  font-size: .75rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--green-600); margin-bottom: 8px;
+}
+
+/* =============================================
+   DRAG & DROP
+   ============================================= */
+#dd-chips {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;
+  min-height: 50px; padding: 12px; background: var(--slate-50);
+  border-radius: var(--radius-md); border: 2px dashed var(--slate-200);
+}
+.chip {
+  padding: 8px 18px; border-radius: 100px; cursor: grab; user-select: none;
+  font-weight: 700; font-size: .9rem; transition: transform .2s, box-shadow .2s;
+  border: 2px solid transparent;
+}
+.chip:active { cursor: grabbing; transform: scale(1.05); }
+.chip.dragging { opacity: .4; }
+.chip.c-indigo { background: var(--indigo-50);  color: var(--indigo-700);  border-color: var(--indigo-100); }
+.chip.c-cyan   { background: var(--cyan-50);    color: var(--cyan-700);    border-color: var(--cyan-100); }
+.chip.c-amber  { background: var(--amber-50);   color: var(--amber-600);   border-color: var(--amber-100); }
+.chip.c-green  { background: var(--green-50);   color: var(--green-600);   border-color: var(--green-100); }
+.chip.c-red    { background: var(--red-50);     color: var(--red-600);     border-color: var(--red-100); }
+.chip.c-neutral { background: var(--slate-100); color: var(--slate-700);   border-color: var(--slate-300); }
+
+.dd-zones { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+.drop-zone {
+  border: 2px dashed var(--slate-300); border-radius: var(--radius-md);
+  padding: 16px; min-height: 100px; transition: border-color .2s, background .2s;
+}
+.drop-zone.over { border-color: var(--indigo-600); background: var(--indigo-50); }
+.drop-zone .dz-label {
+  font-weight: 700; font-size: .85rem; color: var(--slate-600);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.drop-zone .dz-sub { font-size: .78rem; color: var(--slate-400); font-style: italic; margin-bottom: 8px; }
+.drop-zone.correct { border-color: var(--green-600); background: var(--green-50); }
+.drop-zone.wrong   { border-color: var(--red-600);   background: var(--red-50); }
+.drop-zone .chip   { margin-top: 4px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 26px; border-radius: var(--radius-md); border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 700;
+  transition: transform .15s, box-shadow .15s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.btn:active { transform: scale(.98); }
+.btn-primary { background: var(--indigo-700); color: var(--white); }
+.btn-outline {
+  background: transparent; color: var(--indigo-700);
+  border: 2px solid var(--indigo-200);
+}
+.btn-outline:hover { background: var(--indigo-50); }
+
+/* =============================================
+   QUIZ
+   ============================================= */
+#quiz-container { }
+.quiz-q {
+  background: var(--slate-50); border-radius: var(--radius-md);
+  padding: 20px; margin-bottom: 20px; border: 1px solid var(--slate-200);
+}
+.quiz-q-text {
+  font-weight: 700; font-size: 1rem; margin-bottom: 16px; color: var(--slate-900);
+}
+.quiz-q-num {
+  font-size: .75rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--indigo-600); margin-bottom: 8px;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: var(--radius-md);
+  border: 2px solid var(--slate-200); cursor: pointer; user-select: none;
+  background: var(--white); transition: border-color .2s, background .2s;
+  font-weight: 500;
+}
+.quiz-opt:hover:not(.locked) { border-color: var(--indigo-600); background: var(--indigo-50); }
+.quiz-opt .opt-letter {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--slate-100); color: var(--slate-600);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .82rem; transition: background .2s, color .2s;
+}
+.quiz-opt.selected { border-color: var(--indigo-600); background: var(--indigo-50); }
+.quiz-opt.selected .opt-letter { background: var(--indigo-700); color: var(--white); }
+.quiz-opt.correct { border-color: var(--green-600); background: var(--green-50); }
+.quiz-opt.correct .opt-letter { background: var(--green-600); color: var(--white); }
+.quiz-opt.wrong { border-color: var(--red-600); background: var(--red-50); }
+.quiz-opt.wrong .opt-letter { background: var(--red-600); color: var(--white); }
+.quiz-opt.locked { pointer-events: none; }
+.quiz-explain {
+  margin-top: 14px; padding: 14px 18px; border-radius: var(--radius-sm);
+  border-left: 4px solid; font-size: .92rem; display: none;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain.ex-correct {
+  background: var(--green-50); border-color: var(--green-600); color: var(--slate-800);
+}
+.quiz-explain.ex-wrong {
+  background: var(--red-50); border-color: var(--red-600); color: var(--slate-800);
+}
+
+/* Score bar */
+#score-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--slate-200); padding: 12px 24px;
+  display: flex; align-items: center; gap: 16px;
+  transform: translateY(100%); transition: transform .4s ease;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+}
+#score-bar.visible { transform: none; }
+#score-bar .bar-label { font-weight: 700; font-size: .9rem; white-space: nowrap; }
+#score-bar .bar-track {
+  flex: 1; height: 10px; background: var(--slate-200);
+  border-radius: 100px; overflow: hidden;
+}
+#score-bar .bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--indigo-700), var(--cyan-600));
+  border-radius: 100px; transition: width .6s ease;
+}
+#score-bar .bar-count { font-weight: 800; color: var(--indigo-700); font-size: .95rem; white-space: nowrap; }
+
+/* =============================================
+   MINDMAP (SVG inline)
+   ============================================= */
+.mindmap-wrap { overflow-x: auto; }
+
+/* =============================================
+   INTERACTIVE 3D CANVAS VIEWER
+   ============================================= */
+#canvas-wrap {
+  border-radius: var(--radius-md); overflow: hidden;
+  background: #0d1b40; position: relative;
+}
+#canvas3d { display: block; width: 100%; touch-action: none; }
+#canvas-controls {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
+}
+.c-btn {
+  padding: 8px 18px; border-radius: 100px; border: 2px solid var(--indigo-200);
+  background: var(--white); color: var(--indigo-700); font-weight: 700;
+  font-size: .85rem; cursor: pointer; transition: background .2s, color .2s;
+  font-family: var(--font-body);
+}
+.c-btn:hover, .c-btn.active { background: var(--indigo-700); color: var(--white); border-color: var(--indigo-700); }
+
+/* =============================================
+   REAL-WORLD CALLOUT
+   ============================================= */
+.real-card {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: linear-gradient(135deg, var(--indigo-50), var(--cyan-50));
+  border: 1px solid var(--indigo-100); border-radius: var(--radius-md); padding: 20px;
+}
+.real-icon { font-size: 2.5rem; line-height: 1; flex-shrink: 0; }
+
+/* =============================================
+   POSITION TYPE CARD
+   ============================================= */
+.pos-card {
+  border-radius: var(--radius-md); padding: 18px; border: 2px solid;
+  display: flex; flex-direction: column; gap: 10px; background: var(--white);
+}
+.pos-card.trung   { border-color: var(--amber-600); }
+.pos-card.cat     { border-color: var(--red-600);   }
+.pos-card.song    { border-color: var(--green-600); }
+.pos-card.cheo    { border-color: var(--indigo-700);}
+.pos-tag {
+  font-size: .78rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .06em; padding: 3px 10px; border-radius: 100px;
+  display: inline-block;
+}
+.trung .pos-tag   { background: var(--amber-100); color: var(--amber-600); }
+.cat   .pos-tag   { background: var(--red-100);   color: var(--red-600);   }
+.song  .pos-tag   { background: var(--green-100); color: var(--green-600); }
+.cheo  .pos-tag   { background: var(--indigo-100);color: var(--indigo-700);}
+.pos-name { font-weight: 800; font-size: 1.05rem; }
+.pos-sym  { font-size: .92rem; color: var(--slate-600); }
+.pos-desc { font-size: .88rem; color: var(--slate-600); }
+
+/* =============================================
+   RESPONSIVE HELPERS
+   ============================================= */
+@media (max-width:900px) {
+  #hero { padding: 40px 20px 36px; }
+  .sec-title { font-size: 1.2rem; }
+}
+@media (max-width:600px) {
+  .real-card { flex-direction: column; }
+  #hero h1 { font-size: 1.7rem; }
+  .g2, .g3, .ga { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- =============================================
+     HEADER HERO
+     ============================================= -->
+<header id="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="badge">
+    <i class="fa-solid fa-graduation-cap"></i>
+    Toán học 11 &bull; Hình học không gian
+  </div>
+  <h1>Hai Đường Thẳng Song Song</h1>
+  <p class="subtitle">Khám phá vị trí tương đối và tính chất cơ bản của hai đường thẳng trong không gian ba chiều</p>
+  <div class="tags">
+    <span class="tag"><i class="fa-solid fa-diagram-project"></i> Vị trí tương đối</span>
+    <span class="tag"><i class="fa-solid fa-infinity"></i> Đường thẳng song song</span>
+    <span class="tag"><i class="fa-solid fa-cube"></i> Không gian 3D</span>
+    <span class="tag"><i class="fa-solid fa-flask"></i> Tính chất & Định lí</span>
+    <span class="tag"><i class="fa-solid fa-gamepad"></i> Bài tập tương tác</span>
+  </div>
+</header>
+
+<!-- =============================================
+     STICKY NAVIGATION
+     ============================================= -->
+<nav id="sticky-nav" aria-label="Điều hướng bài học">
+  <ul>
+    <li><a href="#sec-kd"  class="nav-link"><i class="fa-solid fa-rocket"></i> Khởi động</a></li>
+    <li><a href="#sec-lt"  class="nav-link"><i class="fa-solid fa-book-open"></i> Lý thuyết</a></li>
+    <li><a href="#sec-tc"  class="nav-link"><i class="fa-solid fa-star"></i> Tính chất</a></li>
+    <li><a href="#sec-3d"  class="nav-link"><i class="fa-solid fa-cube"></i> Mô hình 3D</a></li>
+    <li><a href="#sec-mm"  class="nav-link"><i class="fa-solid fa-sitemap"></i> Sơ đồ tư duy</a></li>
+    <li><a href="#sec-fc"  class="nav-link"><i class="fa-solid fa-layer-group"></i> Thẻ lật</a></li>
+    <li><a href="#sec-dd"  class="nav-link"><i class="fa-solid fa-hand-pointer"></i> Kéo thả</a></li>
+    <li><a href="#sec-vd"  class="nav-link"><i class="fa-solid fa-pen-ruler"></i> Ví dụ mẫu</a></li>
+    <li><a href="#sec-qz"  class="nav-link"><i class="fa-solid fa-circle-question"></i> Trắc nghiệm</a></li>
+  </ul>
+</nav>
+
+<!-- =============================================
+     MAIN CONTENT
+     ============================================= -->
+<main id="main">
+
+  <!-- ========================
+       SECTION 1: KHỞI ĐỘNG
+       ======================== -->
+  <section class="card" id="sec-kd">
+    <div class="sec-header">
+      <div class="sec-icon indigo"><i class="fa-solid fa-rocket"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Bài 1 &mdash; Khởi động</small>
+          Thực tế xung quanh ta
+        </div>
+      </div>
+    </div>
+
+    <div class="real-card" style="margin-bottom:24px;">
+      <div class="real-icon">🏗️</div>
+      <div>
+        <p style="font-weight:700; font-size:1.05rem; margin-bottom:8px;">Quan sát lan can cầu thang thép!</p>
+        <p>Hãy nhìn vào lan can cầu thang bên dưới. Bạn có thể nhận ra ngay các cặp thanh thép nào <strong>song song</strong>, cặp nào <strong>cắt nhau</strong>, và đặc biệt — những cặp nào trông có vẻ gần nhau nhưng thực ra <strong>chéo nhau</strong> trong không gian?</p>
+        <p style="margin-top:8px; color:var(--indigo-700); font-weight:600;">💡 Đây chính là nội dung trọng tâm của bài hôm nay!</p>
+      </div>
+    </div>
+
+    <!-- SVG minh họa lan can cầu thang 3D -->
+    <div class="fig-wrap" style="margin-bottom:20px;">
+      <svg viewBox="0 0 540 260" width="100%" style="max-width:560px;">
+        <!-- Nền sàn -->
+        <rect x="40" y="232" width="460" height="22" fill="#e2e8f0" rx="2"/>
+
+        <!-- Mặt trên bậc thang (hình bình hành, 3D depth +22, -11) -->
+        <polygon points="65,205 115,205 137,194 87,194"   fill="#dce4ef" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="115,175 165,175 187,164 137,164" fill="#dce4ef" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="165,145 215,145 237,134 187,134" fill="#dce4ef" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="215,115 265,115 287,104 237,104" fill="#dce4ef" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="265,85  315,85  337,74  287,74"  fill="#dce4ef" stroke="#94a3b8" stroke-width="0.8"/>
+
+        <!-- Mặt bên phải bậc thang (tối hơn để tạo chiều sâu) -->
+        <polygon points="115,205 115,235 137,224 137,194" fill="#c8d2e0" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="165,175 165,205 187,194 187,164" fill="#c8d2e0" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="215,145 215,175 237,164 237,134" fill="#c8d2e0" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="265,115 265,145 287,134 287,104" fill="#c8d2e0" stroke="#94a3b8" stroke-width="0.8"/>
+        <polygon points="315,85  315,115 337,104 337,74"  fill="#c8d2e0" stroke="#94a3b8" stroke-width="0.8"/>
+
+        <!-- Mặt trước bậc thang (riser) -->
+        <polygon points="65,205  65,235  115,235 115,205" fill="#e8edf5" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="115,175 115,205 165,205 165,175" fill="#e8edf5" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="165,145 165,175 215,175 215,145" fill="#e8edf5" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="215,115 215,145 265,145 265,115" fill="#e8edf5" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="265,85  265,115 315,115 315,85"  fill="#e8edf5" stroke="#94a3b8" stroke-width="1"/>
+
+        <!-- Viền ngoài biên dạng bậc thang -->
+        <polyline points="65,235 65,205 115,205 115,175 165,175 165,145 215,145 215,115 265,115 265,85 315,85 315,235 65,235"
+                  fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+
+        <!-- Cạnh phía sau (nét đứt) -->
+        <polyline points="87,194 137,194 137,164 187,164 187,134 237,134 237,104 287,104 287,74 337,74 337,232"
+                  fill="none" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="4,3" opacity=".5"/>
+
+        <!-- === TRỤ ĐỨNG (CYAN) — cắt nhau với a và b === -->
+        <line x1="65"  y1="205" x2="65"  y2="155" stroke="#0891b2" stroke-width="2.2"/>
+        <line x1="115" y1="175" x2="115" y2="125" stroke="#0891b2" stroke-width="2.2"/>
+        <line x1="165" y1="145" x2="165" y2="95"  stroke="#0891b2" stroke-width="2.2"/>
+        <line x1="215" y1="115" x2="215" y2="65"  stroke="#0891b2" stroke-width="2.2"/>
+        <line x1="265" y1="85"  x2="265" y2="35"  stroke="#0891b2" stroke-width="2.2"/>
+
+        <!-- === TAY VỊN DƯỚI b (INDIGO nét đứt) — song song với a === -->
+        <line x1="50" y1="190" x2="278" y2="55" stroke="#4338ca" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="9,5"/>
+
+        <!-- === TAY VỊN TRÊN a (INDIGO nét liền) === -->
+        <line x1="50" y1="162" x2="278" y2="27" stroke="#4338ca" stroke-width="3.5" stroke-linecap="round"/>
+
+        <!-- === THANH NGANG c (AMBER nét liền, nằm ngang) — chéo nhau với a === -->
+        <line x1="337" y1="150" x2="490" y2="150" stroke="#d97706" stroke-width="2.8" stroke-linecap="round"/>
+        <circle cx="337" cy="150" r="3.5" fill="#d97706"/>
+        <circle cx="490" cy="150" r="3.5" fill="#d97706"/>
+
+        <!-- Nhãn a, b, c -->
+        <text x="283" y="25" font-family="Georgia,serif" font-style="italic" font-size="17" fill="#4338ca" font-weight="700">a</text>
+        <text x="283" y="57" font-family="Georgia,serif" font-style="italic" font-size="15" fill="#4338ca" font-weight="700">b</text>
+        <text x="308" y="47" font-family="Nunito,sans-serif" font-size="11" fill="#4338ca" font-weight="700">(b ∥ a)</text>
+        <text x="496" y="148" font-family="Georgia,serif" font-style="italic" font-size="15" fill="#d97706" font-weight="700">c</text>
+
+        <!-- Chú thích -->
+        <rect x="352" y="14" width="178" height="126" rx="8" fill="white" fill-opacity=".92" stroke="#e2e8f0" stroke-width="1.2"/>
+        <line x1="365" y1="40" x2="393" y2="40" stroke="#4338ca" stroke-width="3.5"/>
+        <text x="399" y="44" font-size="11" font-family="Nunito,sans-serif" fill="#475569">a: Tay vịn trên</text>
+        <line x1="365" y1="60" x2="393" y2="60" stroke="#4338ca" stroke-width="2.5" stroke-dasharray="9,5"/>
+        <text x="399" y="64" font-size="11" font-family="Nunito,sans-serif" fill="#475569">b: Tay vịn dưới (a ∥ b)</text>
+        <line x1="378" y1="72" x2="378" y2="94" stroke="#0891b2" stroke-width="2.2"/>
+        <text x="399" y="87" font-size="11" font-family="Nunito,sans-serif" fill="#475569">Trụ đứng (cắt a và b)</text>
+        <line x1="365" y1="108" x2="393" y2="108" stroke="#d97706" stroke-width="2.8"/>
+        <text x="399" y="112" font-size="11" font-family="Nunito,sans-serif" fill="#475569">c: Thanh ngang (chéo a)</text>
+      </svg>
+      <div class="fig-cap">Hình 0 – Lan can cầu thang thép: tay vịn a ∥ b (song song), trụ đứng cắt a và b, thanh ngang c chéo với a</div>
+    </div>
+
+    <div class="box box-am">
+      <span class="box-icon"><i class="fa-solid fa-lightbulb"></i></span>
+      <div>
+        <strong>Câu hỏi đặt vấn đề:</strong> Trong mặt phẳng (2D) ta chỉ có 3 vị trí tương đối: trùng, cắt, song song. Vậy trong không gian 3D, có thêm khả năng nào? Đó là gì? Làm sao phân biệt?
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 2: LÝ THUYẾT
+       ======================== -->
+  <section class="card cyan" id="sec-lt">
+    <div class="sec-header">
+      <div class="sec-icon cyan"><i class="fa-solid fa-book-open"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Phần I &mdash; Lý thuyết</small>
+          Vị Trí Tương Đối Của Hai Đường Thẳng
+        </div>
+      </div>
+    </div>
+
+    <div class="box box-in">
+      <span class="box-icon"><i class="fa-solid fa-info-circle"></i></span>
+      <div>
+        <strong>Trường hợp tổng quát:</strong> Cho hai đường thẳng $a$ và $b$ trong không gian. Có <strong>2 trường hợp chính</strong> xảy ra, dẫn đến <strong>4 vị trí tương đối</strong>.
+      </div>
+    </div>
+
+    <!-- 4 vị trí tương đối -->
+    <div class="g2" style="margin:24px 0;">
+
+      <!-- Trường hợp 1: Đồng phẳng -->
+      <div>
+        <p style="font-weight:800; font-size:.9rem; text-transform:uppercase; letter-spacing:.06em; color:var(--cyan-700); margin-bottom:12px;">
+          <i class="fa-solid fa-layer-group"></i> Trường hợp 1 – Đồng phẳng
+        </p>
+        <p style="font-size:.9rem; color:var(--slate-600); margin-bottom:12px;">Tồn tại một mặt phẳng chứa cả $a$ và $b$.</p>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+
+          <div class="pos-card trung" style="padding:10px 12px; gap:5px;">
+            <span class="pos-tag">Trường hợp 1a</span>
+            <div class="pos-name" style="font-size:.95rem;">Trùng nhau</div>
+            <div class="pos-sym" style="font-size:.82rem;">Kí hiệu: $a \equiv b$</div>
+            <div class="pos-desc" style="font-size:.8rem; margin-bottom:0;">Hai đường thẳng có vô số điểm chung (mọi điểm).</div>
+            <div class="fig-wrap" style="padding:6px;">
+              <svg viewBox="0 0 200 62" width="70%">
+                <line x1="22" y1="31" x2="178" y2="31" stroke="#d97706" stroke-width="4" stroke-linecap="round"/>
+                <line x1="22" y1="31" x2="178" y2="31" stroke="#059669" stroke-width="2" stroke-dasharray="10,6"/>
+                <text x="6"  y="16" font-size="12" font-style="italic" fill="#d97706" font-family="Georgia">a</text>
+                <line x1="13" y1="17" x2="20" y2="28" stroke="#d97706" stroke-width="1.2"/>
+                <text x="6"  y="52" font-size="12" font-style="italic" fill="#059669" font-family="Georgia">b</text>
+                <line x1="13" y1="48" x2="20" y2="34" stroke="#059669" stroke-width="1.2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="pos-card cat" style="padding:10px 12px; gap:5px;">
+            <span class="pos-tag">Trường hợp 1b</span>
+            <div class="pos-name" style="font-size:.95rem;">Cắt nhau</div>
+            <div class="pos-sym" style="font-size:.82rem;">Kí hiệu: $a \cap b = \{M\}$</div>
+            <div class="pos-desc" style="font-size:.8rem; margin-bottom:0;">Hai đường thẳng có đúng <strong>một điểm chung</strong> $M$.</div>
+            <div class="fig-wrap" style="padding:6px;">
+              <svg viewBox="0 0 200 66" width="70%">
+                <line x1="20" y1="12" x2="180" y2="52" stroke="#dc2626" stroke-width="2.2"/>
+                <line x1="20" y1="52" x2="180" y2="12" stroke="#4338ca" stroke-width="2.2"/>
+                <circle cx="100" cy="32" r="4" fill="#0891b2"/>
+                <text x="100" y="25" font-size="12" fill="#0891b2" font-family="Georgia" font-style="italic">M</text>
+                <text x="22" y="10" font-size="12" fill="#dc2626" font-family="Georgia" font-style="italic">a</text>
+                <text x="22" y="64" font-size="12" fill="#4338ca" font-family="Georgia" font-style="italic">b</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="pos-card song" style="padding:10px 12px; gap:5px;">
+            <span class="pos-tag">Trường hợp 1c</span>
+            <div class="pos-name" style="font-size:.95rem;">Song song</div>
+            <div class="pos-sym" style="font-size:.82rem;">Kí hiệu: $a \parallel b$</div>
+            <div class="pos-desc" style="font-size:.8rem; margin-bottom:0;">Nằm trong cùng mặt phẳng, <strong>không có điểm chung</strong>.</div>
+            <div class="fig-wrap" style="padding:6px;">
+              <svg viewBox="0 0 200 56" width="70%">
+                <line x1="20" y1="14" x2="180" y2="14" stroke="#059669" stroke-width="2.2"/>
+                <line x1="20" y1="36" x2="180" y2="36" stroke="#4338ca" stroke-width="2.2"/>
+                <text x="8" y="12" font-size="12" fill="#059669" font-family="Georgia" font-style="italic">a</text>
+                <text x="8" y="34" font-size="12" fill="#4338ca" font-family="Georgia" font-style="italic">b</text>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Trường hợp 2: Không đồng phẳng -->
+      <div>
+        <p style="font-weight:800; font-size:.9rem; text-transform:uppercase; letter-spacing:.06em; color:var(--indigo-700); margin-bottom:12px;">
+          <i class="fa-solid fa-cube"></i> Trường hợp 2 – Không đồng phẳng
+        </p>
+        <p style="font-size:.9rem; color:var(--slate-600); margin-bottom:12px;">Không tồn tại mặt phẳng nào chứa cả $a$ và $b$.</p>
+
+        <div class="pos-card cheo">
+          <span class="pos-tag">Trường hợp 2</span>
+          <div class="pos-name">Chéo nhau</div>
+          <div class="pos-sym">$a$ và $b$ chéo nhau</div>
+          <div class="pos-desc"><strong>Không có mặt phẳng nào</strong> chứa đồng thời cả hai đường. Không có điểm chung và không song song.</div>
+
+          <!-- SVG tứ diện ABCD với AB và CD chéo nhau -->
+          <div class="fig-wrap" style="padding:12px; margin-top:8px;">
+            <svg viewBox="0 0 220 190" width="100%">
+              <!-- Tứ diện ABCD (B và C tịnh tiến lên 30 đơn vị) -->
+              <!-- Các cạnh nhìn thấy -->
+              <line x1="110" y1="20"  x2="40"  y2="130" stroke="#1e293b" stroke-width="2"/>
+              <line x1="110" y1="20"  x2="180" y2="110" stroke="#1e293b" stroke-width="2"/>
+              <line x1="40"  y1="130" x2="130" y2="170" stroke="#1e293b" stroke-width="2"/>
+              <line x1="180" y1="110" x2="130" y2="170" stroke="#1e293b" stroke-width="2"/>
+              <!-- Cạnh khuất -->
+              <line x1="110" y1="20"  x2="130" y2="170" stroke="#1e293b" stroke-width="2"/>
+              <line x1="40"  y1="130" x2="180" y2="110" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="5,4"/>
+              <!-- Cạnh AB (chéo) -->
+              <line x1="110" y1="20"  x2="40"  y2="130" stroke="#dc2626" stroke-width="2.8"/>
+              <!-- Cạnh CD (chéo) -->
+              <line x1="130" y1="170" x2="180" y2="110" stroke="#dc2626" stroke-width="2.8"/>
+              <!-- Đỉnh -->
+              <circle cx="110" cy="20"  r="4" fill="#1e293b"/>
+              <circle cx="40"  cy="130" r="4" fill="#1e293b"/>
+              <circle cx="180" cy="110" r="4" fill="#1e293b"/>
+              <circle cx="130" cy="170" r="4" fill="#1e293b"/>
+              <!-- Nhãn đỉnh -->
+              <text x="106" y="14"  font-size="13" font-style="italic" fill="#1e293b" font-family="Georgia">A</text>
+              <text x="24"  y="134" font-size="13" font-style="italic" fill="#1e293b" font-family="Georgia">B</text>
+              <text x="184" y="108" font-size="13" font-style="italic" fill="#1e293b" font-family="Georgia">C</text>
+              <text x="130" y="185" font-size="13" font-style="italic" fill="#1e293b" font-family="Georgia">D</text>
+            </svg>
+            <div class="fig-cap">Trong tứ diện ABCD, các cạnh <strong style="color:var(--red-600)">AB</strong> và <strong style="color:var(--red-600)">CD</strong> chéo nhau</div>
+          </div>
+        </div>
+
+        <div class="box warn" style="margin-top:16px;">
+          <span class="box-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+          <div>
+            <strong>Lưu ý:</strong> Trong không gian, hai đường thẳng <em>không có điểm chung</em> chưa chắc là song song! Chúng có thể là <strong>chéo nhau</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bảng tổng hợp -->
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vị trí tương đối</th>
+            <th>Điểm chung</th>
+            <th>Đồng phẳng?</th>
+            <th>Kí hiệu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Trùng nhau</strong></td>
+            <td>Vô số điểm</td>
+            <td><span style="color:var(--green-600);">✔ Có</span></td>
+            <td>$a \equiv b$</td>
+          </tr>
+          <tr>
+            <td><strong>Cắt nhau</strong></td>
+            <td>Đúng 1 điểm $M$</td>
+            <td><span style="color:var(--green-600);">✔ Có</span></td>
+            <td>$a \cap b = \{M\}$</td>
+          </tr>
+          <tr>
+            <td><strong>Song song</strong></td>
+            <td>Không có</td>
+            <td><span style="color:var(--green-600);">✔ Có</span></td>
+            <td>$a \parallel b$</td>
+          </tr>
+          <tr>
+            <td><strong>Chéo nhau</strong></td>
+            <td>Không có</td>
+            <td><span style="color:var(--red-600);">✘ Không</span></td>
+            <td>$a$ và $b$ chéo nhau</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Định nghĩa chính thức song song -->
+    <div class="theorem">
+      <div class="theorem-label"><i class="fa-solid fa-scroll"></i> &nbsp;Định nghĩa – Hai đường thẳng song song</div>
+      <div class="theorem-body">
+        Hai đường thẳng gọi là <strong>song song</strong> nếu chúng <em>nằm trong cùng một mặt phẳng</em> và <em>không có điểm chung</em>. <br>
+        <strong>Hệ quả:</strong> Có duy nhất một mặt phẳng chứa hai đường thẳng song song $a$ và $b$, kí hiệu là $mp(a,b)$.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 3: TÍNH CHẤT
+       ======================== -->
+  <section class="card amber" id="sec-tc">
+    <div class="sec-header">
+      <div class="sec-icon amber"><i class="fa-solid fa-star"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Phần II &mdash; Lý thuyết</small>
+          Các Tính Chất Cơ Bản
+        </div>
+      </div>
+    </div>
+
+    <!-- Định lí 1 -->
+    <div class="theorem" style="border-left:4px solid var(--indigo-700); background:var(--indigo-50);">
+      <div class="theorem-label" style="color:var(--indigo-700);">📐 Định lí 1 – Sự tồn tại duy nhất</div>
+      <div class="theorem-body">
+        Trong không gian, qua một điểm $M$ nằm ngoài một đường thẳng $d$, có <strong>một và chỉ một</strong> đường thẳng $d'$ song song với $d$.
+      </div>
+    </div>
+
+    <div class="g2" style="margin:20px 0;">
+      <div class="fig-wrap">
+        <svg viewBox="0 0 280 160" width="100%">
+          <!-- Mặt phẳng (P) -->
+          <polygon points="20,135 260,135 240,50 0,50" fill="rgba(67,56,202,.06)" stroke="#c7d2fe" stroke-width="1.2"/>
+          <!-- Đường thẳng d -->
+          <line x1="50" y1="120" x2="230" y2="120" stroke="#475569" stroke-width="2.2"/>
+          <text x="232" y="124" font-size="13" font-style="italic" fill="#475569" font-family="Georgia">d</text>
+          <!-- Đường thẳng d' qua M, song song d -->
+          <line x1="30" y1="80" x2="210" y2="80" stroke="#4338ca" stroke-width="2.2"/>
+          <text x="212" y="84" font-size="13" font-style="italic" fill="#4338ca" font-family="Georgia">d'</text>
+          <!-- Điểm M -->
+          <circle cx="110" cy="80" r="3" fill="#dc2626"/>
+          <text x="105" y="72" font-size="13" font-style="italic" fill="#dc2626" font-family="Georgia">M</text>
+        </svg>
+        <div class="fig-cap">Điểm $M$ ngoài $d$ → có duy nhất $d' \parallel d$</div>
+      </div>
+
+      <div>
+        <div class="box box-gr">
+          <span class="box-icon"><i class="fa-solid fa-check-circle"></i></span>
+          <div>
+            <strong>Ứng dụng:</strong> Định lí này là cơ sở để vẽ đường thẳng song song trong hình học không gian và chứng minh hai đường thẳng song song nhau.
+          </div>
+        </div>
+        <div class="box box-am" style="margin-top:12px;">
+          <span class="box-icon"><i class="fa-solid fa-exclamation-triangle"></i></span>
+          <div>
+            <strong>So sánh với mặt phẳng:</strong> Định lí này <em>đúng cả</em> trong mặt phẳng lẫn trong không gian. Đây là sự kế thừa từ tiên đề Euclid!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Định lí 2 -->
+    <div class="theorem" style="border-left:4px solid var(--cyan-600); background:var(--cyan-50); margin-top:20px;">
+      <div class="theorem-label" style="color:var(--cyan-700);">📐 Định lí 2 – Giao tuyến của 3 mặt phẳng</div>
+      <div class="theorem-body">
+        Nếu ba mặt phẳng đôi một cắt nhau theo ba giao tuyến phân biệt, thì ba giao tuyến ấy hoặc <strong>đồng quy</strong> hoặc <strong>đôi một song song</strong>.
+      </div>
+    </div>
+
+    <!-- SVG minh họa 2 trường hợp của Định lí 2 -->
+    <div class="g2" style="margin:16px 0;">
+      <!-- TH1: Đồng quy (góc phòng – 3 mặt phẳng gặp nhau tại S) -->
+      <div class="fig-wrap">
+        <svg viewBox="0 0 240 200" width="100%">
+          <!-- Mặt sàn (α) chứa a và b -->
+          <polygon points="120,108 30,160 120,192 210,155"
+                   fill="rgba(100,116,139,.11)" stroke="#94a3b8" stroke-width="1.2"/>
+          <!-- Tường trái (β) chứa a và c -->
+          <polygon points="120,108 30,160 30,68 120,24"
+                   fill="rgba(67,56,202,.09)" stroke="#c7d2fe" stroke-width="1.2"/>
+          <!-- Tường phải (γ) chứa b và c -->
+          <polygon points="120,108 210,155 210,63 120,24"
+                   fill="rgba(220,38,38,.08)" stroke="#fecaca" stroke-width="1.2"/>
+
+          <!-- Giao tuyến c: β∩γ (xanh lá, thẳng đứng) -->
+          <line x1="120" y1="24" x2="120" y2="108" stroke="#059669" stroke-width="2.8"/>
+          <!-- Giao tuyến a: α∩β (indigo, trái-dưới) -->
+          <line x1="120" y1="108" x2="30" y2="160" stroke="#4338ca" stroke-width="2.8"/>
+          <!-- Giao tuyến b: α∩γ (đỏ, phải-dưới) -->
+          <line x1="120" y1="108" x2="210" y2="155" stroke="#dc2626" stroke-width="2.8"/>
+
+          <!-- Điểm S (giao điểm chung) -->
+          <circle cx="120" cy="108" r="3" fill="#1e293b" stroke="white" stroke-width="1.5"/>
+          <text x="126" y="106" font-size="13" font-style="italic" fill="#1e293b" font-family="Georgia" font-weight="700">S</text>
+
+          <!-- Nhãn giao tuyến -->
+          <text x="15"  y="158" font-size="13" font-style="italic" fill="#4338ca" font-family="Georgia" font-weight="700">a</text>
+          <text x="214" y="153" font-size="13" font-style="italic" fill="#dc2626" font-family="Georgia" font-weight="700">b</text>
+          <text x="124" y="60"  font-size="13" font-style="italic" fill="#059669" font-family="Georgia" font-weight="700">c</text>
+
+          <!-- Nhãn mặt phẳng -->
+          <text x="100"  y="148" font-size="10" fill="#475569" font-family="Nunito,sans-serif" font-style="italic">(α)</text>
+          <text x="55"  y="92"  font-size="10" fill="#4338ca" font-family="Nunito,sans-serif" font-style="italic">(β)</text>
+          <text x="172" y="88"  font-size="10" fill="#dc2626" font-family="Nunito,sans-serif" font-style="italic">(γ)</text>
+
+          <!-- Chú thích: a = β∩α, b = γ∩α, c = β∩γ -->
+          <text x="120" y="16" font-size="9" fill="#475569" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">a=α∩β, b=α∩γ, c=β∩γ</text>
+        </svg>
+        <div class="fig-cap">TH1: Ba giao tuyến $a, b, c$ đồng quy tại $S$</div>
+      </div>
+
+      <!-- TH2: Song song (lăng trụ tam giác – 3 mặt phẳng, 3 giao tuyến song song) -->
+      <div class="fig-wrap">
+        <svg viewBox="0 0 240 205" width="100%">
+          <!-- Đỉnh lăng trụ: A'(52,32) B'(198,32) C'(126,68) trên; A(52,158) B(198,158) C(126,194) dưới -->
+
+          <!-- Mặt sau α (A'C'CA, giữa a và c) – vẽ trước, nét đứt -->
+          <polygon points="52,32 126,68 126,194 52,158"
+                   fill="rgba(5,150,105,.07)" stroke="#6ee7b7" stroke-width="1" stroke-dasharray="5,3"/>
+
+          <!-- Mặt trên (A'B'C') -->
+          <polygon points="52,32 198,32 126,68"
+                   fill="rgba(100,116,139,.13)" stroke="#475569" stroke-width="1.3"/>
+          <!-- Mặt dưới (ABC) -->
+          <polygon points="52,158 198,158 126,194"
+                   fill="rgba(100,116,139,.13)" stroke="#475569" stroke-width="1.3"/>
+
+          <!-- Mặt sau β (A'B'BA, giữa a và b) -->
+          <polygon points="52,32 198,32 198,158 52,158"
+                   fill="rgba(67,56,202,.08)" stroke="#c7d2fe" stroke-width="1.3"/>
+          <!-- Mặt phải γ (B'C'CB, giữa b và c) -->
+          <polygon points="198,32 126,68 126,194 198,158"
+                   fill="rgba(220,38,38,.08)" stroke="#fecaca" stroke-width="1.3"/>
+
+          <!-- Giao tuyến c (α∩γ, xanh lá, nét đứt vì khuất) -->
+          <line x1="126" y1="68" x2="126" y2="194" stroke="#059669" stroke-width="2.8"/>
+          <!-- Giao tuyến a (α∩β, indigo) -->
+          <line x1="52"  y1="32" x2="52"  y2="158" stroke="#4338ca" stroke-width="2.8"/>
+          <!-- Giao tuyến b (β∩γ, đỏ) -->
+          <line x1="198" y1="32" x2="198" y2="158" stroke="#dc2626" stroke-width="2.8"/>
+
+          <!-- Đỉnh -->
+          <circle cx="52"  cy="32"  r="3" fill="#4338ca"/>
+          <circle cx="52"  cy="158" r="3" fill="#4338ca"/>
+          <circle cx="198" cy="32"  r="3" fill="#dc2626"/>
+          <circle cx="198" cy="158" r="3" fill="#dc2626"/>
+          <circle cx="126" cy="68"  r="3" fill="#059669"/>
+          <circle cx="126" cy="194" r="3" fill="#059669"/>
+
+          <!-- Nhãn giao tuyến -->
+          <text x="37"  y="98"  font-size="14" font-style="italic" fill="#4338ca" font-family="Georgia" font-weight="700">a</text>
+          <text x="205" y="98"  font-size="14" font-style="italic" fill="#dc2626" font-family="Georgia" font-weight="700">b</text>
+          <text x="131" y="134" font-size="14" font-style="italic" fill="#059669" font-family="Georgia" font-weight="700">c</text>
+
+          <!-- Nhãn mặt phẳng -->
+          <text x="118" y="50" font-size="10" fill="#4338ca" font-family="Nunito,sans-serif" font-style="italic">(β)</text>
+          <text x="176" y="122" font-size="10" fill="#dc2626" font-family="Nunito,sans-serif" font-style="italic">(γ)</text>
+          <text x="63"  y="110" font-size="10" fill="#059669" font-family="Nunito,sans-serif" font-style="italic">(α)</text>
+
+          <!-- Nhãn a ∥ b ∥ c -->
+          <text x="120" y="14" font-size="10" fill="#475569" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">a ∥ b ∥ c</text>
+        </svg>
+        <div class="fig-cap">TH2: Ba giao tuyến $a \parallel b \parallel c$</div>
+      </div>
+    </div>
+
+    <!-- Định lí 3 -->
+    <div class="theorem" style="border-left:4px solid var(--green-600); background:var(--green-50); margin-top:4px;">
+      <div class="theorem-label" style="color:var(--green-600);">📐 Định lí 3 – Tính chất bắc cầu</div>
+      <div class="theorem-body">
+        Hai đường thẳng phân biệt cùng song song với một đường thẳng thứ ba thì song song với nhau. <br>
+        $$a \parallel c, \; b \parallel c \implies a \parallel b$$
+      </div>
+    </div>
+
+    <!-- Hệ quả Định lí 2 -->
+    <div class="box box-cy" style="margin-top:16px;">
+      <span class="box-icon"><i class="fa-solid fa-code-branch"></i></span>
+      <div>
+        <strong>Hệ quả Định lí 2:</strong> Nếu hai mặt phẳng phân biệt lần lượt đi qua hai đường thẳng song song, thì giao tuyến của chúng (nếu có) <strong>song song với hai đường thẳng đó</strong> hoặc trùng với một trong hai đường thẳng đó.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 3B: APPLET 3D
+       ======================== -->
+  <section class="card" id="sec-3d" style="border-left-color:var(--cyan-600);">
+    <div class="sec-header">
+      <div class="sec-icon cyan"><i class="fa-solid fa-cube"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Mô hình tương tác</small>
+          Khám phá 3D – Vị trí hai đường thẳng
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-bottom:16px;">Kéo để xoay mô hình 3D. Chọn vị trí tương đối để quan sát trực quan.</p>
+
+    <div id="canvas-wrap">
+      <canvas id="canvas3d" width="700" height="360"></canvas>
+    </div>
+    <div id="canvas-controls">
+      <button class="c-btn active" data-mode="song-song">Song song</button>
+      <button class="c-btn" data-mode="cat-nhau">Cắt nhau</button>
+      <button class="c-btn" data-mode="cheo-nhau">Chéo nhau</button>
+      <button class="c-btn" data-mode="trung-nhau">Trùng nhau</button>
+      <button class="c-btn" id="btn-autorotate" style="margin-left:auto;"><i class="fa-solid fa-rotate"></i> Tự quay</button>
+    </div>
+    <p style="margin-top:12px; font-size:.85rem; color:var(--slate-400);">
+      <i class="fa-solid fa-mouse-pointer"></i> Nhấp giữ và kéo để xoay &nbsp;|&nbsp;
+      <i class="fa-solid fa-hand-point-up"></i> Chạm và kéo trên điện thoại
+    </p>
+  </section>
+
+  <!-- ========================
+       SECTION 4: SƠ ĐỒ TƯ DUY
+       ======================== -->
+  <section class="card green" id="sec-mm">
+    <div class="sec-header">
+      <div class="sec-icon green"><i class="fa-solid fa-sitemap"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Tổng kết kiến thức</small>
+          Sơ Đồ Tư Duy
+        </div>
+      </div>
+    </div>
+    <div class="mindmap-wrap">
+      <svg viewBox="0 0 880 420" width="100%" style="min-width:620px;">
+        <defs>
+          <filter id="sdw" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.20)"/>
+          </filter>
+          <linearGradient id="gc" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#312e81"/>
+            <stop offset="100%" stop-color="#4f46e5"/>
+          </linearGradient>
+          <linearGradient id="gcy" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0e7490"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+          </linearGradient>
+          <linearGradient id="ggr" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#047857"/>
+            <stop offset="100%" stop-color="#10b981"/>
+          </linearGradient>
+          <linearGradient id="gam" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#92400e"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+          <linearGradient id="gvi" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4c1d95"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+        </defs>
+
+        <!-- ── Kết nối chính ── -->
+
+        <!-- Trung tâm → Vị trí tương đối -->
+        <path d="M 308,220 C 284,220 262,220 230,220" stroke="#06b6d4" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.75"/>
+
+        <!-- Trung tâm → Tính chất (từ vùng trên-phải của center) -->
+        <path d="M 530,185 C 534,166 548,156 562,140" stroke="#10b981" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.75"/>
+
+        <!-- Trung tâm → Ứng dụng (từ vùng dưới-phải của center) -->
+        <path d="M 530,255 C 534,272 548,292 562,304" stroke="#f59e0b" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.75"/>
+
+        <!-- Trung tâm → Kí hiệu (xuống) -->
+        <path d="M 440,255 C 440,293 440,333 440,356" stroke="#7c3aed" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.75"/>
+
+        <!-- Vị trí → Đồng phẳng -->
+        <path d="M 155,196 C 148,177 136,163 118,144" stroke="#0891b2" stroke-width="1.7" fill="none" opacity="0.65"/>
+
+        <!-- Vị trí → Chéo nhau -->
+        <path d="M 155,244 C 148,268 136,296 118,308" stroke="#4338ca" stroke-width="1.7" fill="none" opacity="0.65"/>
+
+        <!-- Đồng phẳng → Trùng nhau -->
+        <path d="M 72,106 C 62,96 46,86 38,80" stroke="#d97706" stroke-width="1.3" fill="none" opacity="0.6"/>
+        <!-- Đồng phẳng → Song song -->
+        <line x1="118" y1="106" x2="118" y2="80" stroke="#059669" stroke-width="1.3" opacity="0.6"/>
+        <!-- Đồng phẳng → Cắt nhau -->
+        <path d="M 164,106 C 174,96 190,86 198,80" stroke="#dc2626" stroke-width="1.3" fill="none" opacity="0.6"/>
+
+        <!-- Tính chất → Định lí 1, 2, 3 (từ cạnh phải của Tính chất x=716) -->
+        <path d="M 716,132 C 728,114 742,100 750,82" stroke="#10b981" stroke-width="1.3" fill="none" opacity="0.55"/>
+        <line x1="716" y1="140" x2="750" y2="140" stroke="#10b981" stroke-width="1.3" opacity="0.55"/>
+        <path d="M 716,148 C 728,166 742,182 750,198" stroke="#10b981" stroke-width="1.3" fill="none" opacity="0.55"/>
+
+        <!-- Ứng dụng → Giao tuyến, Hệ quả (từ cạnh phải của Ứng dụng x=716) -->
+        <path d="M 716,296 C 728,288 740,282 750,278" stroke="#f59e0b" stroke-width="1.3" fill="none" opacity="0.55"/>
+        <path d="M 716,312 C 728,324 740,334 750,336" stroke="#f59e0b" stroke-width="1.3" fill="none" opacity="0.55"/>
+
+        <!-- ── Lá (level 3) ── -->
+        <rect x="4" y="52" width="68" height="30" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="38" y="71" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400e" font-family="Nunito,sans-serif">Trùng nhau (≡)</text>
+
+        <rect x="84" y="52" width="68" height="30" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="118" y="71" text-anchor="middle" font-size="9.5" font-weight="700" fill="#065f46" font-family="Nunito,sans-serif">Song song (∥)</text>
+
+        <rect x="164" y="52" width="68" height="30" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="198" y="71" text-anchor="middle" font-size="9.5" font-weight="700" fill="#991b1b" font-family="Nunito,sans-serif">Cắt nhau (∩)</text>
+
+        <!-- ── Định lí sub-nodes (x=750, tách xa Tính chất x=562–716) ── -->
+        <rect x="750" y="68" width="106" height="28" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.2" filter="url(#sdw)"/>
+        <text x="803" y="86" text-anchor="middle" font-size="9.5" font-weight="600" fill="#065f46" font-family="Nunito,sans-serif">Định lí 1 – Duy nhất</text>
+
+        <rect x="750" y="126" width="106" height="28" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.2" filter="url(#sdw)"/>
+        <text x="803" y="144" text-anchor="middle" font-size="9.5" font-weight="600" fill="#065f46" font-family="Nunito,sans-serif">Định lí 2 – Giao tuyến</text>
+
+        <rect x="750" y="184" width="106" height="28" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.2" filter="url(#sdw)"/>
+        <text x="803" y="202" text-anchor="middle" font-size="9.5" font-weight="600" fill="#065f46" font-family="Nunito,sans-serif">Định lí 3 – Bắc cầu</text>
+
+        <!-- ── Ứng dụng sub-nodes (x=750, tách xa Ứng dụng x=562–716) ── -->
+        <rect x="750" y="264" width="106" height="28" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.2" filter="url(#sdw)"/>
+        <text x="803" y="282" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400e" font-family="Nunito,sans-serif">Giao tuyến mp</text>
+
+        <rect x="750" y="322" width="106" height="28" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.2" filter="url(#sdw)"/>
+        <text x="803" y="340" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400e" font-family="Nunito,sans-serif">Hệ quả Định lí 2</text>
+
+        <!-- ── Nhánh cấp 2 ── -->
+
+        <!-- Đồng phẳng -->
+        <rect x="28" y="106" width="180" height="38" rx="10" fill="#e0f2fe" stroke="#0891b2" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="118" y="129" text-anchor="middle" font-size="11" font-weight="700" fill="#0e7490" font-family="Nunito,sans-serif">Đồng phẳng (3 TH)</text>
+
+        <!-- Chéo nhau -->
+        <rect x="28" y="308" width="180" height="44" rx="10" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="118" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="#312e81" font-family="Nunito,sans-serif">Không đồng phẳng</text>
+        <text x="118" y="344" text-anchor="middle" font-size="10" font-weight="600" fill="#4338ca" font-family="Nunito,sans-serif">⟶ Chéo nhau</text>
+
+        <!-- ── Nhánh chính cấp 1 ── -->
+
+        <!-- Trái: Vị trí tương đối -->
+        <rect x="80" y="196" width="150" height="48" rx="13" fill="url(#gcy)" stroke="#cffafe" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="155" y="217" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Nunito,sans-serif">Vị trí tương đối</text>
+        <text x="155" y="234" text-anchor="middle" font-size="9.5" fill="#e0f7fa" font-family="Nunito,sans-serif">hai đường thẳng</text>
+
+        <!-- Phải trên: Tính chất (dịch trái sang x=562, right edge=716, tách xa children x=750) -->
+        <rect x="562" y="116" width="154" height="48" rx="13" fill="url(#ggr)" stroke="#d1fae5" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="639" y="136" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Nunito,sans-serif">Tính chất</text>
+        <text x="639" y="154" text-anchor="middle" font-size="9.5" fill="#d1fae5" font-family="Nunito,sans-serif">&amp; Định lí quan trọng</text>
+
+        <!-- Phải dưới: Ứng dụng (dịch trái sang x=562, right edge=716, tách xa children x=750) -->
+        <rect x="562" y="280" width="154" height="48" rx="13" fill="url(#gam)" stroke="#fef3c7" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="639" y="300" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Nunito,sans-serif">Ứng dụng</text>
+        <text x="639" y="318" text-anchor="middle" font-size="9.5" fill="#fef3c7" font-family="Nunito,sans-serif">trong hình học không gian</text>
+
+        <!-- Dưới: Kí hiệu -->
+        <rect x="322" y="356" width="236" height="52" rx="13" fill="url(#gvi)" stroke="#ddd6fe" stroke-width="1.5" filter="url(#sdw)"/>
+        <text x="440" y="377" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Nunito,sans-serif">Kí hiệu &amp; Tính chất bắc cầu</text>
+        <text x="440" y="397" text-anchor="middle" font-size="13" fill="#ddd6fe" font-family="Georgia,serif" font-style="italic">a ∥ b,  b ∥ c  ⟹  a ∥ c</text>
+
+        <!-- ── Trung tâm (vẽ sau cùng) ── -->
+        <!-- Vòng phát sáng ngoài -->
+        <rect x="300" y="177" width="280" height="86" rx="22" fill="none" stroke="#818cf8" stroke-width="8" opacity="0.25"/>
+        <rect x="304" y="181" width="272" height="78" rx="20" fill="none" stroke="#a5b4fc" stroke-width="3.5" opacity="0.5"/>
+        <!-- Node chính -->
+        <rect x="308" y="185" width="264" height="70" rx="18" fill="url(#gc)" stroke="#a5b4fc" stroke-width="3" filter="url(#sdw)"/>
+        <text x="440" y="213" text-anchor="middle" font-size="17" font-weight="800" fill="#fff" font-family="Nunito,sans-serif" letter-spacing="0.5">Hai đường thẳng</text>
+        <text x="440" y="236" text-anchor="middle" font-size="13" font-weight="700" fill="#e0e7ff" font-family="Nunito,sans-serif">trong không gian</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 5: FLASHCARDS
+       ======================== -->
+  <section class="card" id="sec-fc" style="border-left-color:var(--cyan-600);">
+    <div class="sec-header">
+      <div class="sec-icon cyan"><i class="fa-solid fa-layer-group"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Ôn tập nhanh</small>
+          Thẻ Ghi Nhớ – Nhấp để lật!
+        </div>
+      </div>
+    </div>
+    <p style="margin-bottom:20px; color:var(--slate-600);">Nhấp vào thẻ để lật xem đáp án. Ôn lại các khái niệm cốt lõi!</p>
+    <div id="flashcard-grid">
+      <!-- Flashcards sẽ được render bằng JS -->
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 6: DRAG & DROP
+       ======================== -->
+  <section class="card orange" id="sec-dd">
+    <div class="sec-header">
+      <div class="sec-icon orange"><i class="fa-solid fa-hand-pointer"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Luyện tập – Kéo thả</small>
+          Ghép Tính Chất Ứng Với Định Nghĩa
+        </div>
+      </div>
+    </div>
+    <p style="margin-bottom:16px; color:var(--slate-600);">Kéo các kí hiệu/cụm từ vào ô đúng với vị trí tương đối tương ứng. Sau đó nhấn <strong>"Kiểm tra"</strong>.</p>
+
+    <div id="dd-chips" aria-label="Ngân hàng từ khóa cần kéo">
+      <!-- chips render bởi JS -->
+    </div>
+
+    <div class="dd-zones" id="dd-zones">
+      <!-- zones render bởi JS -->
+    </div>
+
+    <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+      <button class="btn btn-primary" id="btn-check-dd">
+        <i class="fa-solid fa-check"></i> Kiểm tra
+      </button>
+      <button class="btn btn-outline" id="btn-reset-dd">
+        <i class="fa-solid fa-rotate-left"></i> Làm lại
+      </button>
+    </div>
+    <div id="dd-result" style="margin-top:14px; font-weight:700; display:none;"></div>
+  </section>
+
+  <!-- ========================
+       SECTION 7: VÍ DỤ MẪU
+       ======================== -->
+  <section class="card red" id="sec-vd">
+    <div class="sec-header">
+      <div class="sec-icon red"><i class="fa-solid fa-pen-ruler"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Phân tích bài toán</small>
+          Ví Dụ Mẫu Từng Bước
+        </div>
+      </div>
+    </div>
+
+    <!-- Ví dụ 1 -->
+    <div class="acc-item" id="acc2">
+      <div class="acc-head" onclick="toggleAcc('acc2')">
+        <span><i class="fa-solid fa-cut" style="color:var(--cyan-600); margin-right:8px;"></i>Ví dụ 1 – Xác định giao tuyến của hai mặt phẳng qua 2 đường thẳng song song</span>
+        <i class="fa-solid fa-chevron-down acc-arr"></i>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="box box-cy" style="margin-bottom:16px;">
+            <span class="box-icon"><i class="fa-solid fa-question-circle"></i></span>
+            <div>
+              <strong>Đề bài:</strong> Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Tìm giao tuyến của mặt phẳng $(SAB)$ và mặt phẳng $(SCD)$.
+            </div>
+          </div>
+
+          <ul class="steps">
+            <li class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <strong>Xét hai mặt phẳng $(SAB)$ và $(SCD)$.</strong><br>
+                Chúng có điểm chung $S$ → Giao tuyến đi qua $S$.
+              </div>
+            </li>
+            <li class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <strong>Vì $ABCD$ là hình bình hành:</strong> $AB \parallel DC$.<br>
+                Do $AB \subset (SAB)$ và $DC \subset (SCD)$, nên bằng <em>Hệ quả Định lí 2</em>:<br>
+                Giao tuyến của $(SAB)$ và $(SCD)$ song song với $AB$ (và $DC$).
+              </div>
+            </li>
+            <li class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <strong>Tìm điểm thứ 2 trên giao tuyến:</strong><br>
+                Giao tuyến đi qua $S$ và song song $AB$. Vậy giao tuyến là đường thẳng $Sm$ với $m$ trên $AD$ sao cho $Sm \parallel AB$. Cụ thể: giao tuyến chính là đường thẳng $SI$ với $I$ là trung điểm $AD$ → Nhưng đơn giản hơn: giao tuyến đi qua $S$ và song song $AB$.
+              </div>
+            </li>
+            <li class="step">
+              <div class="sn">4</div>
+              <div class="step-content">
+                <strong>Kết luận:</strong> Giao tuyến của $(SAB)$ và $(SCD)$ là đường thẳng qua $S$ và song song với $AB$ (cũng song song $DC$). $\blacksquare$
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ví dụ 2 -->
+    <div class="acc-item" id="acc3">
+      <div class="acc-head" onclick="toggleAcc('acc3')">
+        <span><i class="fa-solid fa-equals" style="color:var(--amber-600); margin-right:8px;"></i>Ví dụ 2 – Chứng minh hai đường thẳng song song (Định lí 3)</span>
+        <i class="fa-solid fa-chevron-down acc-arr"></i>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="box box-am" style="margin-bottom:16px;">
+            <span class="box-icon"><i class="fa-solid fa-question-circle"></i></span>
+            <div>
+              <strong>Đề bài:</strong> Cho hình lăng trụ $ABC.A'B'C'$. Chứng minh $AA' \parallel BB'$.
+            </div>
+          </div>
+          <ul class="steps">
+            <li class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                Trong lăng trụ tam giác $ABC.A'B'C'$, theo định nghĩa: các cạnh bên $AA'$, $BB'$, $CC'$ đều song song nhau và bằng nhau.
+              </div>
+            </li>
+            <li class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                Ta có: $AA' \parallel CC'$ (cạnh bên song song) và $BB' \parallel CC'$ (cạnh bên song song).
+              </div>
+            </li>
+            <li class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <strong>Áp dụng Định lí 3:</strong> Hai đường thẳng phân biệt $AA'$ và $BB'$ cùng song song với $CC'$, suy ra $AA' \parallel BB'$. $\blacksquare$
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       SECTION 8: TRẮC NGHIỆM
+       ======================== -->
+  <section class="card" id="sec-qz" style="border-left-color:var(--green-600);">
+    <div class="sec-header">
+      <div class="sec-icon green"><i class="fa-solid fa-circle-question"></i></div>
+      <div>
+        <div class="sec-title">
+          <small>Kiểm tra cuối bài</small>
+          Trắc Nghiệm Tổng Hợp
+        </div>
+      </div>
+    </div>
+    <p style="margin-bottom:20px; color:var(--slate-600);">Chọn đáp án đúng. Sau khi chọn sẽ có phản hồi và giải thích ngay.</p>
+    <div id="quiz-container"></div>
+    <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;" id="quiz-actions" style="display:none;">
+      <button class="btn btn-outline" id="btn-reset-quiz">
+        <i class="fa-solid fa-rotate-left"></i> Làm lại từ đầu
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Score Bar -->
+<div id="score-bar" role="status" aria-live="polite">
+  <span class="bar-label">Kết quả:</span>
+  <div class="bar-track"><div class="bar-fill" id="bar-fill" style="width:0%"></div></div>
+  <span class="bar-count" id="bar-count">0/0</span>
+</div>
+
+<!-- =============================================
+     JAVASCRIPT
+     ============================================= -->
+<script>
+/* =============================================
+   SCROLL REVEAL
+   ============================================= */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('revealed'), i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.card').forEach(c => revealObserver.observe(c));
+
+/* =============================================
+   ACTIVE NAV HIGHLIGHT
+   ============================================= */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if (active) { active.classList.add('active'); active.scrollIntoView({block:'nearest',inline:'center'}); }
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+/* =============================================
+   ACCORDION
+   ============================================= */
+function toggleAcc(id) {
+  const item = document.getElementById(id);
+  const body = item.querySelector('.acc-body');
+  const isOpen = item.classList.contains('open');
+  // close all
+  document.querySelectorAll('.acc-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.acc-body').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+/* =============================================
+   FLASHCARDS DATA & RENDER
+   ============================================= */
+const flashcardData = [
+  { q: 'Hai đường thẳng chéo nhau là gì?', a: 'Hai đường thẳng KHÔNG CÙNG NẰM trong bất kỳ mặt phẳng nào (không đồng phẳng), không có điểm chung.' },
+  { q: 'Kí hiệu hai đường thẳng song song?', a: '$a \\parallel b$' },
+  { q: 'Định lí 1 (Sự tồn tại duy nhất) phát biểu gì?', a: 'Qua điểm $M$ nằm ngoài đường thẳng $d$, có DUY NHẤT một đường thẳng song song với $d$.' },
+  { q: 'Định lí 3 (Bắc cầu) phát biểu gì?', a: 'Nếu $a \\parallel c$ và $b \\parallel c$ thì $a \\parallel b$ (hai đường cùng song song với đường thứ ba thì song song nhau).' },
+  { q: 'Trong không gian, hai đường thẳng không có điểm chung thì...?', a: 'Chúng có thể SONG SONG hoặc CHÉO NHAU — không nhất thiết là song song như trong mặt phẳng!' },
+  { q: 'Có bao nhiêu mặt phẳng chứa 2 đường thẳng song song $a$ và $b$?', a: 'Có DUY NHẤT một mặt phẳng chứa $a$ và $b$, kí hiệu $mp(a,b)$.' },
+  { q: '3 giao tuyến của 3 mặt phẳng đôi một cắt nhau thì...?', a: 'Hoặc ĐỒNG QUY tại một điểm, hoặc ĐÔI MỘT SONG SONG nhau.' },
+  { q: 'Trong tứ diện ABCD, cặp cạnh nào chéo nhau?', a: 'Ba cặp: (AB, CD), (AC, BD), (AD, BC) — mỗi cặp cạnh đối (không chung đỉnh) đều chéo nhau.' }
+];
+
+const fcGrid = document.getElementById('flashcard-grid');
+flashcardData.forEach((d, i) => {
+  const scene = document.createElement('div');
+  scene.className = 'fc-scene';
+  scene.innerHTML = `
+    <div class="fc-card">
+      <div class="fc-front">
+        <div class="fc-q">${d.q}</div>
+        <div class="fc-hint"><i class="fa-solid fa-hand-pointer"></i> Nhấp để xem đáp án</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label"><i class="fa-solid fa-check-circle"></i> Đáp án</div>
+        <div class="fc-a">${d.a}</div>
+      </div>
+    </div>`;
+  scene.addEventListener('click', () => scene.classList.toggle('flipped'));
+  fcGrid.appendChild(scene);
+});
+// Re-render MathJax for flashcards
+if (window.MathJax) MathJax.typesetPromise && MathJax.typesetPromise([fcGrid]);
+
+/* =============================================
+   DRAG & DROP
+   ============================================= */
+const ddZonesData = [
+  { id: 'dz-trung', label: 'Trùng nhau', icon: 'fa-equals', color: '#d97706', answers: ['a ≡ b', 'Vô số điểm chung'] },
+  { id: 'dz-cat',   label: 'Cắt nhau',  icon: 'fa-xmark',  color: '#dc2626', answers: ['a ∩ b = {M}', '1 điểm chung'] },
+  { id: 'dz-song',  label: 'Song song', icon: 'fa-grip-lines', color: '#059669', answers: ['a ∥ b', 'Đồng phẳng, không điểm chung'] },
+  { id: 'dz-cheo',  label: 'Chéo nhau', icon: 'fa-cube', color: '#4338ca', answers: ['Không đồng phẳng', 'Không điểm chung, không song song'] },
+];
+const ddChipsData = [
+  { id: 'c1', text: 'a ≡ b',   zone: 'dz-trung', cls: 'c-neutral' },
+  { id: 'c2', text: 'a ∩ b = {M}', zone: 'dz-cat', cls: 'c-neutral' },
+  { id: 'c3', text: 'a ∥ b',  zone: 'dz-song', cls: 'c-neutral' },
+  { id: 'c4', text: 'Không đồng phẳng', zone: 'dz-cheo', cls: 'c-neutral' },
+  { id: 'c5', text: 'Vô số điểm chung', zone: 'dz-trung', cls: 'c-neutral' },
+  { id: 'c6', text: '1 điểm chung', zone: 'dz-cat', cls: 'c-neutral' },
+  { id: 'c7', text: 'Đồng phẳng, không điểm chung', zone: 'dz-song', cls: 'c-neutral' },
+  { id: 'c8', text: 'Không điểm chung, không song song', zone: 'dz-cheo', cls: 'c-neutral' },
+];
+
+const ddChipsEl = document.getElementById('dd-chips');
+const ddZonesEl = document.getElementById('dd-zones');
+let draggedChip = null;
+
+function shuffleArr(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function renderDD() {
+  ddChipsEl.innerHTML = '';
+  ddZonesEl.innerHTML = '';
+  // Render zones
+  ddZonesData.forEach(z => {
+    const div = document.createElement('div');
+    div.className = 'drop-zone';
+    div.id = z.id;
+    div.innerHTML = `<div class="dz-label"><i class="fa-solid ${z.icon}" style="color:${z.color}"></i> ${z.label}</div>
+                     <div class="dz-sub">Kéo thả vào đây</div>`;
+    ddZonesEl.appendChild(div);
+    // Drop events
+    div.addEventListener('dragover', e => { e.preventDefault(); div.classList.add('over'); });
+    div.addEventListener('dragleave', () => div.classList.remove('over'));
+    div.addEventListener('drop', e => {
+      e.preventDefault(); div.classList.remove('over');
+      if (draggedChip) { div.appendChild(draggedChip); draggedChip.classList.remove('dragging'); draggedChip = null; }
+    });
+    // Touch drop handled by touchend
+  });
+  // Render chips (shuffled)
+  shuffleArr([...ddChipsData]).forEach(c => {
+    const chip = createChip(c);
+    ddChipsEl.appendChild(chip);
+  });
+}
+
+function createChip(c) {
+  const chip = document.createElement('div');
+  chip.className = `chip ${c.cls}`;
+  chip.id = c.id;
+  chip.textContent = c.text;
+  chip.dataset.zone = c.zone;
+  chip.draggable = true;
+  chip.addEventListener('dragstart', e => {
+    draggedChip = chip;
+    chip.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+  // Touch events
+  let touchStart = null;
+  chip.addEventListener('touchstart', e => {
+    touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    draggedChip = chip;
+    chip.style.opacity = '.5';
+  }, { passive: true });
+  chip.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    chip.style.position = 'fixed';
+    chip.style.zIndex = '9999';
+    chip.style.left = (t.clientX - 60) + 'px';
+    chip.style.top  = (t.clientY - 20) + 'px';
+  }, { passive: false });
+  chip.addEventListener('touchend', e => {
+    chip.style.position = '';
+    chip.style.zIndex = '';
+    chip.style.left = '';
+    chip.style.top  = '';
+    chip.style.opacity = '1';
+    const t = e.changedTouches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    const zone = el && (el.classList.contains('drop-zone') ? el : el.closest('.drop-zone'));
+    if (zone) { zone.appendChild(chip); }
+    draggedChip = null;
+  }, { passive: true });
+  return chip;
+}
+
+function checkDD() {
+  let correct = 0; let total = 0;
+  ddZonesData.forEach(z => {
+    const zone = document.getElementById(z.id);
+    const chips = zone.querySelectorAll('.chip');
+    let zoneCorrect = chips.length > 0;
+    chips.forEach(chip => {
+      total++;
+      if (chip.dataset.zone === z.id) correct++;
+      else zoneCorrect = false;
+    });
+    zone.classList.remove('correct', 'wrong');
+    if (chips.length > 0) zone.classList.add(zoneCorrect ? 'correct' : 'wrong');
+  });
+  const res = document.getElementById('dd-result');
+  res.style.display = 'block';
+  const pct = Math.round((correct / total) * 100);
+  if (pct === 100) {
+    res.innerHTML = `<span style="color:var(--green-600)"><i class="fa-solid fa-trophy"></i> Xuất sắc! Bạn đúng tất cả ${correct}/${total} câu!</span>`;
+  } else {
+    res.innerHTML = `<span style="color:var(--amber-600)"><i class="fa-solid fa-circle-info"></i> Bạn đúng ${correct}/${total}. Hãy xem lại các ô màu đỏ!</span>`;
+  }
+}
+
+document.getElementById('btn-check-dd').addEventListener('click', checkDD);
+document.getElementById('btn-reset-dd').addEventListener('click', () => {
+  document.getElementById('dd-result').style.display = 'none';
+  renderDD();
+});
+renderDD();
+
+/* =============================================
+   QUIZ DATA & RENDER
+   ============================================= */
+const quizData = [
+  {
+    q: 'Trong không gian, hai đường thẳng không có điểm chung thì:',
+    opts: ['Nhất thiết phải song song với nhau', 'Nhất thiết phải chéo nhau', 'Có thể song song hoặc chéo nhau', 'Phải nằm trong cùng một mặt phẳng'],
+    ans: 2,
+    exp: 'Trong không gian (khác với mặt phẳng), hai đường thẳng không có điểm chung <strong>có thể song song</strong> (nếu đồng phẳng) <strong>hoặc chéo nhau</strong> (nếu không đồng phẳng). Đây là điểm khác biệt quan trọng so với hình học phẳng.'
+  },
+  {
+    q: 'Cho tứ diện $ABCD$. Số cặp cạnh chéo nhau của tứ diện là:',
+    opts: ['2 cặp', '3 cặp', '4 cặp', '6 cặp'],
+    ans: 1,
+    exp: 'Tứ diện có 4 đỉnh, 6 cạnh. Các cặp cạnh đối (không chung đỉnh) đều chéo nhau. Đó là: $(AB, CD)$, $(AC, BD)$, $(AD, BC)$ → Có đúng <strong>3 cặp</strong>.'
+  },
+  {
+    q: 'Định lí nào sau đây là Định lí bắc cầu về đường thẳng song song?',
+    opts: [
+      'Qua 1 điểm nằm ngoài đường thẳng có 1 đường thẳng song song duy nhất',
+      'Hai đường thẳng cùng song song với đường thẳng thứ ba thì song song nhau',
+      'Nếu 3 mặt phẳng đôi một cắt nhau thì 3 giao tuyến đồng quy hoặc song song',
+      'Có duy nhất một mặt phẳng chứa hai đường thẳng song song'
+    ],
+    ans: 1,
+    exp: '<strong>Định lí 3 (Bắc cầu):</strong> $a \\parallel c$ và $b \\parallel c$ $\\Rightarrow$ $a \\parallel b$. Đây là tính chất quan trọng giúp chứng minh hai đường thẳng song song qua đường thẳng thứ ba.'
+  },
+  {
+    q: 'Hai đường thẳng gọi là song song khi:',
+    opts: [
+      'Chúng không có điểm chung',
+      'Chúng nằm trong cùng một mặt phẳng và không có điểm chung',
+      'Chúng cùng vuông góc với một đường thẳng thứ ba',
+      'Chúng có vô số điểm chung'
+    ],
+    ans: 1,
+    exp: 'Theo định nghĩa chính thức: Hai đường thẳng song song khi chúng <strong>đồng phẳng</strong> (cùng nằm trong một mặt phẳng) <strong>VÀ</strong> không có điểm chung. Điều kiện đồng phẳng rất quan trọng để phân biệt với trường hợp chéo nhau.'
+  },
+  {
+    q: 'Trong không gian, cho $a \\parallel b$ và mặt phẳng $(P)$ cắt $a$ tại $A$. Kết luận nào đúng?',
+    opts: [
+      '$(P)$ không cắt $b$',
+      '$(P)$ cắt $b$ tại điểm $B$ sao cho $AB \\parallel$ giao tuyến nào đó',
+      '$(P)$ chứa $b$',
+      '$(P)$ cắt $b$ hoặc chứa $b$'
+    ],
+    ans: 3,
+    exp: 'Nếu $a \\parallel b$ và mặt phẳng $(P)$ cắt $a$, thì $(P)$ <strong>cắt $b$ hoặc chứa $b$</strong>. Không thể xảy ra trường hợp $(P)$ không cắt và cũng không chứa $b$, vì điều đó dẫn đến $b$ song song với $(P)$, mâu thuẫn.'
+  },
+  {
+    q: 'Trong hình lập phương $ABCD.A\'B\'C\'D\'$, đường thẳng $AB$ và $C\'D\'$ có vị trí tương đối là:',
+    opts: ['Song song với nhau', 'Cắt nhau', 'Chéo nhau', 'Trùng nhau'],
+    ans: 0,
+    exp: 'Trong hình lập phương, $AB \\parallel DC \\parallel D\'C\' \\parallel A\'B\'$. Ta có $C\'D\' = D\'C\'$, mà $AB \\parallel D\'C\'$, suy ra $AB \\parallel C\'D\'$. Đây cũng là biểu hiện của Định lí 3 (bắc cầu).'
+  },
+  {
+    q: 'Hai đường thẳng $a$ và $b$ chéo nhau nghĩa là:',
+    opts: [
+      'Không có điểm chung và không song song',
+      'Không đồng phẳng',
+      'Không có điểm chung và không có mặt phẳng nào chứa cả hai',
+      'Tất cả các đáp án trên đều đúng'
+    ],
+    ans: 3,
+    exp: 'Các phát biểu đều tương đương nhau và cùng diễn tả tính chất của hai đường thẳng chéo nhau: không đồng phẳng ↔ không có điểm chung và không song song ↔ không có mặt phẳng nào chứa cả hai.'
+  },
+  {
+    q: 'Cho $a \\parallel b$ và $c$ là đường thẳng cắt $a$ tại $M$. Kết luận nào đúng về $c$ và $b$?',
+    opts: [
+      '$c$ song song với $b$',
+      '$c$ chéo với $b$',
+      '$c$ cắt $b$ hoặc $c$ chéo $b$',
+      '$c$ vuông góc với $b$'
+    ],
+    ans: 2,
+    exp: 'Nếu $c$ cắt $a$ tại $M$, thì $c$ và $a$ đồng phẳng, nhưng $b \\parallel a$ → $c$ không song song $b$ (vì $c$ cắt $a$, mà mặt phẳng chứa $a$ và $b$ không chứa $c$). Tùy vị trí không gian, $c$ có thể <strong>cắt hoặc chéo</strong> với $b$.'
+  }
+];
+
+let quizScore = 0;
+let quizAnswered = 0;
+const quizContainer = document.getElementById('quiz-container');
+
+function renderQuiz() {
+  quizContainer.innerHTML = '';
+  quizScore = 0; quizAnswered = 0;
+  updateScoreBar(0, quizData.length);
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.id = `qq-${qi}`;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="quiz-q-num">Câu ${qi+1} / ${quizData.length}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options" id="qopts-${qi}">
+        ${q.opts.map((o,oi) => `
+          <div class="quiz-opt" id="qo-${qi}-${oi}" onclick="selectOpt(${qi},${oi})">
+            <div class="opt-letter">${letters[oi]}</div>
+            <div>${o}</div>
+          </div>`).join('')}
+      </div>
+      <div class="quiz-explain" id="qexp-${qi}"></div>
+    `;
+    quizContainer.appendChild(div);
+  });
+  if (window.MathJax) MathJax.typesetPromise && MathJax.typesetPromise([quizContainer]);
+  document.getElementById('quiz-actions').style.display = 'flex';
+}
+
+function selectOpt(qi, oi) {
+  const opts = document.querySelectorAll(`#qopts-${qi} .quiz-opt`);
+  if (opts[0].classList.contains('locked')) return;
+  const q = quizData[qi];
+  opts.forEach(o => o.classList.add('locked'));
+  opts[oi].classList.add('selected');
+  const correct = oi === q.ans;
+  opts[q.ans].classList.add('correct');
+  if (!correct) opts[oi].classList.add('wrong');
+
+  const expEl = document.getElementById(`qexp-${qi}`);
+  expEl.className = `quiz-explain show ${correct ? 'ex-correct' : 'ex-wrong'}`;
+  expEl.innerHTML = `<strong>${correct ? '✅ Đúng rồi!' : '❌ Chưa đúng!'}</strong> ${q.exp}`;
+
+  if (correct) quizScore++;
+  quizAnswered++;
+  updateScoreBar(quizScore, quizData.length);
+  if (window.MathJax) MathJax.typesetPromise && MathJax.typesetPromise([expEl]);
+}
+
+let quizSectionVisible = false;
+
+function updateScoreBar(score, total) {
+  const fill = document.getElementById('bar-fill');
+  const count = document.getElementById('bar-count');
+  fill.style.width = (total > 0 ? (score / total) * 100 : 0) + '%';
+  count.textContent = `${score}/${total}`;
+  if (quizSectionVisible && quizAnswered > 0) {
+    document.getElementById('score-bar').classList.add('visible');
+  }
+}
+
+document.getElementById('btn-reset-quiz').addEventListener('click', () => {
+  document.getElementById('score-bar').classList.remove('visible');
+  renderQuiz();
+});
+
+renderQuiz();
+
+/* Chỉ hiện score-bar khi người dùng đang xem section quiz */
+const quizSecObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    quizSectionVisible = e.isIntersecting;
+    const bar = document.getElementById('score-bar');
+    if (!quizSectionVisible) {
+      bar.classList.remove('visible');
+    } else if (quizAnswered > 0) {
+      bar.classList.add('visible');
+    }
+  });
+}, { threshold: 0.05 });
+quizSecObserver.observe(document.getElementById('sec-qz'));
+
+/* =============================================
+   CANVAS 3D VIEWER
+   ============================================= */
+const canvas = document.getElementById('canvas3d');
+const ctx = canvas.getContext('2d');
+
+// Responsive canvas size
+function resizeCanvas() {
+  const wrap = document.getElementById('canvas-wrap');
+  canvas.width = wrap.offsetWidth;
+  canvas.height = Math.min(340, wrap.offsetWidth * 0.5);
+  drawScene();
+}
+window.addEventListener('resize', resizeCanvas);
+
+let rotX = 0.3, rotY = 0.5;
+let isDragging = false, lastX = 0, lastY = 0;
+let currentMode = 'song-song';
+
+// Modes definition (two line endpoints in 3D)
+const modes = {
+  'song-song': {
+    line1: { pts: [[-1.8, 0, -0.7], [1.8, 0, -0.7]], color: '#818cf8', label: 'a' },
+    line2: { pts: [[-1.8, 0,  0.7], [1.8, 0,  0.7]], color: '#34d399', label: 'b' },
+    plane: { pts: [[-2, 0, -1.3], [2, 0, -1.3], [2, 0, 1.3], [-2, 0, 1.3]], color: 'rgba(99,102,241,0.10)' },
+    caption: 'Song song'
+  },
+  'cat-nhau': {
+    line1: { pts: [[-1.8, 0, 0], [1.8, 0, 0]], color: '#818cf8', label: 'a' },
+    line2: { pts: [[0, 0, -1.8], [0, 0, 1.8]], color: '#f87171', label: 'b' },
+    intersection: [0, 0, 0],
+    plane: { pts: [[-2, 0, -2], [2, 0, -2], [2, 0, 2], [-2, 0, 2]], color: 'rgba(99,102,241,0.08)' },
+    caption: 'Cắt nhau'
+  },
+  'cheo-nhau': {
+    line1: { pts: [[-1.8, 0.7, 0], [1.8, 0.7, 0]], color: '#818cf8', label: 'a' },
+    line2: { pts: [[0, 0, -1.8], [0, 0, 1.8]], color: '#fb923c', label: 'b' },
+    perpendicular: [[0, 0, 0], [0, 0.7, 0]],
+    caption: 'Chéo nhau'
+  },
+  'trung-nhau': {
+    line1: { pts: [[-1.8, 0, 0], [1.8, 0, 0]], color: '#818cf8', label: 'a' },
+    line2: { pts: [[-1.8, 0, 0], [1.8, 0, 0]], color: '#34d399', label: 'b', dashed: true },
+    caption: 'Trùng nhau'
+  }
+};
+
+function rotate3D(pt) {
+  let [x, y, z] = pt;
+  // Rotate Y
+  let x2 = x * Math.cos(rotY) - z * Math.sin(rotY);
+  let z2 = x * Math.sin(rotY) + z * Math.cos(rotY);
+  x = x2; z = z2;
+  // Rotate X
+  let y2 = y * Math.cos(rotX) - z * Math.sin(rotX);
+  let z3 = y * Math.sin(rotX) + z * Math.cos(rotX);
+  y = y2; z = z3;
+  return [x, y, z];
+}
+
+function project(pt) {
+  const fov = 4;
+  const [x, y, z] = rotate3D(pt);
+  const scale = fov / (fov + z);
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  return [cx + x * scale * 90, cy - y * scale * 90];
+}
+
+function drawLine3D(p1, p2, color, w, dashed) {
+  const a = project(p1), b = project(p2);
+  ctx.beginPath();
+  ctx.moveTo(a[0], a[1]);
+  ctx.lineTo(b[0], b[1]);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w;
+  ctx.setLineDash(dashed ? [8, 5] : []);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawDot3D(pt, color, r) {
+  const [px, py] = project(pt);
+  ctx.beginPath();
+  ctx.arc(px, py, r || 5, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function drawLabel3D(pt, text, color, dx, dy) {
+  const [px, py] = project(pt);
+  ctx.fillStyle = color;
+  ctx.font = 'italic bold 16px Georgia, serif';
+  ctx.fillText(text, px + (dx || 8), py + (dy || 4));
+}
+
+function fillPoly3D(pts, color) {
+  const p = pts.map(project);
+  ctx.beginPath();
+  ctx.moveTo(p[0][0], p[0][1]);
+  for (let i = 1; i < p.length; i++) ctx.lineTo(p[i][0], p[i][1]);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function drawAxes() {
+  for (let i = -2; i <= 2; i++) {
+    drawLine3D([i, 0, -2], [i, 0, 2], 'rgba(148,163,184,0.09)', 0.8);
+    drawLine3D([-2, 0, i], [2, 0, i], 'rgba(148,163,184,0.09)', 0.8);
+  }
+  drawLine3D([-2.2, 0, 0], [2.2, 0, 0], 'rgba(148,163,184,0.30)', 1);
+  drawLine3D([0, -1.5, 0], [0, 1.5, 0], 'rgba(148,163,184,0.30)', 1);
+  drawLine3D([0, 0, -2.2], [0, 0, 2.2], 'rgba(148,163,184,0.30)', 1);
+}
+
+function drawScene() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#0d1b40';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  drawAxes();
+
+  const m = modes[currentMode];
+
+  if (m.plane) fillPoly3D(m.plane.pts, m.plane.color);
+
+  if (currentMode === 'trung-nhau') {
+    drawLine3D(m.line2.pts[0], m.line2.pts[1], m.line2.color, 2, true);
+    drawLine3D(m.line1.pts[0], m.line1.pts[1], m.line1.color, 3.5, false);
+    drawDot3D(m.line1.pts[0], m.line1.color, 4);
+    drawDot3D(m.line1.pts[1], m.line1.color, 4);
+    drawLabel3D(m.line1.pts[1], 'a ≡ b', '#a5b4fc', 8, 0);
+  } else {
+    drawLine3D(m.line1.pts[0], m.line1.pts[1], m.line1.color, 3, false);
+    drawLine3D(m.line2.pts[0], m.line2.pts[1], m.line2.color, 3, false);
+    drawDot3D(m.line1.pts[0], m.line1.color, 4);
+    drawDot3D(m.line1.pts[1], m.line1.color, 4);
+    drawDot3D(m.line2.pts[0], m.line2.color, 4);
+    drawDot3D(m.line2.pts[1], m.line2.color, 4);
+    drawLabel3D(m.line1.pts[1], m.line1.label, m.line1.color, 8, 0);
+    drawLabel3D(m.line2.pts[1], m.line2.label, m.line2.color, 8, 0);
+  }
+
+  if (currentMode === 'cat-nhau') {
+    const [px, py] = project([0, 0, 0]);
+    ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.strokeStyle = '#c7d2fe'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#0d1b40';
+    ctx.font = 'bold 12px Nunito, sans-serif';
+    ctx.fillText('M', px + 9, py - 3);
+  }
+
+  if (currentMode === 'cheo-nhau') {
+    drawLine3D([0, 0, 0], [0, 0.7, 0], 'rgba(255,255,255,0.55)', 1.5, true);
+    drawDot3D([0, 0, 0], 'rgba(255,255,255,0.75)', 3);
+    drawDot3D([0, 0.7, 0], 'rgba(255,255,255,0.75)', 3);
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,0.80)';
+  ctx.font = '12px Nunito, sans-serif';
+  ctx.fillText(m.caption, 12, canvas.height - 12);
+}
+
+// Auto-rotate toggle
+let autoRotating = false;
+let autoRotateTimer = null;
+function setAutoRotate(on) {
+  autoRotating = on;
+  const btn = document.getElementById('btn-autorotate');
+  if (on) {
+    btn.classList.add('active');
+    autoRotateTimer = setInterval(() => { rotY += 0.008; drawScene(); }, 40);
+  } else {
+    btn.classList.remove('active');
+    if (autoRotateTimer) { clearInterval(autoRotateTimer); autoRotateTimer = null; }
+  }
+}
+
+// Mouse interaction
+canvas.addEventListener('mousedown', e => {
+  isDragging = true; lastX = e.clientX; lastY = e.clientY;
+  setAutoRotate(false);
+});
+canvas.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  rotY += (e.clientX - lastX) * 0.01;
+  rotX += (e.clientY - lastY) * 0.01;
+  lastX = e.clientX; lastY = e.clientY;
+  drawScene();
+});
+window.addEventListener('mouseup', () => isDragging = false);
+
+// Touch interaction
+canvas.addEventListener('touchstart', e => {
+  isDragging = true;
+  lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+  setAutoRotate(false);
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  rotY += (e.touches[0].clientX - lastX) * 0.012;
+  rotX += (e.touches[0].clientY - lastY) * 0.012;
+  lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+  drawScene();
+  e.preventDefault();
+}, { passive: false });
+canvas.addEventListener('touchend', () => isDragging = false, { passive: true });
+
+// Mode buttons (exclude the autorotate button)
+document.querySelectorAll('.c-btn[data-mode]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.c-btn[data-mode]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMode = btn.dataset.mode;
+    drawScene();
+  });
+});
+document.getElementById('btn-autorotate').addEventListener('click', () => setAutoRotate(!autoRotating));
+
+setAutoRotate(true);
+resizeCanvas();
+</script>
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+<button class="theme-toggle" id="hcToggle" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<button class="to-top" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>

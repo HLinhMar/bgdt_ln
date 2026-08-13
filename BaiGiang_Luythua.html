@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lũy Thừa Với Số Mũ Thực – Toán 11</title>
+
+<!-- ═══════════════ EXTERNAL FONTS & ICONS ═══════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<!-- ═══════════════ MATHJAX ═══════════════ -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'],['\\(','\\)']],
+    displayMath: [['$$','$$'],['\\[','\\]']],
+    tags: 'ams'
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ════════════════════════════════════════════════════════════
+   1. CSS VARIABLES & DESIGN SYSTEM
+════════════════════════════════════════════════════════════ */
+:root {
+  /* Primary Palette – Indigo */
+  --indigo-900: #312e81; --indigo-800: #3730a3; --indigo-700: #4338ca;
+  --indigo-600: #4f46e5; --indigo-500: #6366f1; --indigo-400: #818cf8;
+  --indigo-300: #a5b4fc; --indigo-200: #c7d2fe; --indigo-100: #e0e7ff;
+  --indigo-50:  #eef2ff;
+  /* Cyan accent */
+  --cyan-700: #0e7490; --cyan-600: #0891b2; --cyan-500: #06b6d4;
+  --cyan-400: #22d3ee; --cyan-100: #cffafe; --cyan-50: #ecfeff;
+  /* Amber – warning/highlight */
+  --amber-700: #b45309; --amber-600: #d97706; --amber-500: #f59e0b;
+  --amber-400: #fbbf24; --amber-300: #fcd34d; --amber-200: #fde68a;
+  --amber-100: #fef3c7; --amber-50: #fffbeb;
+  /* Green – success */
+  --green-700: #15803d; --green-600: #16a34a; --green-500: #22c55e;
+  --green-100: #dcfce7; --green-50: #f0fdf4;
+  /* Red – error */
+  --red-600: #dc2626; --red-500: #ef4444; --red-100: #fee2e2; --red-50: #fef2f2;
+  /* Orange */
+  --orange-600: #ea580c; --orange-100: #ffedd5;
+  /* Slate – text & borders */
+  --slate-900: #0f172a; --slate-800: #1e293b; --slate-700: #334155;
+  --slate-600: #475569; --slate-500: #64748b; --slate-400: #94a3b8;
+  --slate-300: #cbd5e1; --slate-200: #e2e8f0; --slate-100: #f1f5f9; --slate-50: #f8fafc;
+  /* Semantic */
+  --bg: #f3f4f8; --surface: #ffffff; --border: #e2e8f0;
+  --text-primary: #1e293b; --text-secondary: #475569; --text-muted: #94a3b8;
+  /* Radii & Shadows */
+  --radius-xl: 20px; --radius-lg: 16px; --radius-md: 12px;
+  --radius-sm: 8px; --radius-xs: 6px;
+  --shadow-card: 0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover: 0 8px 40px rgba(49,46,129,.16);
+  --shadow-btn: 0 2px 8px rgba(99,102,241,.30);
+  /* Font */
+  --font-head: 'Merriweather', Georgia, serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+  /* Transitions */
+  --transition: .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ════════════════════════════════════════════════════════════
+   2. RESET & BASE
+════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+
+/* ════════════════════════════════════════════════════════════
+   3. SCROLL REVEAL ANIMATION
+════════════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ════════════════════════════════════════════════════════════
+   4. HERO HEADER
+════════════════════════════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 55%, #5b21b6 100%);
+  color: #fff;
+  padding: 64px 24px 52px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-svg-bg {
+  position: absolute; inset: 0; pointer-events: none; opacity: .07;
+}
+.hero-badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 22px; }
+.hero-badge {
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.28);
+  border-radius: 100px; padding: 5px 16px; font-size: .78rem; font-weight: 700;
+  letter-spacing: .5px; display: flex; align-items: center; gap: 6px;
+}
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(1.9rem, 5vw, 3.2rem);
+  font-weight: 900; letter-spacing: -.5px;
+  line-height: 1.2; position: relative;
+}
+.hero h1 em { color: var(--amber-400); font-style: normal; }
+.hero-sub { margin-top: 12px; font-size: 1.05rem; opacity: .85; position: relative; }
+.hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px; position: relative; }
+.hero-tag {
+  background: rgba(255,255,255,.12); border-radius: 8px;
+  padding: 8px 18px; font-size: .84rem; font-weight: 600;
+  display: flex; align-items: center; gap: 7px;
+  transition: background var(--transition);
+}
+.hero-tag:hover { background: rgba(255,255,255,.22); }
+.hero-tag i { color: var(--amber-400); }
+
+/* ════════════════════════════════════════════════════════════
+   5. STICKY NAV
+════════════════════════════════════════════════════════════ */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(49,46,129,.07);
+  padding: 0 16px;
+}
+.sticky-nav-inner {
+  display: flex; overflow-x: auto; gap: 4px;
+  max-width: 1100px; margin: 0 auto;
+  scrollbar-width: none;
+  padding: 8px 0;
+}
+.sticky-nav-inner::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0; white-space: nowrap;
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  border: none; background: none;
+  color: var(--text-secondary); font-size: .85rem; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+  transition: all var(--transition);
+}
+.nav-btn:hover { background: var(--indigo-50); color: var(--indigo-600); }
+.nav-btn.active { background: var(--indigo-600); color: #fff; }
+.nav-btn i { font-size: .8rem; }
+
+/* ════════════════════════════════════════════════════════════
+   6. MAIN LAYOUT
+════════════════════════════════════════════════════════════ */
+.lesson-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; display: flex; flex-direction: column; gap: 36px; }
+
+/* ════════════════════════════════════════════════════════════
+   7. CARD COMPONENT
+════════════════════════════════════════════════════════════ */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-hover); }
+.card-head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 28px 18px;
+  border-bottom: 1px solid var(--slate-100);
+}
+.card-head .ch-icon {
+  width: 42px; height: 42px; border-radius: var(--radius-sm);
+  display: grid; place-items: center;
+  font-size: 1.15rem; flex-shrink: 0;
+}
+.card-head h2 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
+.card-head .sect-pill {
+  margin-left: auto; border-radius: 100px; padding: 3px 14px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .5px;
+}
+.card-body { padding: 28px; }
+
+/* colour themes */
+.c-amber .card-head { background: var(--amber-50); }
+.c-amber .card-head .ch-icon { background: var(--amber-400); color: #fff; }
+.c-amber .card-head h2 { color: var(--amber-700); }
+.c-amber .card-head .sect-pill { background: var(--amber-200); color: var(--amber-700); }
+
+.c-indigo .card-head { background: var(--indigo-50); }
+.c-indigo .card-head .ch-icon { background: var(--indigo-600); color: #fff; }
+.c-indigo .card-head h2 { color: var(--indigo-800); }
+.c-indigo .card-head .sect-pill { background: var(--indigo-200); color: var(--indigo-700); }
+
+.c-cyan .card-head { background: var(--cyan-50); }
+.c-cyan .card-head .ch-icon { background: var(--cyan-600); color: #fff; }
+.c-cyan .card-head h2 { color: var(--cyan-700); }
+.c-cyan .card-head .sect-pill { background: var(--cyan-100); color: var(--cyan-700); }
+
+.c-green .card-head { background: var(--green-50); }
+.c-green .card-head .ch-icon { background: var(--green-600); color: #fff; }
+.c-green .card-head h2 { color: var(--green-700); }
+.c-green .card-head .sect-pill { background: var(--green-100); color: var(--green-700); }
+
+.c-orange .card-head { background: var(--orange-100); }
+.c-orange .card-head .ch-icon { background: var(--orange-600); color: #fff; }
+.c-orange .card-head h2 { color: var(--orange-600); }
+.c-orange .card-head .sect-pill { background: var(--amber-200); color: var(--amber-700); }
+
+.c-red .card-head { background: var(--red-50); }
+.c-red .card-head .ch-icon { background: var(--red-600); color: #fff; }
+.c-red .card-head h2 { color: var(--red-600); }
+.c-red .card-head .sect-pill { background: var(--red-100); color: var(--red-600); }
+
+/* ════════════════════════════════════════════════════════════
+   8. CALLOUT BOXES
+════════════════════════════════════════════════════════════ */
+.box-in, .box-gr, .box-am, .warn, .tip, .box-bl {
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: .92rem;
+  line-height: 1.7;
+}
+.box-in { background: var(--indigo-50); border-left: 4px solid var(--indigo-400); color: var(--indigo-900); }
+.box-gr { background: var(--green-50); border-left: 4px solid var(--green-500); color: var(--green-700); }
+.box-am { background: var(--amber-50); border-left: 4px solid var(--amber-500); color: var(--amber-700); position: relative; }
+.box-am::before { content: '❓'; position: absolute; left: -14px; top: -14px; background: var(--amber-400); border-radius: 50%; width: 28px; height: 28px; display: grid; place-items: center; font-size: .9rem; }
+.warn  { background: var(--red-50); border-left: 4px solid var(--red-500); color: var(--red-600); }
+.tip   { background: var(--cyan-50); border-left: 4px solid var(--cyan-500); color: var(--cyan-700); }
+.box-bl { background: var(--indigo-900); color: #e0e7ff; border-radius: var(--radius-md); border: none; padding: 20px 24px; }
+.box-bl h4 { color: var(--indigo-300); margin-bottom: 12px; font-size: .9rem; letter-spacing: .5px; text-transform: uppercase; }
+
+/* ════════════════════════════════════════════════════════════
+   9. TC – THEORY CARDS
+════════════════════════════════════════════════════════════ */
+.tc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 20px 0; }
+.tc-card { border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); }
+.tc-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.tc-head { padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: .88rem; letter-spacing: .3px; }
+.tc-head .tc-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.3); display: grid; place-items: center; font-size: .78rem; font-weight: 900; flex-shrink: 0; }
+.tc-body { padding: 16px 18px; font-size: .88rem; }
+.formula-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--slate-200); }
+.formula-row:last-child { border-bottom: none; }
+.formula-row .lbl { width: 32px; height: 32px; border-radius: 6px; display: grid; place-items: center; font-weight: 800; font-size: .78rem; flex-shrink: 0; }
+
+/* TC Colour variants */
+.tc-card.tc-blue .tc-head  { background: var(--indigo-600); color: #fff; }
+.tc-card.tc-blue .lbl      { background: var(--indigo-100); color: var(--indigo-700); }
+.tc-card.tc-cyan .tc-head  { background: var(--cyan-600);   color: #fff; }
+.tc-card.tc-cyan .lbl      { background: var(--cyan-100);   color: var(--cyan-700); }
+.tc-card.tc-green .tc-head { background: var(--green-600);  color: #fff; }
+.tc-card.tc-green .lbl     { background: var(--green-100);  color: var(--green-700); }
+.tc-card.tc-amber .tc-head  { background: var(--amber-500);  color: #fff; }
+.tc-card.tc-amber .lbl      { background: var(--amber-100);  color: var(--amber-700); }
+.tc-card.tc-purple .tc-head { background: #7c3aed;           color: #fff; }
+.tc-card.tc-purple .lbl     { background: #ede9fe;           color: #4c1d95; }
+
+/* ════════════════════════════════════════════════════════════
+   10. PROPERTIES LIST (.props)
+════════════════════════════════════════════════════════════ */
+.props { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.props li {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--indigo-50); border-radius: var(--radius-sm);
+  padding: 12px 16px; font-size: .9rem;
+}
+.props li .pnum {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--indigo-600); color: #fff;
+  display: grid; place-items: center; font-weight: 800; font-size: .75rem; margin-top: 2px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   11. FIGURE / SVG ILLUSTRATIONS
+════════════════════════════════════════════════════════════ */
+.fig-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
+.fig-row figure { flex: 0 0 220px; }
+.fig-row figure figcaption { font-size: .74rem; color: var(--text-muted); text-align: center; margin-top: 8px; font-style: italic; }
+.fig-row .fig-text { flex: 1; min-width: 240px; }
+.fig-row .fig-text p { color: var(--text-secondary); margin-bottom: 10px; font-size: .93rem; }
+
+/* photo frame */
+.ph {
+  border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 2px solid var(--border);
+}
+
+/* ════════════════════════════════════════════════════════════
+   12. ACCORDION (.acc)
+════════════════════════════════════════════════════════════ */
+.acc { display: flex; flex-direction: column; gap: 14px; }
+.acc-item { border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.acc-trigger {
+  width: 100%; background: none; border: none;
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px; text-align: left;
+  font-size: .95rem; font-weight: 700; color: var(--text-primary);
+  cursor: pointer; transition: background var(--transition);
+}
+.acc-trigger:hover { background: var(--slate-50); }
+.acc-trigger .acc-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 1rem; flex-shrink: 0; }
+.acc-trigger .acc-icon.fin { background: #dcfce7; color: #15803d; }
+.acc-trigger .acc-icon.pop { background: var(--indigo-100); color: var(--indigo-600); }
+.acc-trigger .acc-meta { font-size: .75rem; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+.acc-trigger .acc-chev { margin-left: auto; width: 28px; height: 28px; border-radius: 50%; background: var(--slate-100); display: grid; place-items: center; font-size: .72rem; color: var(--slate-500); transition: transform .35s; flex-shrink: 0; }
+.acc-item.open .acc-chev { transform: rotate(180deg); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height .55s ease; }
+.acc-item.open .acc-body { max-height: 2400px; }
+.acc-body-inner { padding: 0 20px 22px; }
+
+/* Steps inside accordion */
+.step { display: flex; gap: 14px; margin-bottom: 16px; }
+.sn { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--indigo-600); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .8rem; margin-top: 2px; }
+.sc { display: inline-block; background: var(--green-50); color: var(--green-700); border-left: 3px solid var(--green-500); padding: 6px 12px; border-radius: 0 6px 6px 0; font-size: .84rem; margin-top: 6px; }
+.result-box { background: linear-gradient(90deg, var(--indigo-50), var(--indigo-100)); border: 1.5px solid var(--indigo-200); border-radius: var(--radius-sm); padding: 14px 20px; margin-top: 14px; text-align: center; font-weight: 800; color: var(--indigo-800); font-size: 1.05rem; }
+.step-content p { color: var(--text-secondary); font-size: .9rem; }
+.step-content strong { color: var(--text-primary); }
+
+/* ════════════════════════════════════════════════════════════
+   13. DRAG & DROP (.dnd-area)
+════════════════════════════════════════════════════════════ */
+.dnd-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media(max-width:620px){ .dnd-layout { grid-template-columns: 1fr; } }
+.dnd-col-title { font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); margin-bottom: 10px; }
+.drop-grid { display: flex; flex-direction: column; gap: 12px; }
+.drop-row { display: flex; align-items: center; gap: 12px; }
+.drop-label { font-size: .88rem; font-weight: 600; color: var(--text-secondary); min-width: 120px; }
+.drop-z {
+  flex: 1; min-height: 46px;
+  border: 2px dashed var(--slate-300); border-radius: var(--radius-sm);
+  padding: 8px 14px; display: flex; align-items: center; gap: 8px;
+  transition: border-color .2s, background .2s;
+  font-size: .84rem; color: var(--slate-400);
+  position: relative;
+}
+.drop-z.drag-over { border-color: var(--indigo-400); background: var(--indigo-50); }
+.drop-z.correct   { border-color: var(--green-500); background: var(--green-50); }
+.drop-z.wrong     { border-color: var(--red-500);   background: var(--red-50); }
+.drop-z .state-icon { position: absolute; right: 10px; font-size: .8rem; }
+.drop-z.correct .state-icon { color: var(--green-600); }
+.drop-z.wrong   .state-icon { color: var(--red-600); }
+
+.chips-pool { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.chip {
+  background: var(--indigo-600); color: #fff;
+  border-radius: 100px; padding: 8px 18px; font-size: .85rem; font-weight: 700;
+  cursor: grab; user-select: none; touch-action: none;
+  box-shadow: var(--shadow-btn);
+  transition: transform .15s, box-shadow .15s, opacity .2s;
+}
+.chip:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(99,102,241,.4); }
+.chip:active { cursor: grabbing; }
+.chip.placed { opacity: .4; pointer-events: none; }
+
+.dnd-actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btn {
+  padding: 10px 22px; border-radius: var(--radius-sm); font-weight: 700; font-size: .88rem;
+  border: none; cursor: pointer; transition: background .2s, transform .1s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--indigo-600); color: #fff; }
+.btn-primary:hover { background: var(--indigo-700); }
+.btn-ghost { background: var(--slate-100); color: var(--slate-700); }
+.btn-ghost:hover { background: var(--slate-200); }
+#dnd-score-text { font-weight: 700; color: var(--slate-700); font-size: .95rem; }
+
+/* ════════════════════════════════════════════════════════════
+   14. FLASHCARDS (.fc-grid)
+════════════════════════════════════════════════════════════ */
+.fc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+.fc { perspective: 900px; height: 180px; cursor: pointer; }
+.fc-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.4,0,.2,1); }
+.fc.flipped .fc-inner { transform: rotateY(180deg); }
+.fc-front, .fc-back { position: absolute; inset: 0; border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 16px; text-align: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.fc-front { background: linear-gradient(145deg, var(--indigo-700), var(--indigo-500)); color: #fff; box-shadow: 0 6px 24px rgba(99,102,241,.3); }
+.fc-front .fc-q { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+.fc-front .fc-hint { margin-top: 10px; font-size: .7rem; opacity: .75; }
+.fc-back { background: #fff; border: 2px solid var(--indigo-200); color: var(--indigo-900); transform: rotateY(180deg); box-shadow: var(--shadow-card); }
+.fc-back .fc-ans { font-size: 1.1rem; font-weight: 800; color: var(--indigo-700); }
+.fc-back .fc-why { margin-top: 8px; font-size: .78rem; color: var(--text-muted); line-height: 1.5; }
+.fc-tap-hint { text-align: center; margin-top: 12px; font-size: .78rem; color: var(--text-muted); }
+.fc-progress { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.fc-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--slate-300); transition: background .3s; cursor: pointer; }
+.fc-dot.active { background: var(--indigo-600); }
+
+/* ════════════════════════════════════════════════════════════
+   15. QUIZ MODULE
+════════════════════════════════════════════════════════════ */
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.quiz-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-secondary); }
+.quiz-progress-text { font-size: .85rem; color: var(--text-muted); }
+.quiz-progress-bar { height: 6px; background: var(--slate-200); border-radius: 3px; margin-bottom: 24px; }
+.quiz-progress-fill { height: 100%; background: linear-gradient(90deg, var(--indigo-600), var(--cyan-500)); border-radius: 3px; transition: width .4s ease; }
+
+.q-card { margin-bottom: 28px; border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.q-card-head { background: var(--slate-50); padding: 14px 20px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border); }
+.q-num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--indigo-600); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .82rem; margin-top: 2px; }
+.q-text { font-weight: 700; font-size: .95rem; line-height: 1.55; }
+.q-opts { padding: 14px 20px; display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); cursor: pointer;
+  font-size: .9rem; transition: all .2s; font-weight: 500;
+}
+.q-opt:hover { border-color: var(--indigo-400); background: var(--indigo-50); }
+.q-opt.correct { background: var(--green-50); border-color: var(--green-500); color: var(--green-700); }
+.q-opt.wrong   { background: var(--red-50);   border-color: var(--red-500);   color: var(--red-600); }
+.q-opt.missed  { background: var(--green-50); border-color: var(--green-500); opacity: .75; }
+.q-opt .opt-key { width: 26px; height: 26px; border-radius: 50%; background: var(--slate-200); display: grid; place-items: center; font-weight: 800; font-size: .78rem; flex-shrink: 0; }
+.q-opt.correct .opt-key { background: var(--green-500); color: #fff; }
+.q-opt.wrong   .opt-key { background: var(--red-500); color: #fff; }
+.q-explain { margin: 0 20px 16px; background: var(--amber-50); border-left: 4px solid var(--amber-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px; font-size: .86rem; color: var(--amber-700); display: none; }
+.q-explain.show { display: block; }
+
+/* Score bar */
+.score-bar {
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--indigo-900); color: #fff;
+  border-radius: var(--radius-md); padding: 12px 20px;
+  min-width: 200px; box-shadow: var(--shadow-hover);
+  z-index: 200; font-size: .85rem;
+  transition: transform .35s ease;
+}
+.score-bar h4 { font-size: .75rem; color: var(--indigo-300); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.score-fill-wrap { height: 8px; background: rgba(255,255,255,.15); border-radius: 4px; margin: 8px 0; }
+.score-fill { height: 100%; background: linear-gradient(90deg, var(--green-500), var(--cyan-400)); border-radius: 4px; transition: width .5s ease; }
+.score-fraction { font-size: 1.5rem; font-weight: 900; }
+
+/* ════════════════════════════════════════════════════════════
+   16. MINDMAP – HTML nodes + SVG lines
+════════════════════════════════════════════════════════════ */
+.mm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.mm-container {
+  position: relative;
+  width: 820px;
+  height: 390px;
+  margin: 8px auto 0;
+}
+.mm-lines-svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; overflow: visible;
+}
+/* Center node */
+.mm-center-node {
+  position: absolute;
+  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-600) 100%);
+  border-radius: 50px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; color: #fff; padding: 20px 32px;
+  box-shadow: 0 6px 32px rgba(79,70,229,.45), 0 0 0 5px rgba(99,102,241,.18);
+  z-index: 2;
+}
+.mm-center-node .mm-head {
+  font-size: 1.25rem; font-weight: 900; letter-spacing: 3px;
+  font-family: var(--font-head);
+}
+.mm-center-node .mm-sub { font-size: .95rem; color: var(--indigo-300); margin-top: 5px; }
+/* Branch nodes */
+.mm-branch-node {
+  position: absolute;
+  border-radius: var(--radius-md);
+  padding: 13px 16px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,.09);
+  z-index: 2;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.mm-branch-node:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.16); }
+.mm-branch-node .mm-head { font-size: .95rem; font-weight: 800; margin-bottom: 7px; }
+.mm-branch-node .mm-body { font-size: .82rem; line-height: 1.75; color: var(--text-secondary); }
+/* Color variants */
+.mm-indigo { background: var(--indigo-50);  border: 2px solid var(--indigo-400); }
+.mm-indigo .mm-head { color: var(--indigo-800); }
+.mm-cyan   { background: var(--cyan-50);    border: 2px solid var(--cyan-500); }
+.mm-cyan   .mm-head { color: var(--cyan-700); }
+.mm-green  { background: var(--green-50);   border: 2px solid var(--green-500); }
+.mm-green  .mm-head { color: var(--green-700); }
+.mm-amber  { background: var(--amber-50);   border: 2px solid var(--amber-400); }
+.mm-amber  .mm-head { color: var(--amber-700); }
+.mm-purple { background: #f5f3ff; border: 2px solid #a78bfa; }
+.mm-purple .mm-head { color: #4c1d95; }
+.mm-red    { background: var(--red-50);     border: 2px solid var(--red-500); }
+.mm-red    .mm-head { color: var(--red-600); }
+/* ── Dropdown khi hover ── */
+.mm-branch-node { overflow: visible; }
+.mm-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 258px;
+  background: #fff;
+  border: 2px solid var(--cyan-400);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 36px rgba(8,145,178,.22);
+  padding: 11px 15px;
+  z-index: 50;
+  text-align: left;
+  /* Trạng thái ẩn */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity .28s ease, transform .28s ease;
+}
+.mm-branch-node:hover { z-index: 20; }
+.mm-branch-node:hover .mm-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.mm-drop-title {
+  font-size: .72rem; font-weight: 800;
+  color: var(--cyan-700); text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 8px; padding-bottom: 5px;
+  border-bottom: 1.5px solid var(--cyan-100);
+}
+.mm-drop-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 0; font-size: .82rem;
+  border-bottom: 1px dashed var(--slate-100);
+  color: var(--text-secondary);
+}
+.mm-drop-item:last-child { border-bottom: none; }
+.mm-drop-key {
+  flex-shrink: 0; width: 22px; height: 22px;
+  background: var(--cyan-600); color: #fff;
+  border-radius: 50%; display: grid; place-items: center;
+  font-size: .65rem; font-weight: 800;
+}
+/* Dropdown mở lên (cho nút phía dưới container) */
+.mm-dropdown-up {
+  top: auto;
+  bottom: calc(100% + 10px);
+  transform: translateY(8px);
+}
+.mm-branch-node:hover .mm-dropdown-up { transform: translateY(0); }
+/* Màu xanh lá cho dropdown Căn bậc n */
+.mm-drop-green {
+  border-color: var(--green-500);
+  box-shadow: 0 10px 36px rgba(34,197,94,.22);
+}
+.mm-drop-green .mm-drop-title { color: var(--green-700); border-bottom-color: var(--green-100); }
+.mm-drop-green .mm-drop-key   { background: var(--green-600); }
+
+/* ════════════════════════════════════════════════════════════
+   17. TABLE
+════════════════════════════════════════════════════════════ */
+.tbl-wrap { overflow-x: auto; border-radius: var(--radius-md); border: 1.5px solid var(--border); margin: 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+thead th { background: var(--indigo-700); color: #fff; padding: 10px 16px; text-align: left; font-weight: 700; }
+tbody td { padding: 9px 16px; border-bottom: 1px solid var(--slate-100); color: var(--text-secondary); }
+tbody tr:nth-child(even) td { background: var(--slate-50); }
+tbody td.hl { font-weight: 800; color: var(--indigo-700); }
+
+/* ════════════════════════════════════════════════════════════
+   18. DIVIDER
+════════════════════════════════════════════════════════════ */
+.divider { height: 1px; background: var(--slate-100); margin: 22px 0; }
+
+/* ════════════════════════════════════════════════════════════
+   19. RESPONSIVE
+════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .tc-grid { grid-template-columns: 1fr; }
+  .fig-row { flex-direction: column; }
+  .fig-row figure { flex: unset; width: 100%; max-width: 280px; }
+  .card-body { padding: 18px; }
+  .hero { padding: 44px 16px 36px; }
+}
+@media(max-width:480px){
+  .fc-grid { grid-template-columns: 1fr 1fr; }
+  .drop-row { flex-direction: column; align-items: flex-start; }
+  .drop-label { min-width: unset; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   20. UTILITY
+════════════════════════════════════════════════════════════ */
+.mt-4  { margin-top: 16px; }
+.mt-6  { margin-top: 24px; }
+.mb-2  { margin-bottom: 8px; }
+.text-sm { font-size: .85rem; }
+.text-muted { color: var(--text-muted); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-2 { gap: 8px; }
+.font-bold { font-weight: 700; }
+.section-intro { color: var(--text-secondary); font-size: .93rem; margin-bottom: 20px; }
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO HEADER
+══════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <!-- SVG grid background pattern -->
+  <svg class="hero-svg-bg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+        <path d="M50 0L0 0 0 50" fill="none" stroke="white" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <div class="hero-badge-row">
+    <span class="hero-badge"><i class="fa fa-book-open"></i> Toán 11</span>
+    <span class="hero-badge"><i class="fa fa-layer-group"></i> Chương: Hàm số mũ, hàm số logarit</span>
+    <span class="hero-badge"><i class="fa fa-star"></i> Kiến thức trọng tâm</span>
+  </div>
+
+  <h1>Lũy Thừa<br/><em>Với Số Mũ Thực</em></h1>
+  <p class="hero-sub">Từ lãi kép ngân hàng đến tăng trưởng dân số — sức mạnh của phép tính lũy thừa</p>
+
+  <div class="hero-tags">
+    <span class="hero-tag"><i class="fa fa-fire"></i> Khởi động</span>
+    <span class="hero-tag"><i class="fa fa-book"></i> Lý thuyết</span>
+    <span class="hero-tag"><i class="fa fa-diagram-project"></i> Sơ đồ</span>
+    <span class="hero-tag"><i class="fa fa-flask"></i> Ví dụ</span>
+    <span class="hero-tag"><i class="fa fa-hand-pointer"></i> Kéo &amp; Thả</span>
+    <span class="hero-tag"><i class="fa fa-id-card"></i> Flashcards</span>
+    <span class="hero-tag"><i class="fa fa-circle-question"></i> Trắc nghiệm</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     STICKY NAVIGATION
+══════════════════════════════════════════════════════════ -->
+<nav class="sticky-nav" id="main-nav">
+  <div class="sticky-nav-inner">
+    <button class="nav-btn" onclick="goToSection('#sec-start')">
+      <i class="fa fa-fire"></i> Khởi động
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-theory')">
+      <i class="fa fa-book"></i> Lý thuyết
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-mindmap')">
+      <i class="fa fa-diagram-project"></i> Sơ đồ
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-examples')">
+      <i class="fa fa-flask"></i> Ví dụ
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-dnd')">
+      <i class="fa fa-hand-pointer"></i> Kéo &amp; Thả
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-fc')">
+      <i class="fa fa-id-card"></i> Flashcards
+    </button>
+    <button class="nav-btn" onclick="goToSection('#sec-quiz')">
+      <i class="fa fa-circle-question"></i> Trắc nghiệm
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT WRAPPER
+══════════════════════════════════════════════════════════ -->
+<main class="lesson-wrap">
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 1 – KHỞI ĐỘNG
+══════════════════════════════════════════════════════════ -->
+<section class="card c-amber reveal" id="sec-start">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-fire"></i></span>
+    <div>
+      <h2>Khởi động: Bài toán thực tế</h2>
+      <div style="font-size:.78rem;color:var(--amber-600);margin-top:3px;">Lãi kép & Tăng trưởng dân số</div>
+    </div>
+    <span class="sect-pill">Mục 1</span>
+  </div>
+  <div class="card-body">
+
+    <div class="fig-row">
+      <!-- SVG: coin stacks growing -->
+      <figure class="ph">
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(160deg,#fffbeb,#fef3c7);">
+          <!-- Ground -->
+          <line x1="10" y1="148" x2="190" y2="148" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <!-- Stack 1 – Year 0 (small) -->
+          <ellipse cx="40" cy="140" rx="16" ry="5" fill="#fbbf24" opacity=".9"/>
+          <rect x="24" y="125" width="32" height="15" fill="#f59e0b"/>
+          <ellipse cx="40" cy="125" rx="16" ry="5" fill="#fde68a"/>
+          <rect x="24" y="113" width="32" height="12" fill="#f59e0b"/>
+          <ellipse cx="40" cy="113" rx="16" ry="5" fill="#fde68a"/>
+          <!-- Stack 2 – Year 5 (medium) -->
+          <ellipse cx="100" cy="140" rx="18" ry="5.5" fill="#fbbf24" opacity=".9"/>
+          <rect x="82" y="118" width="36" height="22" fill="#f59e0b"/>
+          <ellipse cx="100" cy="118" rx="18" ry="5.5" fill="#fde68a"/>
+          <rect x="82" y="100" width="36" height="18" fill="#f59e0b"/>
+          <ellipse cx="100" cy="100" rx="18" ry="5.5" fill="#fde68a"/>
+          <rect x="82" y="86" width="36" height="14" fill="#f59e0b"/>
+          <ellipse cx="100" cy="86" rx="18" ry="5.5" fill="#fde68a"/>
+          <!-- Stack 3 – Year 10 (tall) -->
+          <ellipse cx="165" cy="140" rx="20" ry="6" fill="#fbbf24" opacity=".9"/>
+          <rect x="145" y="110" width="40" height="30" fill="#f59e0b"/>
+          <ellipse cx="165" cy="110" rx="20" ry="6" fill="#fde68a"/>
+          <rect x="145" y="84" width="40" height="26" fill="#f59e0b"/>
+          <ellipse cx="165" cy="84" rx="20" ry="6" fill="#fde68a"/>
+          <rect x="145" y="62" width="40" height="22" fill="#f59e0b"/>
+          <ellipse cx="165" cy="62" rx="20" ry="6" fill="#fde68a"/>
+          <rect x="145" y="44" width="40" height="18" fill="#f59e0b"/>
+          <ellipse cx="165" cy="44" rx="20" ry="6" fill="#fde68a"/>
+          <!-- Sprout from top -->
+          <line x1="165" y1="44" x2="165" y2="20" stroke="#16a34a" stroke-width="2"/>
+          <ellipse cx="158" cy="28" rx="8" ry="5" fill="#22c55e" transform="rotate(-20,158,28)"/>
+          <ellipse cx="172" cy="24" rx="8" ry="5" fill="#22c55e" transform="rotate(20,172,24)"/>
+          <!-- Labels -->
+          <text x="40" y="158" text-anchor="middle" font-size="9" fill="#b45309" font-family="sans-serif">100tr</text>
+          <text x="100" y="158" text-anchor="middle" font-size="9" fill="#b45309" font-family="sans-serif">134tr</text>
+          <text x="165" y="158" text-anchor="middle" font-size="9" fill="#b45309" font-family="sans-serif">179tr</text>
+          <text x="40" y="168" text-anchor="middle" font-size="8" fill="#d97706" font-family="sans-serif">Năm 0</text>
+          <text x="100" y="168" text-anchor="middle" font-size="8" fill="#d97706" font-family="sans-serif">Năm 5</text>
+          <text x="165" y="168" text-anchor="middle" font-size="8" fill="#d97706" font-family="sans-serif">Năm 10</text>
+        </svg>
+        <figcaption>Tăng trưởng lãi kép theo thời gian</figcaption>
+      </figure>
+
+      <div class="fig-text">
+        <p>Trong cuộc sống, ta thường gặp các tình huống mà một đại lượng <strong>tăng trưởng nhân theo một tỉ lệ cố định</strong> sau mỗi chu kỳ thời gian.</p>
+        <p>🏦 <strong>Ví dụ 1 – Lãi kép ngân hàng:</strong> Gửi <em>P</em> đồng với lãi suất <em>r</em>/năm, sau <em>n</em> năm, số tiền là:</p>
+        <div class="box-in">
+          $$A = P \cdot (1+r)^n$$
+        </div>
+        <p>🌍 <strong>Ví dụ 2 – Dân số:</strong> Nếu dân số năm gốc là $A_0$ và tốc độ tăng trưởng là $k$/năm, thì sau $t$ năm:</p>
+        <div class="box-in">
+          $$A(t) = A_0 \cdot k^t$$
+        </div>
+        <p>Cả hai công thức đều dùng <strong>lũy thừa</strong>! Để hiểu và tính toán chúng, ta cần nắm vững khái niệm lũy thừa với số mũ thực.</p>
+      </div>
+    </div>
+
+    <!-- Câu hỏi khởi động (box-am) -->
+    <div class="box-am" style="margin-top:24px">
+      <p style="font-weight:800;font-size:1rem;margin-bottom:8px">📌 Câu hỏi khởi động</p>
+      <p>Nếu gửi <strong>100 triệu đồng</strong> với lãi suất <strong>6%/năm</strong> theo hình thức lãi kép, sau <strong>10 năm</strong> số tiền sẽ là bao nhiêu?</p>
+      <p style="margin-top:8px">Phép toán lũy thừa sẽ giúp ta tính toán: $A = 100 \cdot (1{,}06)^{10} \approx 179{,}08$ triệu đồng. Nhưng $(1{,}06)^{10}$ là gì, và tại sao ta có thể tính được điều này?</p>
+    </div>
+
+    <!-- Bảng so sánh số mũ -->
+    <div class="divider"></div>
+    <p class="font-bold mb-2" style="font-size:.9rem">📊 Hành trình mở rộng số mũ:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Loại số mũ</th><th>Ví dụ</th><th>Ý nghĩa</th><th>Yêu cầu cơ số</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="hl">Số nguyên dương</td><td>$2^5 = 32$</td><td>Nhân 2 năm lần</td><td>Bất kỳ</td></tr>
+          <tr><td class="hl">Số nguyên âm</td><td>$2^{-3} = \dfrac{1}{8}$</td><td>$\dfrac{1}{2^3}$</td><td>$a \neq 0$</td></tr>
+          <tr><td class="hl">Số mũ bằng 0</td><td>$5^0 = 1$</td><td>Quy ước</td><td>$a \neq 0$</td></tr>
+          <tr><td class="hl">Hữu tỉ $m/n$</td><td>$8^{2/3} = 4$</td><td>$\sqrt[3]{8^2}$</td><td>$a > 0$</td></tr>
+          <tr><td class="hl">Số thực $\alpha$</td><td>$2^{\sqrt{2}} \approx 2{,}665$</td><td>Giới hạn</td><td>$a > 0$</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 2 – LÝ THUYẾT TRỌNG TÂM
+══════════════════════════════════════════════════════════ -->
+<section class="card c-indigo reveal" id="sec-theory">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-book"></i></span>
+    <div>
+      <h2>Lý thuyết trọng tâm</h2>
+      <div style="font-size:.78rem;color:var(--indigo-600);margin-top:3px;">3 cấp độ mở rộng &amp; 5 tính chất cơ bản</div>
+    </div>
+    <span class="sect-pill">Mục 2</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Khái niệm lũy thừa được mở rộng dần từ số mũ nguyên → hữu tỉ → thực, mỗi bước đòi hỏi thêm điều kiện cho cơ số.</p>
+
+    <!-- TC Grid: 3 cấp độ -->
+    <div class="tc-grid">
+
+      <!-- TC 1: Số mũ nguyên -->
+      <div class="tc-card tc-blue">
+        <div class="tc-head">
+          <span class="tc-num">1</span>
+          Lũy thừa – Số mũ Nguyên
+        </div>
+        <div class="tc-body">
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--indigo-100);color:var(--indigo-700)">+</span>
+            <span>$a^n = \underbrace{a \cdot a \cdots a}_{n \text{ thừa số}}$ &nbsp;$(n \in \mathbb{N}^*)$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--indigo-100);color:var(--indigo-700)">0</span>
+            <span>$a^0 = 1$ &nbsp;$(a \neq 0)$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--indigo-100);color:var(--indigo-700)">−</span>
+            <span>$a^{-n} = \dfrac{1}{a^n}$ &nbsp;$(a \neq 0, n \in \mathbb{N}^*)$</span>
+          </div>
+          <div class="warn" style="margin-top:12px;font-size:.82rem">
+            <i class="fa fa-triangle-exclamation" style="margin-right:6px"></i>
+            <strong>Lưu ý:</strong> $0^0$ và $0^{-n}$ <strong>không có nghĩa</strong>. Không được viết $0^0 = 1$!
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 2: Số mũ hữu tỉ -->
+      <div class="tc-card tc-cyan">
+        <div class="tc-head">
+          <span class="tc-num">2</span>
+          Lũy thừa – Số mũ Hữu tỉ
+        </div>
+        <div class="tc-body">
+          <p style="font-size:.83rem;color:var(--text-secondary);margin-bottom:8px">Với $a > 0$, $m \in \mathbb{Z}$, $n \in \mathbb{N}^*$:</p>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--cyan-100);color:var(--cyan-700)">√</span>
+            <span>$a^{1/n} = \sqrt[n]{a}$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--cyan-100);color:var(--cyan-700)">m/n</span>
+            <span>$a^{m/n} = \sqrt[n]{a^m} = \left(\sqrt[n]{a}\right)^m$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--cyan-100);color:var(--cyan-700)">ex</span>
+            <span>$8^{2/3} = \sqrt[3]{8^2} = \sqrt[3]{64} = 4$</span>
+          </div>
+          <div class="warn" style="margin-top:12px;font-size:.82rem">
+            <i class="fa fa-triangle-exclamation" style="margin-right:6px"></i>
+            <strong>Bắt buộc:</strong> $a > 0$ để $a^{m/n}$ có nghĩa. Khi $n$ chẵn, nếu $a < 0$ thì $\sqrt[n]{a}$ <em>không tồn tại</em> trong $\mathbb{R}$!
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 3: Số mũ thực -->
+      <div class="tc-card tc-green">
+        <div class="tc-head">
+          <span class="tc-num">3</span>
+          Lũy thừa – Số mũ Thực
+        </div>
+        <div class="tc-body">
+          <p style="font-size:.83rem;color:var(--text-secondary);margin-bottom:8px">Với $a > 0$, $\alpha \in \mathbb{R}$:</p>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--green-100);color:var(--green-700)">→</span>
+            <div>
+              <p style="font-size:.84rem">Xấp xỉ bằng dãy số hữu tỉ tiến tới $\alpha$:</p>
+              <p style="margin-top:4px">$a^\alpha = \lim_{r_n \to \alpha, r_n \in \mathbb{Q}} a^{r_n}$</p>
+            </div>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--green-100);color:var(--green-700)">ex</span>
+            <span>$2^{\sqrt{2}} = \lim_{r_n \to \sqrt{2}} 2^{r_n} \approx 2{,}665$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:var(--green-100);color:var(--green-700)">ex</span>
+            <span>$(1{,}06)^{10} \approx 1{,}7908$</span>
+          </div>
+          <div class="tip" style="margin-top:12px;font-size:.82rem">
+            <i class="fa fa-lightbulb" style="margin-right:6px"></i>
+            Tất cả tính chất của lũy thừa với số mũ nguyên và hữu tỉ đều được <strong>bảo toàn</strong> với số mũ thực!
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 4: Căn bậc n -->
+      <div class="tc-card tc-amber">
+        <div class="tc-head">
+          <span class="tc-num">4</span>
+          Tính chất Căn bậc n
+        </div>
+        <div class="tc-body">
+          <p style="font-size:.83rem;color:var(--text-secondary);margin-bottom:8px">Với $a, b > 0$; $m \in \mathbb{Z}$; $n, k \in \mathbb{N}^*$:</p>
+          <div class="formula-row">
+            <span class="lbl">C1</span>
+            <span>$\sqrt[n]{a} \cdot \sqrt[n]{b} = \sqrt[n]{ab}$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">C2</span>
+            <span>$\dfrac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\dfrac{a}{b}}$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">C3</span>
+            <span>$\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">C4</span>
+            <span>$\sqrt[n]{a^n} = \begin{cases} a & n \text{ lẻ} \\ |a| & n \text{ chẵn} \end{cases}$</span>
+          </div>
+          <div class="formula-row">
+            <span class="lbl">C5</span>
+            <span>$\sqrt[n]{\sqrt[k]{a}} = \sqrt[nk]{a}$</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 5: 5 Tính chất lũy thừa -->
+      <div class="tc-card tc-purple">
+        <div class="tc-head">
+          <span class="tc-num">5</span>
+          5 Tính chất lũy thừa
+        </div>
+        <div class="tc-body">
+          <p style="font-size:.83rem;color:var(--text-secondary);margin-bottom:8px">Với $a, b > 0$; $\alpha, \beta \in \mathbb{R}$:</p>
+          <div class="formula-row">
+            <span class="lbl" style="background:#ede9fe;color:#4c1d95">P1</span>
+            <div>
+              <span>$a^\alpha \cdot a^\beta = a^{\alpha + \beta}$</span><br/>
+              <span style="font-size:.77rem;color:#7c3aed">Tích cùng cơ số: cộng số mũ</span>
+            </div>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:#ede9fe;color:#4c1d95">P2</span>
+            <div>
+              <span>$\dfrac{a^\alpha}{a^\beta} = a^{\alpha - \beta}$</span><br/>
+              <span style="font-size:.77rem;color:#7c3aed">Thương cùng cơ số: trừ số mũ</span>
+            </div>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:#ede9fe;color:#4c1d95">P3</span>
+            <div>
+              <span>$\left(a^\alpha\right)^\beta = a^{\alpha \cdot \beta}$</span><br/>
+              <span style="font-size:.77rem;color:#7c3aed">Lũy thừa của lũy thừa: nhân số mũ</span>
+            </div>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:#ede9fe;color:#4c1d95">P4</span>
+            <div>
+              <span>$(ab)^\alpha = a^\alpha \cdot b^\alpha$</span><br/>
+              <span style="font-size:.77rem;color:#7c3aed">Tích lũy thừa cùng số mũ</span>
+            </div>
+          </div>
+          <div class="formula-row">
+            <span class="lbl" style="background:#ede9fe;color:#4c1d95">P5</span>
+            <div>
+              <span>$\left(\dfrac{a}{b}\right)^\alpha = \dfrac{a^\alpha}{b^\alpha}$</span><br/>
+              <span style="font-size:.77rem;color:#7c3aed">Thương lũy thừa cùng số mũ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.tc-grid -->
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 3 – MINDMAP SVG
+══════════════════════════════════════════════════════════ -->
+<section class="card c-orange reveal" id="sec-mindmap">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-diagram-project"></i></span>
+    <div>
+      <h2>Sơ đồ tư duy: Lũy thừa tổng quan</h2>
+      <div style="font-size:.78rem;color:var(--orange-600);margin-top:3px;">Một cái nhìn toàn diện về bài học</div>
+    </div>
+    <span class="sect-pill">Mục 3</span>
+  </div>
+  <div class="card-body">
+    <div class="mm-scroll">
+      <div class="mm-container">
+
+        <!-- ── Đường nối (chỉ SVG, không có text) ── -->
+        <svg class="mm-lines-svg" viewBox="0 0 820 390" xmlns="http://www.w3.org/2000/svg">
+          <!-- TL: Định nghĩa — indigo -->
+          <path d="M 375,148 Q 265,90 175,57" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- TR: Tính chất — cyan -->
+          <path d="M 445,148 Q 555,90 645,57" stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- BL: Căn bậc n — green -->
+          <path d="M 375,248 Q 265,292 185,318" stroke="#4ade80" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- BR: Ứng dụng — amber -->
+          <path d="M 445,248 Q 555,292 645,318" stroke="#fbbf24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Chấm tròn phía trung tâm -->
+          <circle cx="375" cy="148" r="4" fill="#818cf8"/>
+          <circle cx="445" cy="148" r="4" fill="#22d3ee"/>
+          <circle cx="375" cy="248" r="4" fill="#4ade80"/>
+          <circle cx="445" cy="248" r="4" fill="#fbbf24"/>
+          <!-- Chấm tròn phía nhánh -->
+          <circle cx="175" cy="57"  r="4" fill="#818cf8"/>
+          <circle cx="645" cy="57"  r="4" fill="#22d3ee"/>
+          <circle cx="185" cy="318" r="4" fill="#4ade80"/>
+          <circle cx="645" cy="318" r="4" fill="#fbbf24"/>
+        </svg>
+
+        <!-- ── Nút trung tâm ── -->
+        <div class="mm-center-node" style="left:305px;top:148px;width:210px;height:100px">
+          <div class="mm-head">LŨY THỪA</div>
+          <div class="mm-sub">$a^\alpha,\; \alpha \in \mathbb{R}$</div>
+        </div>
+
+        <!-- ── TL: Định nghĩa ── -->
+        <div class="mm-branch-node mm-indigo" style="left:15px;top:15px;width:160px;min-height:85px">
+          <div class="mm-head">Định nghĩa</div>
+          <div class="mm-body">$a^n$,&ensp;$a^{m/n}$,&ensp;$a^\alpha$<br/>Số mũ nguyên · hữu tỉ · thực</div>
+        </div>
+
+        <!-- ── TR: Tính chất (có dropdown hover) ── -->
+        <div class="mm-branch-node mm-cyan" style="left:645px;top:15px;width:160px;min-height:85px">
+          <div class="mm-head">Tính chất</div>
+          <div class="mm-body">
+            5 tính chất cơ bản<br/>
+            <span style="font-size:.72rem;color:var(--cyan-600);margin-top:2px;display:inline-block">▾ Rê chuột để xem</span>
+          </div>
+
+          <!-- Dropdown 5 công thức -->
+          <div class="mm-dropdown">
+            <div class="mm-drop-title">5 Tính chất lũy thừa</div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">P1</span>
+              <span>$a^\alpha \cdot a^\beta = a^{\alpha+\beta}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">P2</span>
+              <span>$\dfrac{a^\alpha}{a^\beta} = a^{\alpha-\beta}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">P3</span>
+              <span>$\left(a^\alpha\right)^\beta = a^{\alpha \cdot \beta}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">P4</span>
+              <span>$(ab)^\alpha = a^\alpha \cdot b^\alpha$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">P5</span>
+              <span>$\left(\dfrac{a}{b}\right)^\alpha = \dfrac{a^\alpha}{b^\alpha}$</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BR: Ứng dụng ── -->
+        <div class="mm-branch-node mm-amber" style="left:645px;top:268px;width:160px;min-height:100px">
+          <div class="mm-head">Ứng dụng</div>
+          <div class="mm-body">Lãi kép: $P(1+r)^n$<br/>Dân số: $A_0 \cdot k^t$</div>
+        </div>
+
+        <!-- ── BL: Căn bậc n (có dropdown hover, mở lên) ── -->
+        <div class="mm-branch-node mm-green" style="left:15px;top:268px;width:170px;min-height:100px">
+          <div class="mm-head">Căn bậc n</div>
+          <div class="mm-body">
+            5 tính chất cơ bản<br/>
+            <span style="font-size:.72rem;color:var(--green-600);margin-top:2px;display:inline-block">▾ Rê chuột để xem</span>
+          </div>
+
+          <!-- Dropdown 5 công thức Căn bậc n — mở lên -->
+          <div class="mm-dropdown mm-dropdown-up mm-drop-green">
+            <div class="mm-drop-title">5 Tính chất căn bậc n</div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">C1</span>
+              <span>$\sqrt[n]{a} \cdot \sqrt[n]{b} = \sqrt[n]{ab}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">C2</span>
+              <span>$\dfrac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\dfrac{a}{b}}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">C3</span>
+              <span>$\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">C4</span>
+              <span>$\sqrt[n]{a^n} = a$ (n lẻ), $= |a|$ (n chẵn)</span>
+            </div>
+            <div class="mm-drop-item">
+              <span class="mm-drop-key">C5</span>
+              <span>$\sqrt[n]{\sqrt[k]{a}} = \sqrt[nk]{a}$</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 4 – VÍ DỤ PHÂN TÍCH (ACCORDION)
+══════════════════════════════════════════════════════════ -->
+<section class="card c-green reveal" id="sec-examples">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-flask"></i></span>
+    <div>
+      <h2>Ví dụ phân tích chi tiết</h2>
+      <div style="font-size:.78rem;color:var(--green-700);margin-top:3px;">Nhấn vào từng ví dụ để xem lời giải từng bước</div>
+    </div>
+    <span class="sect-pill">Mục 4</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Hai ví dụ điển hình ứng dụng lũy thừa trong Toán tài chính và Sinh học.</p>
+
+    <div class="acc" id="acc-main">
+
+      <!-- ────── Ví dụ 1: Bài tập 6.7 – Lãi kép ────── -->
+      <div class="acc-item" id="acc-ex1">
+        <button class="acc-trigger" onclick="toggleAcc('acc-ex1')">
+          <span class="acc-icon fin"><i class="fa fa-coins"></i></span>
+          <div>
+            <div><strong>Ví dụ 1 (Bài 6.7 – SGK):</strong> Gửi tiết kiệm lãi kép</div>
+            <div class="acc-meta">Toán tài chính · Ứng dụng $(1+r)^n$</div>
+          </div>
+          <span class="acc-chev"><i class="fa fa-chevron-down"></i></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="box-in" style="margin-bottom:18px">
+              <strong>Đề bài:</strong> Bác An gửi tiết kiệm <strong>120 triệu đồng</strong>, kỳ hạn <strong>6 tháng</strong>, lãi suất <strong>5%/năm</strong> (tức 2,5%/kỳ). Tính số tiền bác An nhận được sau <strong>2 năm</strong> (= 4 kỳ), biết lãi được cộng vào gốc sau mỗi kỳ (lãi kép).
+            </div>
+
+            <div class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <p><strong>Xác định các thông số:</strong></p>
+                <p>Vốn gốc: $P = 120$ triệu đồng</p>
+                <p>Lãi suất mỗi kỳ: $r = 5\%/2 = 2{,}5\% = 0{,}025$</p>
+                <p>Số kỳ trong 2 năm: $n = 2 \times 2 = 4$ kỳ</p>
+                <div class="sc">Vì gửi kỳ hạn 6 tháng, mỗi năm có 2 kỳ, nên 2 năm = 4 kỳ.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <p><strong>Viết công thức lãi kép:</strong></p>
+                <p>$$A = P \cdot (1 + r)^n = 120 \cdot (1 + 0{,}025)^4$$</p>
+                <div class="sc">Đây là công thức lũy thừa với cơ số $(1{,}025)$ và số mũ $4$.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <p><strong>Tính $(1{,}025)^4$ từng bước:</strong></p>
+                <p>$(1{,}025)^2 = 1{,}050625$</p>
+                <p>$(1{,}025)^4 = (1{,}050625)^2 \approx 1{,}10381289...$</p>
+                <div class="sc">Dùng tính chất $a^{2n} = (a^n)^2$ để giảm số phép tính.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">4</div>
+              <div class="step-content">
+                <p><strong>Tính số tiền nhận được:</strong></p>
+                <p>$$A = 120 \times 1{,}10381289 \approx 132{,}457 \text{ (triệu đồng)}$$</p>
+              </div>
+            </div>
+
+            <div class="result-box">
+              ✅ Sau 2 năm, bác An nhận được: $A \approx \mathbf{132{,}46}$ <strong>triệu đồng</strong>
+              <br/><span style="font-size:.8rem;font-weight:400;color:var(--indigo-600)">Tiền lãi kiếm được: $132{,}46 - 120 = 12{,}46$ triệu đồng</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────── Ví dụ 2: Bài tập 6.8 – Dân số ────── -->
+      <div class="acc-item" id="acc-ex2">
+        <button class="acc-trigger" onclick="toggleAcc('acc-ex2')">
+          <span class="acc-icon pop"><i class="fa fa-users"></i></span>
+          <div>
+            <div><strong>Ví dụ 2 (Bài 6.8 – SGK):</strong> Gia tăng dân số</div>
+            <div class="acc-meta">Sinh học · Toán ứng dụng · Công thức $A = 19 \cdot 2^{t/30}$</div>
+          </div>
+          <span class="acc-chev"><i class="fa fa-chevron-down"></i></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="box-in" style="margin-bottom:18px">
+              <strong>Đề bài:</strong> Số dân (triệu người) của một quốc gia sau $t$ năm kể từ năm 2000 được tính theo công thức $A = 19 \cdot 2^{t/30}$. Tính dân số của quốc gia đó vào năm <strong>2020</strong> (làm tròn đến 0,01 triệu người).
+            </div>
+
+            <div class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <p><strong>Xác định biến $t$:</strong></p>
+                <p>Năm 2020 so với năm 2000: $t = 2020 - 2000 = 20$ (năm)</p>
+                <div class="sc">$t$ là số năm kể từ năm 2000, mốc gốc của công thức.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <p><strong>Thay $t = 20$ vào công thức:</strong></p>
+                <p>$$A = 19 \cdot 2^{20/30} = 19 \cdot 2^{2/3}$$</p>
+                <div class="sc">Rút gọn: $\dfrac{20}{30} = \dfrac{2}{3}$, đây là số mũ hữu tỉ.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <p><strong>Tính $2^{2/3}$:</strong></p>
+                <p>$$2^{2/3} = \sqrt[3]{2^2} = \sqrt[3]{4} \approx 1{,}5874$$</p>
+                <div class="sc">Dùng công thức $a^{m/n} = \sqrt[n]{a^m}$ với $a=2, m=2, n=3$.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="sn">4</div>
+              <div class="step-content">
+                <p><strong>Tính dân số:</strong></p>
+                <p>$$A = 19 \times 1{,}5874 \approx 30{,}16 \text{ (triệu người)}$$</p>
+              </div>
+            </div>
+
+            <div class="result-box">
+              ✅ Dân số năm 2020: $A \approx \mathbf{30{,}16}$ <strong>triệu người</strong>
+              <br/><span style="font-size:.8rem;font-weight:400;color:var(--indigo-600)">Tăng thêm: $30{,}16 - 19 = 11{,}16$ triệu người trong 20 năm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.acc -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 5 – DRAG & DROP
+══════════════════════════════════════════════════════════ -->
+<section class="card c-orange reveal" id="sec-dnd">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-hand-pointer"></i></span>
+    <div>
+      <h2>Game kéo &amp; thả: Ghép công thức</h2>
+      <div style="font-size:.78rem;color:var(--orange-600);margin-top:3px;">Kéo chip từ bên dưới, thả vào ô đúng bên phải</div>
+    </div>
+    <span class="sect-pill">Mục 5</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Ghép mỗi <strong>biểu thức lũy thừa</strong> (cột trái) với <strong>kết quả tính chất</strong> tương ứng (cột phải) bằng cách kéo các chip.</p>
+
+    <div class="dnd-layout" id="dnd-area">
+      <!-- Left: Formulas -->
+      <div>
+        <p class="dnd-col-title">📌 Biểu thức</p>
+        <div class="drop-grid">
+          <div class="drop-row">
+            <span class="drop-label">$a^m \cdot a^n =$</span>
+            <div class="drop-z" id="dz-1" data-accept="chip-1">
+              <span class="drop-hint" style="font-size:.78rem;font-style:italic">Thả đáp án…</span>
+            </div>
+          </div>
+          <div class="drop-row">
+            <span class="drop-label">$\dfrac{a^m}{a^n} =$</span>
+            <div class="drop-z" id="dz-2" data-accept="chip-2">
+              <span class="drop-hint" style="font-size:.78rem;font-style:italic">Thả đáp án…</span>
+            </div>
+          </div>
+          <div class="drop-row">
+            <span class="drop-label">$(a^m)^n =$</span>
+            <div class="drop-z" id="dz-3" data-accept="chip-3">
+              <span class="drop-hint" style="font-size:.78rem;font-style:italic">Thả đáp án…</span>
+            </div>
+          </div>
+          <div class="drop-row">
+            <span class="drop-label">$a^{m/n} =$</span>
+            <div class="drop-z" id="dz-4" data-accept="chip-4">
+              <span class="drop-hint" style="font-size:.78rem;font-style:italic">Thả đáp án…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: legend/hint -->
+      <div>
+        <p class="dnd-col-title">💡 Gợi ý các tính chất</p>
+        <div class="box-in" style="font-size:.84rem">
+          <ul style="padding-left:18px;line-height:2">
+            <li>Cùng cơ số nhân → <em>cộng</em> số mũ</li>
+            <li>Cùng cơ số chia → <em>trừ</em> số mũ</li>
+            <li>Lũy thừa của lũy thừa → <em>nhân</em> số mũ</li>
+            <li>Số mũ hữu tỉ → <em>căn bậc n</em> của $a^m$</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chips pool -->
+    <div style="margin-top:22px">
+      <p class="dnd-col-title">🃏 Kéo từ đây</p>
+      <div class="chips-pool" id="chips-pool">
+        <div class="chip" id="chip-1" draggable="true" data-target="dz-1">$a^{m+n}$</div>
+        <div class="chip" id="chip-2" draggable="true" data-target="dz-2">$a^{m-n}$</div>
+        <div class="chip" id="chip-3" draggable="true" data-target="dz-3">$a^{m \cdot n}$</div>
+        <div class="chip" id="chip-4" draggable="true" data-target="dz-4">$\sqrt[n]{a^m}$</div>
+        <div class="chip" id="chip-d1" draggable="true" data-target="">$\sqrt[m]{a^n}$</div>
+        <div class="chip" id="chip-d2" draggable="true" data-target="">$a^{m \div n}$</div>
+      </div>
+    </div>
+
+    <div class="dnd-actions">
+      <button class="btn btn-primary" id="btn-check-dnd" onclick="checkDnd()">
+        <i class="fa fa-check"></i> Kiểm tra
+      </button>
+      <button class="btn btn-ghost" onclick="resetDnd()">
+        <i class="fa fa-rotate-left"></i> Làm lại
+      </button>
+      <span id="dnd-score-text"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 6 – FLASHCARDS
+══════════════════════════════════════════════════════════ -->
+<section class="card c-indigo reveal" id="sec-fc">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-id-card"></i></span>
+    <div>
+      <h2>Thẻ ghi nhớ nhanh</h2>
+      <div style="font-size:.78rem;color:var(--indigo-600);margin-top:3px;">Nhấn thẻ để lật — ôn các bẫy lý thuyết phổ biến</div>
+    </div>
+    <span class="sect-pill">Mục 6</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">4 thẻ kiểm tra các điểm <strong>dễ sai</strong> nhất trong bài Lũy thừa. Nhấn thẻ để xem đáp án!</p>
+
+    <div class="fc-grid">
+      <!-- FC 1 -->
+      <div class="fc" onclick="flipFC(this)" title="Nhấn để lật">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">Điều kiện để $a^{m/n}$ có nghĩa là gì?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">$a > 0$</div>
+            <div class="fc-why">Cơ số phải dương.<br/>Nếu $n$ chẵn và $a < 0$: $\sqrt[n]{a}$ không tồn tại trong $\mathbb{R}$.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 2 -->
+      <div class="fc" onclick="flipFC(this)" title="Nhấn để lật">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">$0^0$ bằng bao nhiêu?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">Không có nghĩa!</div>
+            <div class="fc-why">$0^0$ là dạng vô định.<br/>Ta chỉ có $a^0 = 1$ khi $a \neq 0$.<br/>Đừng viết $0^0 = 1$!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 3 -->
+      <div class="fc" onclick="flipFC(this)" title="Nhấn để lật">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">Viết lại $a^{-n}$ theo cách khác?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">$a^{-n} = \dfrac{1}{a^n}$</div>
+            <div class="fc-why">Điều kiện: $a \neq 0$.<br/>Ví dụ: $2^{-3} = \dfrac{1}{8}$.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FC 4 -->
+      <div class="fc" onclick="flipFC(this)" title="Nhấn để lật">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-q">Căn bậc chẵn của một số âm?</div>
+            <div class="fc-hint">↩ Nhấn để lật</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-ans">Không tồn tại!<br/>(trong $\mathbb{R}$)</div>
+            <div class="fc-why">$\sqrt{-4}$ không tồn tại trong $\mathbb{R}$.<br/>Chỉ tồn tại trong $\mathbb{C}$: $\sqrt{-4} = 2i$.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="fc-tap-hint"><i class="fa fa-hand-pointer" style="margin-right:4px"></i> Nhấp/chạm vào thẻ để lật · Nhấp lại để lật ngược</p>
+
+    <!-- Flash progress -->
+    <div class="fc-progress" id="fc-progress">
+      <div class="fc-dot active" onclick="scrollToFC(0)"></div>
+      <div class="fc-dot" onclick="scrollToFC(1)"></div>
+      <div class="fc-dot" onclick="scrollToFC(2)"></div>
+      <div class="fc-dot" onclick="scrollToFC(3)"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 6B – BẢNG SO SÁNH NÂNG CAO
+══════════════════════════════════════════════════════════ -->
+<section class="card c-cyan reveal" id="sec-compare">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-table-columns"></i></span>
+    <div>
+      <h2>Bảng so sánh & Tổng hợp công thức</h2>
+      <div style="font-size:.78rem;color:var(--cyan-700);margin-top:3px;">Đối chiếu 3 cấp độ số mũ một cách trực quan</div>
+    </div>
+    <span class="sect-pill">Nâng cao</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Bảng tổng hợp toàn bộ kiến thức Lũy thừa theo từng cấp độ số mũ — dùng để ôn tập và tra cứu nhanh.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Loại số mũ</th>
+            <th>Ký hiệu</th>
+            <th>Định nghĩa</th>
+            <th>Điều kiện cơ số</th>
+            <th>Ví dụ minh họa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hl">Số mũ nguyên dương</td>
+            <td>$a^n,\; n \in \mathbb{N}^*$</td>
+            <td>$a \cdot a \cdots a$ ($n$ lần)</td>
+            <td>Bất kỳ $a$</td>
+            <td>$3^4 = 81$</td>
+          </tr>
+          <tr>
+            <td class="hl">Số mũ bằng 0</td>
+            <td>$a^0$</td>
+            <td>Quy ước = 1</td>
+            <td>$a \neq 0$</td>
+            <td>$7^0 = 1$; $(-5)^0 = 1$</td>
+          </tr>
+          <tr>
+            <td class="hl">Số mũ nguyên âm</td>
+            <td>$a^{-n},\; n \in \mathbb{N}^*$</td>
+            <td>$\dfrac{1}{a^n}$</td>
+            <td>$a \neq 0$</td>
+            <td>$5^{-2} = \dfrac{1}{25}$</td>
+          </tr>
+          <tr>
+            <td class="hl">Số mũ $\tfrac{1}{n}$ (căn)</td>
+            <td>$a^{1/n}$</td>
+            <td>$\sqrt[n]{a}$</td>
+            <td>$a > 0$ (hoặc $a \geq 0$ nếu $n$ lẻ, $a \in \mathbb{R}$)</td>
+            <td>$27^{1/3} = 3$</td>
+          </tr>
+          <tr>
+            <td class="hl">Số mũ hữu tỉ $m/n$</td>
+            <td>$a^{m/n}$</td>
+            <td>$\sqrt[n]{a^m} = (\sqrt[n]{a})^m$</td>
+            <td>$a > 0$</td>
+            <td>$16^{3/4} = (\sqrt[4]{16})^3 = 8$</td>
+          </tr>
+          <tr>
+            <td class="hl">Số mũ thực $\alpha$</td>
+            <td>$a^\alpha,\; \alpha \in \mathbb{R}$</td>
+            <td>$\lim_{r_n \to \alpha} a^{r_n}$</td>
+            <td>$a > 0$</td>
+            <td>$2^{\pi} \approx 8{,}825$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="font-bold" style="font-size:.92rem;margin-bottom:14px">🌿 Bảng tính chất Căn bậc n — Đối chiếu công thức &amp; lỗi thường gặp</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tính chất</th>
+            <th>Công thức tổng quát</th>
+            <th>Ví dụ số</th>
+            <th>Lỗi hay gặp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hl">C1 – Tích căn (cùng bậc)</td>
+            <td>$\sqrt[n]{a} \cdot \sqrt[n]{b} = \sqrt[n]{ab}$</td>
+            <td>$\sqrt[3]{2} \cdot \sqrt[3]{4} = \sqrt[3]{8} = 2$</td>
+            <td>❌ $\sqrt{2} \cdot \sqrt{3} \neq \sqrt{2+3}$ (không cộng số trong dấu căn)</td>
+          </tr>
+          <tr>
+            <td class="hl">C2 – Thương căn (cùng bậc)</td>
+            <td>$\dfrac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\dfrac{a}{b}}$</td>
+            <td>$\dfrac{\sqrt[3]{54}}{\sqrt[3]{2}} = \sqrt[3]{27} = 3$</td>
+            <td>❌ $\dfrac{\sqrt{a}}{\sqrt{b}} \neq \sqrt{a - b}$ (không trừ số trong dấu căn)</td>
+          </tr>
+          <tr>
+            <td class="hl">C3 – Lũy thừa của căn</td>
+            <td>$\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$</td>
+            <td>$\left(\sqrt[3]{4}\right)^2 = \sqrt[3]{16}$</td>
+            <td>❌ $\left(\sqrt[n]{a}\right)^m \neq \sqrt[n]{a} \cdot m$ (không nhân với số mũ)</td>
+          </tr>
+          <tr>
+            <td class="hl">C4 – Căn của lũy thừa</td>
+            <td>$\sqrt[n]{a^n} = \begin{cases} a & n \text{ lẻ} \\ |a| & n \text{ chẵn}\end{cases}$</td>
+            <td>$\sqrt[3]{(-2)^3} = -2$; $\;\sqrt{(-3)^2} = 3$</td>
+            <td>❌ $\sqrt{(-3)^2} \neq -3$ (căn bậc chẵn luôn $\geq 0$)</td>
+          </tr>
+          <tr>
+            <td class="hl">C5 – Căn lồng nhau</td>
+            <td>$\sqrt[n]{\sqrt[k]{a}} = \sqrt[nk]{a}$</td>
+            <td>$\sqrt[3]{\sqrt{64}} = \sqrt[6]{64} = 2$</td>
+            <td>❌ $\sqrt{\sqrt{a}} \neq \sqrt[3]{a}$ (bậc căn là tích, không phải tổng)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="font-bold" style="font-size:.92rem;margin-bottom:14px">📐 Bảng tính chất đối chiếu — Tích vs. Thương vs. Lũy thừa</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tính chất</th>
+            <th>Công thức tổng quát</th>
+            <th>Ví dụ số</th>
+            <th>Lỗi hay gặp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hl">P1 – Tích (cùng cơ số)</td>
+            <td>$a^\alpha \cdot a^\beta = a^{\alpha+\beta}$</td>
+            <td>$2^3 \cdot 2^5 = 2^8 = 256$</td>
+            <td>❌ $2^3 \cdot 2^5 \neq 2^{15}$ (không nhân số mũ)</td>
+          </tr>
+          <tr>
+            <td class="hl">P2 – Thương (cùng cơ số)</td>
+            <td>$\dfrac{a^\alpha}{a^\beta} = a^{\alpha-\beta}$</td>
+            <td>$\dfrac{3^7}{3^4} = 3^3 = 27$</td>
+            <td>❌ $\dfrac{2^5}{2^3} \neq 1^2$ (không chia cơ số)</td>
+          </tr>
+          <tr>
+            <td class="hl">P3 – Lũy thừa của lũy thừa</td>
+            <td>$(a^\alpha)^\beta = a^{\alpha\beta}$</td>
+            <td>$(5^2)^3 = 5^6 = 15625$</td>
+            <td>❌ $(2^3)^4 \neq 2^7$ (không cộng số mũ)</td>
+          </tr>
+          <tr>
+            <td class="hl">P4 – Tích lũy thừa</td>
+            <td>$(ab)^\alpha = a^\alpha \cdot b^\alpha$</td>
+            <td>$(2 \cdot 3)^4 = 2^4 \cdot 3^4 = 1296$</td>
+            <td>❌ $(a+b)^2 \neq a^2 + b^2$ (không phân phối qua cộng)</td>
+          </tr>
+          <tr>
+            <td class="hl">P5 – Thương lũy thừa</td>
+            <td>$\left(\dfrac{a}{b}\right)^\alpha = \dfrac{a^\alpha}{b^\alpha}$</td>
+            <td>$\left(\dfrac{2}{3}\right)^3 = \dfrac{8}{27}$</td>
+            <td>❌ $\left(\dfrac{a}{b}\right)^2 \neq \dfrac{a^2}{b}$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Ví dụ tính nhanh -->
+    <p class="font-bold" style="font-size:.92rem;margin-bottom:14px">🔢 Ví dụ tính nhanh — Rút gọn biểu thức</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+
+      <div class="box-in">
+        <p style="font-weight:800;margin-bottom:8px;color:var(--indigo-700)">Ví dụ A:</p>
+        <p>Rút gọn: $\dfrac{a^{7/3} \cdot a^{-1/3}}{a^{2/3}}$</p>
+        <p style="margin-top:8px">$= \dfrac{a^{7/3 + (-1/3)}}{a^{2/3}} = \dfrac{a^{6/3}}{a^{2/3}} = \dfrac{a^2}{a^{2/3}}$</p>
+        <p>$= a^{2 - 2/3} = a^{4/3}$</p>
+        <div class="sc" style="margin-top:6px">Kết quả: $a^{4/3}$</div>
+      </div>
+
+      <div class="box-in">
+        <p style="font-weight:800;margin-bottom:8px;color:var(--indigo-700)">Ví dụ B:</p>
+        <p>Tính: $\left(\dfrac{8}{27}\right)^{-2/3}$</p>
+        <p style="margin-top:8px">$= \left(\dfrac{27}{8}\right)^{2/3} = \dfrac{27^{2/3}}{8^{2/3}}$</p>
+        <p>$= \dfrac{(\sqrt[3]{27})^2}{(\sqrt[3]{8})^2} = \dfrac{3^2}{2^2} = \dfrac{9}{4}$</p>
+        <div class="sc" style="margin-top:6px">Kết quả: $\dfrac{9}{4}$</div>
+      </div>
+
+      <div class="box-in">
+        <p style="font-weight:800;margin-bottom:8px;color:var(--indigo-700)">Ví dụ C:</p>
+        <p>So sánh $2^{30}$ và $3^{20}$:</p>
+        <p style="margin-top:8px">$2^{30} = (2^3)^{10} = 8^{10}$</p>
+        <p>$3^{20} = (3^2)^{10} = 9^{10}$</p>
+        <p>Vì $8 < 9 \Rightarrow 8^{10} < 9^{10}$</p>
+        <div class="sc" style="margin-top:6px">$2^{30} < 3^{20}$</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <!-- Ứng dụng thực tế mở rộng -->
+    <p class="font-bold" style="font-size:.92rem;margin-bottom:14px">🌍 Ứng dụng Lũy thừa trong khoa học &amp; đời sống</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      <div style="background:var(--green-50);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--green-100)">
+        <div style="font-size:1.5rem;margin-bottom:6px">💰</div>
+        <p style="font-weight:800;color:var(--green-700);font-size:.88rem">Tài chính</p>
+        <p style="font-size:.83rem;color:var(--text-secondary);margin-top:4px">Lãi kép: $A = P(1+r)^n$<br/>Lãi liên tục: $A = Pe^{rt}$</p>
+      </div>
+      <div style="background:var(--cyan-50);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--cyan-100)">
+        <div style="font-size:1.5rem;margin-bottom:6px">🦠</div>
+        <p style="font-weight:800;color:var(--cyan-700);font-size:.88rem">Vi sinh học</p>
+        <p style="font-size:.83rem;color:var(--text-secondary);margin-top:4px">Vi khuẩn nhân đôi: $N = N_0 \cdot 2^{t/T}$</p>
+      </div>
+      <div style="background:var(--amber-50);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--amber-200)">
+        <div style="font-size:1.5rem;margin-bottom:6px">☢️</div>
+        <p style="font-weight:800;color:var(--amber-700);font-size:.88rem">Vật lý hạt nhân</p>
+        <p style="font-size:.83rem;color:var(--text-secondary);margin-top:4px">Phân rã phóng xạ: $N = N_0 \cdot \left(\dfrac{1}{2}\right)^{t/T_{1/2}}$</p>
+      </div>
+      <div style="background:var(--indigo-50);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--indigo-200)">
+        <div style="font-size:1.5rem;margin-bottom:6px">🌍</div>
+        <p style="font-weight:800;color:var(--indigo-700);font-size:.88rem">Địa vật lý</p>
+        <p style="font-size:.83rem;color:var(--text-secondary);margin-top:4px">Thang Richter dùng $\log$ (nghịch đảo của $10^x$)</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 6C – VÍ DỤ RÚT GỌN NÂNG CAO (ACCORDION)
+══════════════════════════════════════════════════════════ -->
+<section class="card c-indigo reveal" id="sec-advanced">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-graduation-cap"></i></span>
+    <div>
+      <h2>Bài tập nâng cao — Tự kiểm tra</h2>
+      <div style="font-size:.78rem;color:var(--indigo-600);margin-top:3px;">3 dạng bài điển hình thi THPT</div>
+    </div>
+    <span class="sect-pill">Nâng cao</span>
+  </div>
+  <div class="card-body">
+    <p class="section-intro">Ba dạng bài thường xuất hiện trong đề thi — bấm vào từng ô để xem hướng dẫn giải.</p>
+
+    <div class="acc">
+
+      <!-- Dạng 1: Rút gọn biểu thức -->
+      <div class="acc-item" id="acc-adv1">
+        <button class="acc-trigger" onclick="toggleAcc('acc-adv1')">
+          <span class="acc-icon" style="background:var(--indigo-100);color:var(--indigo-600)"><i class="fa fa-scissors"></i></span>
+          <div>
+            <div><strong>Dạng 1:</strong> Rút gọn biểu thức chứa lũy thừa</div>
+            <div class="acc-meta">$P = \dfrac{\sqrt[3]{a^2} \cdot \sqrt{a^3}}{\sqrt[6]{a^{13}}}$</div>
+          </div>
+          <span class="acc-chev"><i class="fa fa-chevron-down"></i></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="box-in">Rút gọn biểu thức $P = \dfrac{\sqrt[3]{a^2} \cdot \sqrt{a^3}}{\sqrt[6]{a^{13}}}$ với $a > 0$.</div>
+            <div class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <p><strong>Đổi tất cả căn thức thành lũy thừa với số mũ hữu tỉ:</strong></p>
+                <p>$\sqrt[3]{a^2} = a^{2/3}$; &nbsp; $\sqrt{a^3} = a^{3/2}$; &nbsp; $\sqrt[6]{a^{13}} = a^{13/6}$</p>
+                <div class="sc">Dùng công thức $\sqrt[n]{a^m} = a^{m/n}$.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <p><strong>Tử số — cùng cơ số, dùng P1:</strong></p>
+                <p>$a^{2/3} \cdot a^{3/2} = a^{2/3 + 3/2} = a^{4/6 + 9/6} = a^{13/6}$</p>
+                <div class="sc">Quy đồng mẫu: $\dfrac{2}{3} = \dfrac{4}{6}$; $\dfrac{3}{2} = \dfrac{9}{6}$. Tổng = $\dfrac{13}{6}$.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <p><strong>Chia — dùng P2:</strong></p>
+                <p>$P = \dfrac{a^{13/6}}{a^{13/6}} = a^{13/6 - 13/6} = a^0 = 1$</p>
+              </div>
+            </div>
+            <div class="result-box">✅ $P = 1$ với mọi $a > 0$</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dạng 2: So sánh lũy thừa -->
+      <div class="acc-item" id="acc-adv2">
+        <button class="acc-trigger" onclick="toggleAcc('acc-adv2')">
+          <span class="acc-icon" style="background:var(--amber-100);color:var(--amber-600)"><i class="fa fa-balance-scale"></i></span>
+          <div>
+            <div><strong>Dạng 2:</strong> So sánh hai lũy thừa không cùng cơ số và số mũ</div>
+            <div class="acc-meta">So sánh $A = 5^{1/2}$ và $B = 4^{2/3}$</div>
+          </div>
+          <span class="acc-chev"><i class="fa fa-chevron-down"></i></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="box-in">So sánh $A = 5^{1/2}$ và $B = 4^{2/3}$.</div>
+            <div class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <p><strong>Đưa về cùng số mũ:</strong> BCNN(2, 3) = 6</p>
+                <p>$A = 5^{1/2} = 5^{3/6} = (5^3)^{1/6} = 125^{1/6}$</p>
+                <p>$B = 4^{2/3} = 4^{4/6} = (4^4)^{1/6} = 256^{1/6}$</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <p><strong>So sánh cơ số (vì hàm $x^{1/6}$ đồng biến với $x > 0$):</strong></p>
+                <p>$125 < 256 \Rightarrow 125^{1/6} < 256^{1/6}$</p>
+              </div>
+            </div>
+            <div class="result-box">✅ $5^{1/2} < 4^{2/3}$ (hay $\sqrt{5} < \sqrt[3]{16}$)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dạng 3: Bài tập tổng hợp -->
+      <div class="acc-item" id="acc-adv3">
+        <button class="acc-trigger" onclick="toggleAcc('acc-adv3')">
+          <span class="acc-icon" style="background:var(--green-100);color:var(--green-600)"><i class="fa fa-star"></i></span>
+          <div>
+            <div><strong>Dạng 3 (Tổng hợp):</strong> Biến đổi biểu thức phức hợp</div>
+            <div class="acc-meta">Chứng minh $\dfrac{a^{n+1}-a^n}{a^{n-1}} = a^2 - a$</div>
+          </div>
+          <span class="acc-chev"><i class="fa fa-chevron-down"></i></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="box-in">Chứng minh: $\dfrac{a^{n+1}-a^n}{a^{n-1}} = a^2 - a$ với $a > 0$, $n \in \mathbb{Z}$.</div>
+            <div class="step">
+              <div class="sn">1</div>
+              <div class="step-content">
+                <p><strong>Đặt nhân tử chung ở tử:</strong></p>
+                <p>$a^{n+1} - a^n = a^n(a^1 - a^0) = a^n(a - 1)$</p>
+                <div class="sc">Dùng $a^{n+1} = a^n \cdot a^1$ và $a^n = a^n \cdot a^0 = a^n \cdot 1$.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="sn">2</div>
+              <div class="step-content">
+                <p><strong>Chia cho mẫu $a^{n-1}$:</strong></p>
+                <p>$\dfrac{a^n(a-1)}{a^{n-1}} = a^{n-(n-1)}(a-1) = a^1(a-1)$</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="sn">3</div>
+              <div class="step-content">
+                <p><strong>Khai triển:</strong></p>
+                <p>$a(a-1) = a^2 - a$ &nbsp;✓</p>
+              </div>
+            </div>
+            <div class="result-box">✅ Đẳng thức được chứng minh — VP = VT</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.acc advanced -->
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 7 – TRẮC NGHIỆM (30 câu)
+══════════════════════════════════════════════════════════ -->
+<section class="card c-red" id="sec-quiz">
+  <div class="card-head">
+    <span class="ch-icon"><i class="fa fa-circle-question"></i></span>
+    <div>
+      <h2>Trắc nghiệm rèn luyện</h2>
+      <div style="font-size:.78rem;color:var(--red-600);margin-top:3px;">30 câu hỏi · Phản hồi tức thì · Giải thích chi tiết</div>
+    </div>
+    <span class="sect-pill">Mục 7</span>
+  </div>
+  <div class="card-body">
+    <div class="quiz-header">
+      <h3><i class="fa fa-stopwatch" style="margin-right:6px;color:var(--red-500)"></i>Làm bài và kiểm tra ngay!</h3>
+      <span class="quiz-progress-text" id="quiz-prog-text">0/30 câu đã trả lời</span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div></div>
+
+    <div id="quiz-container"><!-- Questions rendered by JS --></div>
+  </div>
+</section>
+
+</main><!-- /.lesson-wrap -->
+
+<!-- ══════════════════════════════════════════════════════════
+     SCORE BAR (fixed bottom-right)
+══════════════════════════════════════════════════════════ -->
+<div class="score-bar" id="score-bar" style="transform:translateY(120%)">
+  <h4><i class="fa fa-trophy" style="margin-right:6px;color:var(--amber-400)"></i>Điểm số</h4>
+  <div class="score-fraction"><span id="score-correct">0</span>/30</div>
+  <div class="score-fill-wrap">
+    <div class="score-fill" id="score-fill" style="width:0%"></div>
+  </div>
+  <div style="font-size:.75rem;color:var(--indigo-300)" id="score-msg">Hãy bắt đầu làm bài!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT – ALL MODULES
+══════════════════════════════════════════════════════════ -->
+<script>
+/* ════════════════════════════════════════════════════════
+   MODULE 1: SCROLL REVEAL (IntersectionObserver)
+════════════════════════════════════════════════════════ */
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+/* ════════════════════════════════════════════════════════
+   MODULE 2: STICKY NAV – highlight active section
+════════════════════════════════════════════════════════ */
+(function(){
+  const sections = ['sec-start','sec-theory','sec-mindmap','sec-examples','sec-dnd','sec-fc','sec-quiz'];
+  const navBtns  = document.querySelectorAll('.nav-btn');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const idx = sections.indexOf(e.target.id);
+        navBtns.forEach((b,i) => b.classList.toggle('active', i===idx));
+      }
+    });
+  }, { threshold:0.3 });
+  sections.forEach(id => { const el=document.getElementById(id); if(el) obs.observe(el); });
+})();
+
+function goToSection(hash){
+  const el = document.querySelector(hash);
+  if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ════════════════════════════════════════════════════════
+   MODULE 3: ACCORDION
+════════════════════════════════════════════════════════ */
+function toggleAcc(id){
+  const item = document.getElementById(id);
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+  if(!wasOpen){
+    item.classList.add('open');
+    if(window.MathJax) setTimeout(()=>MathJax.typesetPromise([item]),80);
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   MODULE 4: FLASHCARDS
+════════════════════════════════════════════════════════ */
+function flipFC(el){
+  el.classList.toggle('flipped');
+  // Update dots
+  const cards = Array.from(document.querySelectorAll('.fc'));
+  const idx = cards.indexOf(el);
+  document.querySelectorAll('.fc-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+}
+function scrollToFC(idx){
+  const cards = document.querySelectorAll('.fc');
+  if(cards[idx]) cards[idx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  document.querySelectorAll('.fc-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+
+/* ════════════════════════════════════════════════════════
+   MODULE 5: DRAG & DROP
+════════════════════════════════════════════════════════ */
+(function(){
+  const CORRECT_MAP = {
+    'dz-1': 'chip-1',
+    'dz-2': 'chip-2',
+    'dz-3': 'chip-3',
+    'dz-4': 'chip-4'
+  };
+  let dragging = null;
+
+  // ── Desktop DnD ──
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      dragging = chip;
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(()=> chip.style.opacity='.35', 0);
+    });
+    chip.addEventListener('dragend', () => {
+      chip.style.opacity='';
+      dragging = null;
+    });
+  });
+
+  document.querySelectorAll('.drop-z').forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if(!dragging) return;
+      placeChip(dragging, zone);
+    });
+  });
+
+  // ── Touch DnD ──
+  let touchChip=null, clone=null;
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('touchstart', e => {
+      touchChip = chip;
+      const r = chip.getBoundingClientRect();
+      clone = chip.cloneNode(true);
+      clone.style.cssText=`position:fixed;top:${r.top}px;left:${r.left}px;width:${r.width}px;opacity:.85;pointer-events:none;z-index:9999;margin:0;`;
+      document.body.appendChild(clone);
+    },{passive:true});
+
+    chip.addEventListener('touchmove', e => {
+      if(!clone) return;
+      const t = e.touches[0];
+      clone.style.top  = (t.clientY - clone.offsetHeight/2)+'px';
+      clone.style.left = (t.clientX - clone.offsetWidth/2)+'px';
+    },{passive:true});
+
+    chip.addEventListener('touchend', e => {
+      if(!touchChip||!clone) return;
+      document.body.removeChild(clone); clone=null;
+      const t = e.changedTouches[0];
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      const zone = el?.closest?.('.drop-z');
+      if(zone) placeChip(touchChip, zone);
+      touchChip = null;
+    });
+  });
+
+  function placeChip(chip, zone){
+    // Return any existing chip in zone to pool
+    const existing = zone.querySelector('.chip');
+    if(existing) document.getElementById('chips-pool').appendChild(existing);
+    // Clear zone content
+    zone.innerHTML='';
+    zone.appendChild(chip);
+    zone.dataset.chip = chip.id;
+    zone.classList.remove('correct','wrong');
+    if(window.MathJax) MathJax.typesetPromise([zone]);
+  }
+
+  window.checkDnd = function(){
+    let correct=0, total=0;
+    document.querySelectorAll('.drop-z').forEach(zone => {
+      const placed = zone.dataset.chip;
+      if(!placed) return;
+      total++;
+      const isRight = CORRECT_MAP[zone.id] === placed;
+      zone.classList.toggle('correct', isRight);
+      zone.classList.toggle('wrong', !isRight);
+      if(isRight) correct++;
+      let icon = zone.querySelector('.state-icon');
+      if(!icon){ icon=document.createElement('span'); icon.className='state-icon'; zone.appendChild(icon); }
+      icon.innerHTML = isRight ? '<i class="fa fa-check"></i>' : '<i class="fa fa-xmark"></i>';
+    });
+    const msg = total===0 ? '⚠️ Chưa thả chip nào!' :
+                correct===total ? `🎉 Hoàn hảo! ${correct}/${total} đúng!` :
+                `${correct}/${total} đúng — thử lại nhé!`;
+    document.getElementById('dnd-score-text').textContent = msg;
+  };
+
+  window.resetDnd = function(){
+    const pool = document.getElementById('chips-pool');
+    document.querySelectorAll('.chip').forEach(c => {
+      c.classList.remove('placed'); c.style.opacity=''; pool.appendChild(c);
+    });
+    const hints=['Thả đáp án…','Thả đáp án…','Thả đáp án…','Thả đáp án…'];
+    document.querySelectorAll('.drop-z').forEach((z,i) => {
+      z.innerHTML=`<span class="drop-hint" style="font-size:.78rem;font-style:italic">${hints[i]}</span>`;
+      z.removeAttribute('data-chip');
+      z.classList.remove('correct','wrong','drag-over');
+    });
+    document.getElementById('dnd-score-text').textContent='';
+    if(window.MathJax) MathJax.typesetPromise([document.getElementById('dnd-area')]);
+  };
+})();
+
+/* ════════════════════════════════════════════════════════
+   MODULE 6: QUIZ (30 câu)
+════════════════════════════════════════════════════════ */
+(function(){
+  const questions = [
+    {
+      q: 'Giá trị của $2^{-3}$ là:',
+      opts: ['$-8$', '$\\dfrac{1}{8}$', '$6$', '$-\\dfrac{1}{8}$'],
+      ans: 1,
+      explain: '$2^{-3} = \\dfrac{1}{2^3} = \\dfrac{1}{8}$. Số mũ âm nghĩa là lấy nghịch đảo.'
+    },
+    {
+      q: 'Điều kiện để $a^{m/n}$ có nghĩa trong $\\mathbb{R}$ là:',
+      opts: ['$a \\geq 0$', '$a \\neq 0$', '$a > 0$', 'Không cần điều kiện'],
+      ans: 2,
+      explain: 'Cần $a > 0$ để đảm bảo $\\sqrt[n]{a^m}$ luôn tồn tại trong $\\mathbb{R}$.'
+    },
+    {
+      q: 'Biểu thức $8^{2/3}$ bằng:',
+      opts: ['$4$', '$2$', '$16$', '$\\sqrt{8}$'],
+      ans: 0,
+      explain: '$8^{2/3} = \\sqrt[3]{8^2} = \\sqrt[3]{64} = 4$. Dùng công thức $a^{m/n} = \\sqrt[n]{a^m}$.'
+    },
+    {
+      q: '$0^0$ bằng bao nhiêu?',
+      opts: ['$0$', '$1$', 'Vô cực', 'Không có nghĩa'],
+      ans: 3,
+      explain: '$0^0$ là dạng vô định, không có nghĩa trong toán học. Chỉ khi $a \\neq 0$ mới có $a^0 = 1$.'
+    },
+    {
+      q: 'Tính $a^3 \\cdot a^{-5}$ (với $a > 0$):',
+      opts: ['$a^{-15}$', '$a^{-2}$', '$a^{8}$', '$a^{2}$'],
+      ans: 1,
+      explain: 'Dùng tính chất P1: $a^3 \\cdot a^{-5} = a^{3+(-5)} = a^{-2}$.'
+    },
+    {
+      q: 'Biểu thức $\\left(a^{2/3}\\right)^6$ bằng:',
+      opts: ['$a^{8/3}$', '$a^{4}$', '$a^{12/3}$', '$a^{9}$'],
+      ans: 1,
+      explain: 'Dùng P3: $\\left(a^{2/3}\\right)^6 = a^{(2/3)\\cdot 6} = a^4$.'
+    },
+    {
+      q: 'Gửi 100 triệu đồng lãi suất 8%/năm, sau 3 năm (lãi kép), số tiền là:',
+      opts: ['$100 \\cdot 3{,}08$ tr.', '$100 \\cdot (1{,}08)^3$ tr.', '$100 \\cdot 1{,}24$ tr.', '$100 \\cdot 0{,}08^3$ tr.'],
+      ans: 1,
+      explain: 'Công thức lãi kép: $A = P(1+r)^n = 100 \\cdot (1{,}08)^3 \\approx 125{,}97$ triệu đồng.'
+    },
+    {
+      q: 'Cho số thực $a \\neq 0$ và số nguyên dương $n$. Công thức nào dưới đây là đúng?',
+      opts: ['$a^{-n} = -a^n$', '$a^{-n} = \\dfrac{1}{a^n}$', '$a^{-n} = \\sqrt[n]{a}$', '$a^{-n} = a^{\\frac{1}{n}}$'],
+      ans: 1,
+      explain: '$a^{-n} = \\dfrac{1}{a^n}$. Số mũ âm nghĩa là lấy nghịch đảo của lũy thừa tương ứng.'
+    },
+    {
+      q: 'Cho $a > 0$ và $m, n$ là các số thực. Công thức nào sau đây đúng?',
+      opts: ['$a^m \\cdot a^n = a^{m \\cdot n}$', '$a^m \\cdot a^n = a^{m^n}$', '$a^m \\cdot a^n = a^{m+n}$', '$a^m \\cdot a^n = a^{m-n}$'],
+      ans: 2,
+      explain: 'Tính chất P1: $a^m \\cdot a^n = a^{m+n}$ — tích cùng cơ số thì cộng số mũ.'
+    },
+    {
+      q: 'Cho $a, b > 0$; $\\alpha, \\beta \\in \\mathbb{R}$. Công thức nào dưới đây là đúng?',
+      opts: ['$a^{\\alpha+\\beta} = a^\\alpha + a^\\beta$', '$a^\\alpha b^\\beta = (ab)^{\\alpha\\beta}$', '$(a^\\alpha)^\\beta = a^{\\alpha\\beta}$', '$\\dfrac{a^\\alpha}{a^\\beta} = a^{\\alpha+\\beta}$'],
+      ans: 2,
+      explain: '$(a^\\alpha)^\\beta = a^{\\alpha \\cdot \\beta}$ — lũy thừa của lũy thừa thì nhân số mũ (tính chất P3).'
+    },
+    {
+      q: 'Với $a$ là số thực dương bất kì, $\\sqrt{a^3}$ bằng:',
+      opts: ['$a^{\\frac{1}{6}}$', '$a^{\\frac{2}{3}}$', '$a^6$', '$a^{\\frac{3}{2}}$'],
+      ans: 3,
+      explain: '$\\sqrt{a^3} = (a^3)^{1/2} = a^{3/2}$.'
+    },
+    {
+      q: 'Với $\\alpha$ là số thực bất kì, mệnh đề nào dưới đây là sai?',
+      opts: ['$\\sqrt{2^\\alpha} = (\\sqrt{2})^\\alpha$', '$\\sqrt{2^\\alpha} = 2^{\\alpha/2}$', '$(2^\\alpha)^2 = 4^\\alpha$', '$(2^\\alpha)^2 = 2^{\\alpha^2}$'],
+      ans: 3,
+      explain: '$(2^\\alpha)^2 = 2^{2\\alpha}$, không phải $2^{\\alpha^2}$. Lũy thừa của lũy thừa: nhân số mũ, không bình phương số mũ.'
+    },
+    {
+      q: 'Với $a$ là số thực dương bất kì, $\\sqrt[3]{a^2}$ bằng:',
+      opts: ['$a^{\\frac{1}{6}}$', '$a^{\\frac{2}{3}}$', '$a^6$', '$a^{\\frac{3}{2}}$'],
+      ans: 1,
+      explain: '$\\sqrt[3]{a^2} = a^{2/3}$. Dùng công thức $\\sqrt[n]{a^m} = a^{m/n}$.'
+    },
+    {
+      q: 'Với $a$ là số thực dương bất kì, $\\sqrt[3]{\\sqrt{a}}$ bằng:',
+      opts: ['$a^{\\frac{1}{6}}$', '$a^{\\frac{2}{3}}$', '$a^6$', '$a^{\\frac{3}{2}}$'],
+      ans: 0,
+      explain: '$\\sqrt[3]{\\sqrt{a}} = \\sqrt[3]{a^{1/2}} = a^{\\frac{1}{2} \\cdot \\frac{1}{3}} = a^{1/6}$. Căn lồng nhau: nhân bậc.'
+    },
+    {
+      q: 'Với $a > 0$; $p, q \\in \\mathbb{R}$, công thức nào dưới đây là sai?',
+      opts: ['$(a^p)^q = (a^q)^p$', '$(a^p)^q = a^{pq}$', '$(a^q)^p = a^{pq}$', '$(a^p)^q = a^p \\cdot a^q$'],
+      ans: 3,
+      explain: '$(a^p)^q = a^{pq}$, không phải $a^p \\cdot a^q$. Nhầm lẫn giữa lũy thừa của lũy thừa với tích lũy thừa.'
+    },
+    {
+      q: 'Phép toán nào dưới đây là sai?',
+      opts: ['$\\dfrac{1}{2^6} = \\left(\\dfrac{1}{2}\\right)^6$', '$\\dfrac{1}{2^6} = 2^{-6}$', '$\\dfrac{1}{2^6} = \\dfrac{1}{64}$', '$\\dfrac{1}{2^6} = 2^{\\frac{1}{6}}$'],
+      ans: 3,
+      explain: '$2^{1/6} = \\sqrt[6]{2} \\approx 1{,}12 \\neq \\dfrac{1}{64}$. Đáp án D sai vì $\\dfrac{1}{2^6} = 2^{-6}$, không phải $2^{1/6}$.'
+    },
+    {
+      q: 'Phép toán nào dưới đây là sai?',
+      opts: ['$\\left(\\dfrac{3}{5}\\right)^{-2} = \\left(\\dfrac{5}{3}\\right)^2$', '$\\left(\\dfrac{4}{3}\\right)^{-2} = \\dfrac{16}{9}$', '$\\left(\\dfrac{3}{2}\\right)^{-2} = \\dfrac{4}{9}$', '$\\left(\\dfrac{1}{2}\\right)^{-2} = 4$'],
+      ans: 1,
+      explain: '$\\left(\\dfrac{4}{3}\\right)^{-2} = \\left(\\dfrac{3}{4}\\right)^2 = \\dfrac{9}{16}$, không phải $\\dfrac{16}{9}$. Đáp án B sai.'
+    },
+    {
+      q: 'Phép toán nào dưới đây là đúng?',
+      opts: ['$2^{-3} = 3^{-2}$', '$3^{-2} = \\dfrac{1}{2^3}$', '$2^{-6} = \\left(\\dfrac{1}{2}\\right)^{-6}$', '$2^{-6} = 4^{-3}$'],
+      ans: 3,
+      explain: '$2^{-6} = (2^2)^{-3} = 4^{-3}$ (đúng). A: $2^{-3}=\\dfrac{1}{8} \\neq 3^{-2}=\\dfrac{1}{9}$. B: $3^{-2}=\\dfrac{1}{9} \\neq \\dfrac{1}{8}$. C: $\\left(\\dfrac{1}{2}\\right)^{-6}=2^6=64$.'
+    },
+    {
+      q: 'Biểu diễn $\\dfrac{1}{64}$ dưới dạng $2^\\alpha$, khi đó $\\alpha$ có giá trị bằng:',
+      opts: ['$\\alpha = 6$', '$\\alpha = -6$', '$\\alpha = -3$', '$\\alpha = -8$'],
+      ans: 1,
+      explain: '$\\dfrac{1}{64} = \\dfrac{1}{2^6} = 2^{-6}$, vậy $\\alpha = -6$.'
+    },
+    {
+      q: 'Biểu diễn $\\sqrt[3]{128}$ dưới dạng $2^\\alpha$, khi đó $\\alpha$ có giá trị bằng:',
+      opts: ['$\\alpha = 7$', '$\\alpha = \\dfrac{7}{3}$', '$\\alpha = 5$', '$\\alpha = \\dfrac{7}{2}$'],
+      ans: 1,
+      explain: '$128 = 2^7$, nên $\\sqrt[3]{128} = (2^7)^{1/3} = 2^{7/3}$, vậy $\\alpha = \\dfrac{7}{3}$.'
+    },
+    {
+      q: 'Biểu diễn $\\sqrt[4]{15625}$ dưới dạng $5^\\alpha$, khi đó $\\alpha$ có giá trị bằng:',
+      opts: ['$\\alpha = 3$', '$\\alpha = \\dfrac{3}{2}$', '$\\alpha = 6$', '$\\alpha = \\dfrac{2}{3}$'],
+      ans: 1,
+      explain: '$15625 = 5^6$, nên $\\sqrt[4]{15625} = (5^6)^{1/4} = 5^{3/2}$, vậy $\\alpha = \\dfrac{3}{2}$.'
+    },
+    {
+      q: 'Biểu diễn $\\dfrac{1}{\\sqrt{125}}$ dưới dạng $5^\\alpha$, khi đó $\\alpha$ có giá trị bằng:',
+      opts: ['$\\alpha = \\dfrac{3}{2}$', '$\\alpha = \\dfrac{2}{3}$', '$\\alpha = -\\dfrac{3}{2}$', '$\\alpha = -\\dfrac{2}{3}$'],
+      ans: 2,
+      explain: '$125 = 5^3$, nên $\\dfrac{1}{\\sqrt{125}} = (5^3)^{-1/2} = 5^{-3/2}$, vậy $\\alpha = -\\dfrac{3}{2}$.'
+    },
+    {
+      q: 'Rút gọn $x^{\\frac{1}{3}} \\cdot \\sqrt[6]{x}$ (với $x > 0$) ta được:',
+      opts: ['$x^{\\frac{1}{2}}$', '$x^{\\frac{1}{8}}$', '$x^{\\frac{2}{9}}$', '$x^2$'],
+      ans: 0,
+      explain: '$x^{1/3} \\cdot x^{1/6} = x^{1/3 + 1/6} = x^{2/6 + 1/6} = x^{3/6} = x^{1/2}$.'
+    },
+    {
+      q: 'Mệnh đề nào dưới đây là sai? (Cho $a$ là số thực tùy ý)',
+      opts: ['$\\sqrt[3]{(-a)^3} = -a$', '$\\sqrt[5]{a^5} = a$', '$\\sqrt[36]{a^{36}} = a$', '$\\sqrt[2026]{x^{2026}} = |x|$'],
+      ans: 2,
+      explain: '$\\sqrt[36]{a^{36}} = |a|$ (36 là số chẵn, căn bậc chẵn luôn $\\geq 0$), không nhất thiết bằng $a$. Đáp án C sai.'
+    },
+    {
+      q: 'Cho $a > 0$. Rút gọn $P = a^{1+\\sqrt{5}} \\cdot a^{1-\\sqrt{5}}$ ta được:',
+      opts: ['$a^{-4}$', '$a^4$', '$a^{2\\sqrt{5}}$', '$a^2$'],
+      ans: 3,
+      explain: '$P = a^{(1+\\sqrt{5})+(1-\\sqrt{5})} = a^{2}$. Số mũ $\\sqrt{5}$ triệt tiêu nhau.'
+    },
+    {
+      q: 'Rút gọn $\\sqrt[3]{2026} \\cdot \\sqrt[5]{2026}$ dưới dạng lũy thừa của 2026, ta được:',
+      opts: ['$2026^{\\frac{2}{5}}$', '$2026^{\\frac{1}{15}}$', '$2026^{\\frac{8}{15}}$', '$2026^{\\frac{1}{10}}$'],
+      ans: 2,
+      explain: '$2026^{1/3} \\cdot 2026^{1/5} = 2026^{1/3+1/5} = 2026^{5/15+3/15} = 2026^{8/15}$.'
+    },
+    {
+      q: 'Biết $10^\\alpha = 2$ và $10^\\beta = 5$. Tính $10^{\\alpha+\\beta} + 10^{\\alpha-\\beta}$:',
+      opts: ['$10$', '$\\dfrac{52}{5}$', '$\\dfrac{2}{5}$', '$\\dfrac{5}{52}$'],
+      ans: 1,
+      explain: '$10^{\\alpha+\\beta} = 2 \\cdot 5 = 10$. $10^{\\alpha-\\beta} = \\dfrac{2}{5}$. Tổng $= 10 + \\dfrac{2}{5} = \\dfrac{52}{5}$.'
+    },
+    {
+      q: 'Rút gọn $P = a^{\\frac{1}{3}} \\cdot a^{\\frac{1}{2}} \\cdot a^{\\frac{3}{4}}$ ($a > 0$) và biểu diễn dưới dạng căn thức, ta được:',
+      opts: ['$\\sqrt[3]{a^{19}}$', '$\\sqrt[12]{a^{19}}$', '$\\sqrt[6]{a^5}$', '$\\sqrt[19]{a^{12}}$'],
+      ans: 1,
+      explain: '$\\dfrac{1}{3}+\\dfrac{1}{2}+\\dfrac{3}{4} = \\dfrac{4+6+9}{12} = \\dfrac{19}{12}$. Vậy $P = a^{19/12} = \\sqrt[12]{a^{19}}$.'
+    },
+    {
+      q: 'Rút gọn $P = \\sqrt[3]{a\\sqrt{a}}$ ($a > 0$) và biểu diễn dưới dạng căn thức, ta được:',
+      opts: ['$\\sqrt{a}$', '$\\dfrac{1}{\\sqrt{a}}$', '$a\\sqrt{a}$', '$\\sqrt[3]{a}$'],
+      ans: 0,
+      explain: '$a\\sqrt{a} = a \\cdot a^{1/2} = a^{3/2}$, nên $\\sqrt[3]{a^{3/2}} = a^{3/2 \\cdot 1/3} = a^{1/2} = \\sqrt{a}$.'
+    },
+    {
+      q: 'Cho số thực $x$ thỏa mãn $9^x + 9^{-x} = 23$. Giá trị của biểu thức $A = 3^x + 3^{-x}$ bằng:',
+      opts: ['$\\sqrt{21}$', '$5$', '$\\sqrt{23}$', '$25$'],
+      ans: 1,
+      explain: '$A^2 = (3^x + 3^{-x})^2 = 9^x + 2 \\cdot 3^x \\cdot 3^{-x} + 9^{-x} = 9^x + 9^{-x} + 2 = 23 + 2 = 25$. Vì $A = 3^x + 3^{-x} > 0$ nên $A = 5$.'
+    }
+  ];
+
+  let answered = 0, correct = 0;
+  const container = document.getElementById('quiz-container');
+  const keys = ['A','B','C','D'];
+
+  if(!container){
+    console.error('[Quiz] quiz-container không tồn tại');
+    return;
+  }
+
+  try {
+    questions.forEach(function(q, qi){
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = 'q-card-' + qi;
+
+      // Header
+      const head = document.createElement('div');
+      head.className = 'q-card-head';
+      const num = document.createElement('span');
+      num.className = 'q-num';
+      num.textContent = (qi + 1);
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.innerHTML = q.q;
+      head.appendChild(num);
+      head.appendChild(qText);
+
+      // Options
+      const optsBox = document.createElement('div');
+      optsBox.className = 'q-opts';
+      optsBox.id = 'opts-' + qi;
+      q.opts.forEach(function(opt, oi){
+        const optDiv = document.createElement('div');
+        optDiv.className = 'q-opt';
+        optDiv.setAttribute('data-qi', qi);
+        optDiv.setAttribute('data-oi', oi);
+        optDiv.onclick = function(){ window.pickAns(qi, oi); };
+        const keySpan = document.createElement('span');
+        keySpan.className = 'opt-key';
+        keySpan.textContent = keys[oi];
+        const optText = document.createElement('span');
+        optText.innerHTML = opt;
+        optDiv.appendChild(keySpan);
+        optDiv.appendChild(optText);
+        optsBox.appendChild(optDiv);
+      });
+
+      // Explanation
+      const exp = document.createElement('div');
+      exp.className = 'q-explain';
+      exp.id = 'exp-' + qi;
+      exp.innerHTML = '<strong><i class="fa fa-lightbulb" style="margin-right:5px"></i>Giải thích:</strong> ' + q.explain;
+
+      card.appendChild(head);
+      card.appendChild(optsBox);
+      card.appendChild(exp);
+      container.appendChild(card);
+    });
+  } catch(err){
+    console.error('[Quiz] Lỗi render:', err);
+  }
+
+  // Typeset MathJax sau khi tất cả cards được thêm vào DOM
+  setTimeout(function(){
+    if(window.MathJax && window.MathJax.typesetPromise){
+      MathJax.typesetPromise([container]).catch(function(e){
+        console.error('[Quiz] MathJax error:', e);
+      });
+    }
+  }, 200);
+
+  window.pickAns = function(qi, oi){
+    const opts = document.querySelectorAll(`#opts-${qi} .q-opt`);
+    // Already answered?
+    if(document.querySelector(`#opts-${qi} .q-opt.correct, #opts-${qi} .q-opt.wrong`)) return;
+
+    const isRight = oi === questions[qi].ans;
+    opts.forEach((o, i) => {
+      if(i === questions[qi].ans) o.classList.add('correct');
+      else if(i === oi && !isRight) o.classList.add('wrong');
+    });
+
+    answered++;
+    if(isRight) correct++;
+
+    // Show explanation
+    const exp = document.getElementById(`exp-${qi}`);
+    exp.classList.add('show');
+    if(window.MathJax) MathJax.typesetPromise([exp]);
+
+    // Update progress
+    document.getElementById('quiz-prog-text').textContent = `${answered}/30 câu đã trả lời`;
+    document.getElementById('quiz-prog-fill').style.width = (answered/30*100)+'%';
+
+    // Update score bar
+    updateScoreBar();
+  };
+
+  function updateScoreBar(){
+    const bar = document.getElementById('score-bar');
+    bar.style.transform = 'translateY(0)';
+    document.getElementById('score-correct').textContent = correct;
+    document.getElementById('score-fill').style.width = (correct/30*100)+'%';
+    const pct = correct/answered*100;
+    const msgs = [
+      [100,'🏆 Xuất sắc! Hoàn hảo!'],
+      [80, '🎉 Rất tốt! Tiếp tục phát huy!'],
+      [60, '👍 Khá tốt! Ôn thêm phần sai nhé!'],
+      [40, '💪 Cố gắng lên! Xem lại lý thuyết!'],
+      [0,  '📖 Cần ôn lại từ đầu bài nhé!']
+    ];
+    const msg = (msgs.find(m=>pct>=m[0]))||msgs[4];
+    document.getElementById('score-msg').textContent = msg[1];
+    if(answered===30) showFinal();
+  }
+
+  function showFinal(){
+    const pct = Math.round(correct/30*100);
+    const finalDiv = document.createElement('div');
+    finalDiv.style.cssText='margin-top:28px;padding:24px;background:linear-gradient(135deg,var(--indigo-900),var(--indigo-700));border-radius:var(--radius-md);color:#fff;text-align:center';
+    finalDiv.innerHTML=`
+      <div style="font-size:2.5rem">🎓</div>
+      <div style="font-size:1.4rem;font-weight:800;margin:8px 0">${correct}/30 điểm (${pct}%)</div>
+      <div style="color:var(--indigo-300);font-size:.9rem">${pct>=80?'Xuất sắc – bạn đã nắm vững Lũy thừa!':pct>=60?'Khá tốt – xem lại các câu sai để hoàn thiện!':'Cần ôn thêm – hãy đọc lại phần lý thuyết!'}</div>
+      <button class="btn btn-ghost" style="margin-top:14px" onclick="location.reload()"><i class="fa fa-rotate-left" style="margin-right:6px"></i>Làm lại toàn bộ</button>`;
+    document.getElementById('sec-quiz').querySelector('.card-body').appendChild(finalDiv);
+  }
+})();
+</script>
+
+
+<!-- ============================================================
+     KHỐI ĐỒNG BỘ HỌC LIỆU — chuẩn hoá design system
+     ============================================================ -->
+<style id="ds-sync">
+/* ---------- 1. DESIGN TOKENS CHUẨN ---------- */
+:root{
+  /* Indigo */
+  --indigo-900:#312e81; --indigo-800:#3730a3; --indigo-700:#4338ca; --indigo-600:#4f46e5;
+  --indigo-500:#6366f1; --indigo-400:#818cf8; --indigo-300:#a5b4fc; --indigo-200:#c7d2fe;
+  --indigo-100:#e0e7ff; --indigo-50:#eef2ff;
+  /* Cyan */
+  --cyan-700:#0e7490; --cyan-600:#0891b2; --cyan-500:#06b6d4; --cyan-400:#22d3ee;
+  --cyan-100:#cffafe; --cyan-50:#ecfeff;
+  /* Amber */
+  --amber-700:#b45309; --amber-600:#d97706; --amber-500:#f59e0b; --amber-400:#fbbf24;
+  --amber-300:#fcd34d; --amber-200:#fde68a; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  /* Green */
+  --green-700:#047857; --green-600:#059669; --green-500:#10b981;
+  --green-100:#d1fae5; --green-50:#ecfdf5;
+  /* Red */
+  --red-700:#b91c1c; --red-600:#dc2626; --red-500:#ef4444; --red-100:#fee2e2; --red-50:#fef2f2;
+  /* Orange & Violet */
+  --orange-600:#ea580c; --orange-100:#ffedd5;
+  --violet-700:#6d28d9; --violet-600:#7c3aed; --violet-100:#ede9fe; --violet-50:#f5f3ff;
+  /* Slate */
+  --slate-900:#0f172a; --slate-800:#1e293b; --slate-700:#334155; --slate-600:#475569;
+  --slate-500:#64748b; --slate-400:#94a3b8; --slate-300:#cbd5e1; --slate-200:#e2e8f0;
+  --slate-100:#f1f5f9; --slate-50:#f8fafc;
+  /* Semantic */
+  --white:#ffffff; --bg:#f8fafc; --card:#ffffff; --surface:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-primary:#1e293b; --text-secondary:#475569;
+  --muted:#64748b; --text-muted:#94a3b8;
+  /* Bo góc */
+  --radius-xl:20px; --radius-lg:16px; --radius-md:10px; --radius-sm:6px;
+  --radius:16px; --radius-xs:7px; --r:16px; --r-sm:10px;
+  /* Đổ bóng */
+  --shadow-card:0 4px 24px rgba(49,46,129,.09);
+  --shadow-hover:0 8px 32px rgba(49,46,129,.16);
+  --shadow:0 4px 24px rgba(49,46,129,.09);
+  --shadow-lg:0 8px 32px rgba(49,46,129,.16);
+  --shadow-sm:0 2px 8px rgba(49,46,129,.06);
+  --shadow-btn:0 2px 8px rgba(99,102,241,.30);
+  /* Chữ */
+  --font-head:'Merriweather', Georgia, serif;
+  --font-body:'Nunito', 'Segoe UI', sans-serif;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+  /* --- Bí danh cho các file dùng tên biến rút gọn --- */
+  --indigo:#312e81; --indigo-d:#1e1b4b; --indigo-m:#4338ca; --indigo-l:#818cf8; --indigo-p:#eef2ff;
+  --cyan:#0891b2;  --cyan-l:#ecfeff;
+  --amber:#d97706; --amber-l:#fef3c7;
+  --green:#059669; --green-l:#d1fae5;
+  --red:#dc2626;   --red-l:#fee2e2;
+  --blue:#4338ca;  --blue-l:#e0e7ff; --blue-lt:#e0e7ff;
+  --orange:#ea580c;--orange-l:#ffedd5;
+  --rose:#e11d48;  --rose-l:#ffe4e6;
+  --emerald:#059669; --emerald-l:#d1fae5;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --p:#4338ca; --p-dk:#312e81; --p-lt:#6366f1; --p-pale:#eef2ff;
+  --sec:#d97706; --sec-lt:#fef3c7; --sec-dk:#b45309;
+  --acc:#dc2626; --acc-lt:#fee2e2;
+  --txt:#1e293b;
+}
+
+/* ---------- 2. TYPOGRAPHY ---------- */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,h4,h5{ font-family:var(--font-head); line-height:1.3; }
+
+/* ---------- 3. THANH ĐIỀU HƯỚNG DÍNH ---------- */
+#sticky-nav, .nav-wrap, nav.sticky-nav, body > nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--slate-200);
+  box-shadow:0 2px 12px rgba(49,46,129,.07);
+}
+/* .nav-wrap bên trong thanh nav chỉ là hàng chứa, không phải vỏ dính */
+nav .nav-wrap{
+  position:static; background:none; border:0; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+#sticky-nav ul, .nav, nav .nav-wrap, .sticky-nav-inner{
+  max-width:1100px; margin:0 auto; list-style:none;
+  display:flex; gap:4px; flex-wrap:nowrap;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:9px 16px; scrollbar-width:none;
+}
+#sticky-nav ul::-webkit-scrollbar, .nav::-webkit-scrollbar,
+nav .nav-wrap::-webkit-scrollbar, .sticky-nav-inner::-webkit-scrollbar{ display:none; }
+#sticky-nav li a, .nav-link, .nav-a, .nav-btn{
+  display:inline-flex; align-items:center; gap:7px; flex-shrink:0;
+  padding:8px 14px; border-radius:999px;
+  font-family:var(--font-body); font-size:.83rem; font-weight:700;
+  color:var(--slate-500); text-decoration:none; white-space:nowrap;
+  border:1.5px solid transparent; background:none; cursor:pointer;
+  transition:all .18s;
+}
+#sticky-nav li a i, .nav-link i, .nav-a i, .nav-btn i{ font-size:.78rem; opacity:.85; }
+#sticky-nav li a:hover, .nav-link:hover, .nav-a:hover, .nav-btn:hover{
+  background:var(--indigo-50); color:var(--indigo-700); text-decoration:none;
+}
+#sticky-nav li a.active, .nav-link.active, .nav-a.active, .nav-btn.active{
+  background:var(--indigo-700); color:#fff; border-color:var(--indigo-700);
+  box-shadow:0 4px 12px rgba(67,56,202,.28);
+}
+
+/* ---------- 4. NÚT TIỆN ÍCH ---------- */
+.theme-toggle, #hcToggle, #hcBtn{
+  position:fixed; top:14px; right:14px; z-index:300;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  cursor:pointer; font-size:17px; box-shadow:var(--shadow-lg);
+  display:flex; align-items:center; justify-content:center; transition:transform .2s;
+}
+.theme-toggle:hover, #hcToggle:hover, #hcBtn:hover{ transform:scale(1.08); }
+.theme-toggle:focus-visible, #hcToggle:focus-visible, #hcBtn:focus-visible{
+  outline:3px solid var(--amber-600); outline-offset:2px;
+}
+.to-top, #toTop{
+  position:fixed; bottom:18px; right:16px; z-index:210;
+  width:46px; height:46px; border-radius:50%;
+  border:none; background:var(--indigo-700); color:#fff;
+  font-size:17px; cursor:pointer; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center;
+}
+.to-top.show, #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+body.has-score-bar .to-top, body.has-score-bar #toTop{ bottom:74px; }
+
+/* ---------- 5. CHẾ ĐỘ TƯƠNG PHẢN CAO ---------- */
+body.hc{
+  --slate-600:#1e293b; --slate-500:#334155; --slate-400:#475569; --slate-300:#64748b;
+  --slate-200:#94a3b8; --muted:#334155; --text-secondary:#334155; --text-muted:#475569;
+  --border:#64748b; --text:#0f172a;
+}
+body.hc .card, body.hc .sec{ border:1.5px solid #475569; }
+body.hc p, body.hc li, body.hc td, body.hc th{ color:#0f172a; }
+body.hc .nav-link, body.hc .nav-a, body.hc .nav-btn, body.hc #sticky-nav li a{ color:#1e293b; }
+
+/* ---------- 6. FOOTER THỐNG NHẤT ---------- */
+footer.ds-footer{
+  background:linear-gradient(135deg, var(--indigo-900) 0%, #4c1d95 55%, var(--indigo-700) 100%);
+  color:#e0e7ff; text-align:center;
+  padding:40px 20px 44px; margin-top:0;
+  border-top:4px solid var(--amber-600);
+}
+footer.ds-footer .ds-f-title{
+  font-family:var(--font-head); font-size:1.05rem; font-weight:700;
+  color:#fff; margin:0 0 8px; display:flex; align-items:center;
+  justify-content:center; gap:10px; line-height:1.4;
+}
+footer.ds-footer .ds-f-sub{
+  font-size:.86rem; margin:0; opacity:.85; max-width:640px;
+  margin-left:auto; margin-right:auto; line-height:1.6;
+}
+
+/* ---------- 7. IN ẤN ---------- */
+@media print{
+  .theme-toggle, .print-btn, .to-top, #hcToggle, #hcBtn, #toTop,
+  #sticky-nav, nav, .nav-wrap, .fabs{ display:none !important; }
+  body{ background:#fff; }
+  footer.ds-footer{ background:none; color:#000; border-top:1px solid #000; }
+}
+</style>
+<button class="theme-toggle" id="hcToggle" type="button" aria-pressed="false" aria-label="Bật chế độ tương phản cao" title="Chế độ tương phản cao"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+<button class="to-top" id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<footer class="ds-footer">
+  <p class="ds-f-title"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Học liệu Toán học tương tác</p>
+  <p class="ds-f-sub">Chương trình Giáo dục phổ thông 2018 &middot; Học liệu số phục vụ dạy &amp; học trên lớp và tự học tại nhà</p>
+</footer>
+
+<script id="ds-sync-js">
+/* Khối tiện ích đồng bộ: tương phản cao + về đầu trang.
+   Chỉ gắn sự kiện nếu nút chưa được file gốc xử lý. */
+(function(){
+  var hc = document.getElementById('hcToggle');
+  if (hc && !hc.dataset.dsBound) {
+    hc.dataset.dsBound = '1';
+    hc.addEventListener('click', function(){
+      var on = document.body.classList.toggle('hc');
+      hc.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  var tt = document.getElementById('toTop');
+  if (tt && !tt.dataset.dsBound) {
+    tt.dataset.dsBound = '1';
+    tt.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+    var sync = function(){ tt.classList.toggle('show', window.scrollY > 420); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+})();
+</script>
+
+</body>
+</html>
