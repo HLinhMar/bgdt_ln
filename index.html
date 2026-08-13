@@ -402,7 +402,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .about-art .q{position:relative;z-index:1}
 .about-art .q i{font-size:1.8rem;opacity:.5;margin-bottom:14px;display:block}
 .about-art .q p{font-family:var(--f-head);font-size:1.16rem;font-style:italic;line-height:1.6;margin-bottom:16px}
-.about-art .q b{font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.about-art .q b{font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.8} .video-block{margin-top:52px;padding-top:40px;border-top:1px solid var(--line-soft)} .video-block h3{display:flex;align-items:center;gap:12px;font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:900;letter-spacing:-.02em;margin-bottom:12px} .video-block h3 i{color:var(--b-600);font-size:1.1em} [data-theme="dark"] .video-block h3 i{color:var(--b-300)} .video-block > p{color:var(--text-2);margin-bottom:22px;max-width:760px;line-height:1.78} .video-frame{position:relative;width:100%;max-width:860px;padding-top:56.25%;border-radius:var(--r-lg);overflow:hidden;background:var(--ink);box-shadow:var(--sh-2);border:1px solid var(--line);margin-bottom:22px} .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0} .video-actions{display:flex;flex-wrap:wrap;gap:12px}
 
 /* =====================================================================
    8. FOOTER
@@ -691,7 +691,7 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
 
 <!-- ==================== GIỚI THIỆU ==================== -->
 <section id="about">
-  <div class="wrap about-grid">
+  <div class="wrap"><div class="about-grid">
     <div class="about-txt">
       <div class="rule"></div>
       <h2>Định hướng sư phạm của bộ học liệu</h2>
@@ -733,8 +733,7 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
         <b>Nguyên tắc thiết kế học liệu</b>
       </div>
     </div>
-  </div>
-</section>
+  </div><div class="video-block"><h3><i class="fa-solid fa-circle-play"></i> Video hướng dẫn tạo bài giảng</h3><p>Video hướng dẫn từng bước cách xây dựng một bài giảng điện tử theo cấu trúc của bộ học liệu này, từ khâu soạn nội dung đến việc dựng applet và bài tập tương tác.</p><div class="video-frame"><iframe src="https://drive.google.com/file/d/1gVz5yNpd1Bxd-e354nCWtqPoEVcGv1qr/preview" allow="autoplay" allowfullscreen title="Video hướng dẫn tạo bài giảng"></iframe></div><div class="video-actions"><a class="btn btn-primary" href="https://drive.google.com/file/d/1gVz5yNpd1Bxd-e354nCWtqPoEVcGv1qr/view?usp=drive_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-play"></i> Xem video trên Google Drive</a><a class="btn btn-ghost" href="https://drive.google.com/drive/folders/13zBM-5zXQI4bzOjp3CLhN39S49w8ADaQ?usp=drive_link" target="_blank" rel="noopener"><i class="fa-brands fa-google-drive"></i> Thư mục tài nguyên hướng dẫn</a></div></div></div></section>
 
 <!-- ==================== FOOTER ==================== -->
 <footer>
