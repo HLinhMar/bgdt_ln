@@ -1,1 +1,944 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Học liệu Toán tương tác – Thư viện bài giảng điện tử THPT</title>
+<meta name="description" content="Thư viện bài giảng điện tử môn Toán THPT theo Chương trình GDPT 2018: applet động, flashcards, game kéo thả và trắc nghiệm có phản hồi."/>
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+<!-- FontAwesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+/* =====================================================================
+   1. DESIGN TOKENS
+   ===================================================================== */
+:root{
+  /* Xanh chủ đạo */
+  --b-950:#0a1f44; --b-900:#0c2a5c; --b-800:#123a7a;
+  --b-700:#1553a8; --b-600:#1d6fd0; --b-500:#2f8ef4;
+  --b-400:#57a9fb; --b-300:#8cc6fd; --b-200:#bfe0fe; --b-100:#e3f1ff;
+  --cy-500:#06b6d4; --cy-400:#22d3ee; --cy-300:#67e8f9;
+  --vi-600:#6d5efc; --vi-500:#8b7bff;
+
+  /* Trung tính */
+  --ink:#0a0e17; --ink-2:#141b2a; --ink-3:#233047;
+  --gray-700:#3f4a60; --gray-600:#5a6780; --gray-500:#7c889f;
+  --gray-400:#a6b0c3; --gray-300:#cdd5e2; --gray-200:#e4e9f1;
+  --gray-100:#f1f4f9; --gray-50:#f8fafd; --white:#ffffff;
+
+  /* Ngữ nghĩa (light) */
+  --bg:#ffffff;
+  --bg-alt:#f6f9fe;
+  --surface:#ffffff;
+  --surface-2:#f8fafd;
+  --line:#e4e9f1;
+  --line-soft:#eef2f8;
+  --text:#0a0e17;
+  --text-2:#3a455c;
+  --text-3:#5f6c85;
+  --hero-ink:#ffffff;
+
+  --grad-blue:linear-gradient(135deg,#0c2a5c 0%,#1553a8 42%,#2f8ef4 78%,#22d3ee 100%);
+  --grad-line:linear-gradient(90deg,#1553a8,#2f8ef4,#22d3ee);
+  --grad-soft:linear-gradient(135deg,#e3f1ff 0%,#f1f4f9 100%);
+
+  --r-xl:28px; --r-lg:20px; --r-md:14px; --r-sm:10px;
+  --sh-1:0 1px 2px rgba(10,31,68,.06), 0 4px 16px rgba(10,31,68,.05);
+  --sh-2:0 2px 4px rgba(10,31,68,.06), 0 16px 40px rgba(10,31,68,.10);
+  --sh-3:0 24px 60px rgba(10,31,68,.16);
+  --sh-glow:0 10px 40px rgba(47,142,244,.28);
+
+  --f-head:'Merriweather',Georgia,serif;
+  --f-body:'Nunito','Segoe UI',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+[data-theme="dark"]{
+  --bg:#070b14;
+  --bg-alt:#0b1220;
+  --surface:#0f172a;
+  --surface-2:#131d33;
+  --line:#22304d;
+  --line-soft:#1a2540;
+  --text:#eef3fb;
+  --text-2:#a6b4cc;
+  --text-3:#7183a1;
+  --grad-soft:linear-gradient(135deg,#12233f 0%,#0f172a 100%);
+  --sh-1:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.35);
+  --sh-2:0 2px 4px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.5);
+  --sh-3:0 24px 60px rgba(0,0,0,.6);
+}
+
+/* =====================================================================
+   2. RESET & BASE
+   ===================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body); background:var(--bg); color:var(--text);
+  font-size:16px; line-height:1.65; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s var(--ease), color .35s var(--ease);
+}
+h1,h2,h3,h4{font-family:var(--f-head); line-height:1.22; letter-spacing:-.015em}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::selection{background:var(--b-500);color:#fff}
+:focus-visible{outline:3px solid var(--b-500); outline-offset:3px; border-radius:6px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* =====================================================================
+   3. TOP BAR
+   ===================================================================== */
+#topbar{
+  position:sticky; top:0; z-index:200;
+  background:var(--bg);                                        /* dự phòng cho trình duyệt cũ */
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  backdrop-filter:saturate(180%) blur(16px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease), background .3s var(--ease);
+}
+#topbar.scrolled{border-bottom-color:var(--line)}
+.tb-inner{display:flex;align-items:center;gap:18px;height:70px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.02em}
+.brand-mark{
+  width:40px;height:40px;border-radius:12px;background:var(--grad-blue);
+  display:grid;place-items:center;color:#fff;font-size:1.05rem;flex-shrink:0;
+  box-shadow:var(--sh-glow);
+}
+.brand-txt{display:flex;flex-direction:column;line-height:1.15}
+.brand-txt b{font-size:1rem;font-family:var(--f-head);font-weight:900}
+.brand-txt span{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.tb-spacer{flex:1}
+.tb-links{display:flex;gap:4px}
+.tb-links a{
+  padding:8px 14px;border-radius:999px;font-size:.86rem;font-weight:700;color:var(--text-2);
+  transition:background .2s var(--ease), color .2s var(--ease);
+}
+.tb-links a:hover{background:var(--b-100);color:var(--b-700)}
+[data-theme="dark"] .tb-links a:hover{background:var(--surface-2);color:var(--b-300)}
+.icon-btn{
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2);
+  transition:all .22s var(--ease); flex-shrink:0;
+}
+.icon-btn:hover{border-color:var(--b-400);color:var(--b-600);transform:translateY(-2px)}
+@media(max-width:760px){ .tb-links{display:none} }
+
+/* =====================================================================
+   4. HERO
+   ===================================================================== */
+#hero{position:relative;overflow:hidden;padding:clamp(56px,9vw,104px) 0 clamp(40px,6vw,64px)}
+.hero-aura{
+  position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;pointer-events:none;
+  animation:float 18s ease-in-out infinite;
+}
+.aura-1{width:520px;height:520px;top:-220px;left:-140px;background:radial-gradient(circle,#2f8ef4,transparent 68%)}
+.aura-2{width:460px;height:460px;top:-120px;right:-120px;background:radial-gradient(circle,#22d3ee,transparent 68%);animation-delay:-6s}
+.aura-3{width:380px;height:380px;bottom:-200px;left:38%;background:radial-gradient(circle,#6d5efc,transparent 70%);animation-delay:-12s}
+[data-theme="dark"] .hero-aura{opacity:.34}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-24px) scale(1.06)}
+  66%{transform:translate(-24px,20px) scale(.96)}
+}
+.hero-mesh{
+  position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 78%);
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 78%);
+}
+.hero-inner{position:relative;z-index:2;max-width:940px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 16px 7px 8px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);
+  font-size:.76rem;font-weight:800;letter-spacing:.04em;color:var(--text-2);
+  box-shadow:var(--sh-1);margin-bottom:26px;
+}
+.eyebrow .pill{
+  background:var(--grad-blue);color:#fff;border-radius:999px;
+  padding:3px 11px;font-size:.68rem;font-weight:900;letter-spacing:.08em;
+}
+#hero h1{
+  font-size:clamp(2.3rem,6.2vw,4.5rem);font-weight:900;
+  letter-spacing:-.035em;margin-bottom:22px;
+}
+/* Chữ gradient — màu đặc là lớp dự phòng, chữ không bao giờ bị mất */
+.grad-txt{color:var(--b-700)}
+[data-theme="dark"] .grad-txt{color:var(--b-300)}
+.hero-sub{
+  font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text-2);
+  max-width:640px;margin-bottom:34px;line-height:1.72;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:52px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:999px;font-weight:800;font-size:.94rem;
+  transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease);
+}
+.btn-primary{background:var(--grad-blue);color:#fff;box-shadow:var(--sh-glow)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(47,142,244,.42)}
+.btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:var(--b-400);color:var(--b-700)}
+[data-theme="dark"] .btn-ghost:hover{color:var(--b-300)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,2vw,20px);position:relative;z-index:2}
+.stat{
+  padding:22px 20px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+}
+.stat:hover{transform:translateY(-5px);box-shadow:var(--sh-2);border-color:var(--b-300)}
+.stat b{
+  display:block;font-family:var(--f-head);font-size:clamp(1.7rem,3.4vw,2.5rem);
+  font-weight:900;line-height:1;letter-spacing:-.03em;
+  color:var(--b-700);
+}
+[data-theme="dark"] .stat b{color:var(--b-300)}
+
+/* Chỉ tô gradient lên chữ khi trình duyệt thật sự hỗ trợ.
+   BẮT BUỘC dùng background-image — thuộc tính rút gọn `background`
+   sẽ reset background-clip:text và làm chữ biến mất. */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .grad-txt, .stat b,
+  [data-theme="dark"] .grad-txt, [data-theme="dark"] .stat b{
+    background-image:var(--grad-line);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+  }
+  [data-theme="dark"] .grad-txt{background-image:linear-gradient(90deg,#57a9fb,#67e8f9,#8b7bff)}
+  [data-theme="dark"] .stat b{background-image:linear-gradient(90deg,#57a9fb,#67e8f9)}
+}
+.stat span{display:block;margin-top:8px;font-size:.78rem;font-weight:700;color:var(--text-3);letter-spacing:.02em}
+@media(max-width:640px){ .stats{grid-template-columns:repeat(2,1fr)} }
+
+/* =====================================================================
+   5. THANH ĐIỀU KHIỂN (tìm kiếm + lọc)
+   ===================================================================== */
+#library{padding:clamp(48px,7vw,84px) 0 clamp(60px,9vw,110px);background:var(--bg-alt);border-top:1px solid var(--line-soft)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:30px}
+.sec-head h2{font-size:clamp(1.6rem,3.4vw,2.35rem);font-weight:900;letter-spacing:-.03em}
+.sec-head p{color:var(--text-3);font-size:.92rem;margin-top:8px;max-width:520px}
+.rule{height:4px;width:64px;border-radius:99px;background:var(--grad-line);margin-bottom:18px}
+
+.controls{
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  margin-bottom:36px;padding:14px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1);
+  position:sticky;top:82px;z-index:120;
+}
+.search{position:relative;flex:1 1 280px;min-width:230px}
+.search i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:.9rem;pointer-events:none}
+.search input{
+  width:100%;padding:12px 40px 12px 42px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface-2);color:var(--text);
+  font-family:var(--f-body);font-size:.92rem;font-weight:600;
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.search input::placeholder{color:var(--text-3);font-weight:600}
+.search input:focus{outline:none;border-color:var(--b-500);box-shadow:0 0 0 4px rgba(47,142,244,.16)}
+.search .clr{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;display:none;place-items:center;
+  color:var(--text-3);font-size:.8rem;
+}
+.search .clr:hover{background:var(--line-soft);color:var(--text)}
+.search.has-val .clr{display:grid}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:800;
+  border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);
+  transition:all .22s var(--ease);
+}
+.chip:hover{border-color:var(--b-400);color:var(--b-600)}
+.chip.on{background:var(--grad-blue);color:#fff;border-color:transparent;box-shadow:var(--sh-glow)}
+.count{font-size:.82rem;font-weight:700;color:var(--text-3);margin-left:auto;padding-right:6px;white-space:nowrap}
+
+/* =====================================================================
+   6. BENTO GRID
+   ===================================================================== */
+.grid-title{
+  display:flex;align-items:center;gap:14px;margin:44px 0 22px;
+}
+.grid-title:first-of-type{margin-top:0}
+.grid-title h3{font-size:1.28rem;font-weight:900;letter-spacing:-.02em;white-space:nowrap}
+.grid-title .badge{
+  padding:4px 12px;border-radius:999px;font-size:.7rem;font-weight:900;
+  letter-spacing:.06em;background:var(--b-100);color:var(--b-700);
+}
+[data-theme="dark"] .grid-title .badge{background:var(--surface-2);color:var(--b-300)}
+.grid-title .ln{flex:1;height:1px;background:var(--line)}
+
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(14px,1.6vw,20px)}
+.tile{grid-column:span 2}
+.tile.wide{grid-column:span 3}
+.tile.hero-tile{grid-column:span 4}
+@media(max-width:1000px){
+  .bento{grid-template-columns:repeat(4,1fr)}
+  .tile,.tile.wide{grid-column:span 2}
+  .tile.hero-tile{grid-column:span 4}
+}
+@media(max-width:620px){
+  .bento{grid-template-columns:1fr}
+  .tile,.tile.wide,.tile.hero-tile{grid-column:span 1}
+}
+
+.card{
+  position:relative;display:flex;flex-direction:column;
+  padding:26px 24px 22px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);
+  box-shadow:var(--sh-1);overflow:hidden;height:100%;
+  transition:transform .38s var(--ease), box-shadow .38s var(--ease), border-color .38s var(--ease);
+  opacity:0;transform:translateY(26px);
+}
+.card.in{opacity:1;transform:none}
+.card:hover{transform:translateY(-7px);box-shadow:var(--sh-2);border-color:transparent}
+.card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
+  background:var(--grad-line);opacity:0;transition:opacity .38s var(--ease);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+}
+.card:hover::before{opacity:1}
+.card::after{
+  content:"";position:absolute;right:-70px;top:-70px;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle,var(--b-200),transparent 68%);
+  opacity:0;transition:opacity .45s var(--ease);pointer-events:none;
+}
+[data-theme="dark"] .card::after{background:radial-gradient(circle,rgba(47,142,244,.36),transparent 68%)}
+.card:hover::after{opacity:.85}
+.card > *{position:relative;z-index:1}
+
+.c-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+.c-ico{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  font-size:1.35rem;color:#fff;background:var(--grad-blue);flex-shrink:0;
+  box-shadow:0 8px 22px rgba(21,83,168,.28);
+  transition:transform .38s var(--ease);
+}
+.card:hover .c-ico{transform:rotate(-7deg) scale(1.07)}
+.c-ico.cy{background:linear-gradient(135deg,#0e7490,#06b6d4 60%,#67e8f9)}
+.c-ico.vi{background:linear-gradient(135deg,#4c1d95,#6d5efc 60%,#8b7bff)}
+.c-ico.dp{background:linear-gradient(135deg,#0a1f44,#123a7a 60%,#1d6fd0)}
+.c-lv{
+  padding:5px 12px;border-radius:999px;font-size:.68rem;font-weight:900;
+  letter-spacing:.07em;background:var(--surface-2);color:var(--text-3);
+  border:1px solid var(--line);white-space:nowrap;
+}
+.c-title{font-size:1.1rem;font-weight:800;margin-bottom:9px;line-height:1.32}
+.tile.hero-tile .c-title{font-size:1.42rem}
+.c-desc{font-size:.87rem;color:var(--text-2);line-height:1.62;margin-bottom:16px;flex:1}
+.c-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.c-tag{
+  padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:700;
+  background:var(--surface-2);color:var(--text-3);border:1px solid var(--line-soft);
+}
+.c-go{
+  display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:900;
+  color:var(--b-600);padding-top:14px;border-top:1px solid var(--line-soft);
+}
+[data-theme="dark"] .c-go{color:var(--b-400)}
+.c-go i{transition:transform .3s var(--ease)}
+.card:hover .c-go i{transform:translateX(6px)}
+.c-seen{
+  position:absolute;top:14px;right:14px;z-index:2;
+  width:22px;height:22px;border-radius:50%;display:none;place-items:center;
+  background:#059669;color:#fff;font-size:.6rem;box-shadow:0 4px 12px rgba(5,150,105,.4);
+}
+.card.seen .c-seen{display:grid}
+
+.empty{
+  display:none;text-align:center;padding:70px 20px;border-radius:var(--r-lg);
+  border:2px dashed var(--line);color:var(--text-3);
+}
+.empty.on{display:block}
+.empty i{font-size:2.4rem;margin-bottom:14px;opacity:.45;display:block}
+.empty b{display:block;font-size:1.05rem;color:var(--text-2);margin-bottom:6px}
+
+/* =====================================================================
+   7. DẢI GIỚI THIỆU
+   ===================================================================== */
+#about{padding:clamp(56px,8vw,96px) 0;background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:900px){ .about-grid{grid-template-columns:1fr} }
+.about-txt h2{font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:900;letter-spacing:-.03em;margin-bottom:18px}
+.about-txt p{color:var(--text-2);margin-bottom:14px;line-height:1.78}
+.feat{display:grid;gap:12px;margin-top:26px}
+.feat li{display:flex;gap:14px;align-items:flex-start;list-style:none}
+.feat .fi{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;
+  background:var(--grad-soft);color:var(--b-600);font-size:.92rem;border:1px solid var(--line);
+}
+[data-theme="dark"] .feat .fi{color:var(--b-300)}
+.feat b{display:block;font-size:.94rem;font-weight:800;margin-bottom:2px}
+.feat span{font-size:.85rem;color:var(--text-3);line-height:1.55}
+.about-art{
+  position:relative;border-radius:var(--r-xl);padding:34px;overflow:hidden;
+  background:var(--grad-blue);color:#fff;box-shadow:var(--sh-3);min-height:320px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.about-art .mesh{
+  position:absolute;inset:0;opacity:.16;
+  background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.about-art .orb{position:absolute;border-radius:50%;filter:blur(46px)}
+.about-art .orb1{width:230px;height:230px;top:-70px;right:-50px;background:rgba(103,232,249,.55)}
+.about-art .orb2{width:190px;height:190px;bottom:-60px;left:-40px;background:rgba(139,123,255,.55)}
+.about-art .q{position:relative;z-index:1}
+.about-art .q i{font-size:1.8rem;opacity:.5;margin-bottom:14px;display:block}
+.about-art .q p{font-family:var(--f-head);font-size:1.16rem;font-style:italic;line-height:1.6;margin-bottom:16px}
+.about-art .q b{font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+
+/* =====================================================================
+   8. FOOTER
+   ===================================================================== */
+footer{background:var(--ink);color:#c3cee0;padding:56px 0 34px;position:relative;overflow:hidden}
+[data-theme="dark"] footer{background:#050810;border-top:1px solid var(--line)}
+footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad-line)}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:34px}
+@media(max-width:760px){ .f-grid{grid-template-columns:1fr;gap:26px} }
+.f-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px;color:#fff}
+.f-brand .brand-mark{box-shadow:none}
+.f-brand b{font-family:var(--f-head);font-size:1.05rem;font-weight:900}
+.f-col p{font-size:.87rem;line-height:1.72;color:#8fa0bd;max-width:340px}
+.f-col h4{font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.f-col ul{list-style:none;display:grid;gap:9px}
+.f-col a{font-size:.87rem;color:#8fa0bd;transition:color .2s var(--ease);display:inline-flex;align-items:center;gap:8px}
+.f-col a:hover{color:#57a9fb}
+.f-bot{
+  border-top:1px solid rgba(255,255,255,.09);padding-top:22px;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-size:.8rem;color:#71829f;
+}
+
+/* Về đầu trang */
+#toTop{
+  position:fixed;right:20px;bottom:22px;z-index:300;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--grad-blue);color:#fff;font-size:1rem;
+  display:grid;place-items:center;box-shadow:var(--sh-glow);
+  opacity:0;pointer-events:none;transform:translateY(12px) scale(.9);
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{transform:translateY(-3px)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  .card{opacity:1;transform:none}
+}
+@media print{ #topbar,.controls,#toTop,.hero-aura,.hero-mesh{display:none !important} }
+</style>
+</head>
+<body>
+
+<!-- ==================== TOP BAR ==================== -->
+<header id="topbar">
+  <div class="wrap tb-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark"><i class="fa-solid fa-infinity"></i></span>
+      <span class="brand-txt"><b>Học liệu Toán</b><span>Tương tác · THPT</span></span>
+    </a>
+    <div class="tb-spacer"></div>
+    <nav class="tb-links" aria-label="Điều hướng chính">
+      <a href="#library">Thư viện</a>
+      <a href="#about">Giới thiệu</a>
+    </nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Đổi chế độ sáng/tối" title="Chế độ sáng / tối">
+      <i class="fa-solid fa-moon" id="themeIco"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section id="hero" tabindex="-1">
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <div class="hero-aura aura-1" aria-hidden="true"></div>
+  <div class="hero-aura aura-2" aria-hidden="true"></div>
+  <div class="hero-aura aura-3" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow"><span class="pill">GDPT 2018</span> Bài giảng điện tử · Toán 10 &amp; 11</span>
+      <h1>Bộ học liệu số môn Toán,<br/><span class="grad-txt">thiết kế để học sinh tương tác.</span></h1>
+      <p class="hero-sub">
+        11 bài giảng điện tử bám sát mạch kiến thức Toán 10 và 11: đồ thị động điều khiển bằng thanh trượt,
+        mô hình không gian xoay được, hệ thống bài tập tự chấm có phản hồi. Mỗi bài là một file HTML độc lập —
+        chiếu trên lớp hoặc giao cho học sinh tự học, không cần cài đặt phần mềm.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#library"><i class="fa-solid fa-layer-group"></i> Xem thư viện bài giảng</a>
+        <a class="btn btn-ghost" href="#about"><i class="fa-regular fa-lightbulb"></i> Định hướng sư phạm</a>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b data-to="11">0</b><span>Bài giảng điện tử</span></div>
+      <div class="stat"><b data-to="2">0</b><span>Khối lớp: Toán 10 &amp; 11</span></div>
+      <div class="stat"><b data-to="85" data-suf="+">0</b><span>Hoạt động &amp; mục học</span></div>
+      <div class="stat"><b data-to="100" data-suf="%">0</b><span>Chạy trên trình duyệt, không cài đặt</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THƯ VIỆN ==================== -->
+<section id="library">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="rule"></div>
+        <h2>Thư viện bài giảng</h2>
+        <p>Chọn theo khối lớp hoặc gõ từ khoá để tìm nhanh bài cần dạy.</p>
+      </div>
+    </div>
+
+    <div class="controls" role="search">
+      <label class="sr-only" for="q">Tìm bài giảng</label>
+      <div class="search" id="searchBox">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input id="q" type="search" placeholder="Tìm bài giảng, chủ đề, từ khoá…" autocomplete="off"/>
+        <button class="clr" id="clrBtn" type="button" aria-label="Xoá từ khoá"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="chips" role="group" aria-label="Lọc theo khối lớp">
+        <button class="chip on" data-f="all" type="button">Tất cả</button>
+        <button class="chip" data-f="10" type="button">Toán 10</button>
+        <button class="chip" data-f="11" type="button">Toán 11</button>
+      </div>
+      <span class="count" id="count" aria-live="polite">11 bài giảng</span>
+    </div>
+
+    <!-- ---------- TOÁN 10 ---------- -->
+    <div class="grid-title" data-group="10">
+      <h3>Toán 10</h3><span class="badge">6 BÀI</span><span class="ln"></span>
+    </div>
+    <div class="bento" data-group="10">
+
+      <a class="card tile hero-tile" href="BaiGiangMenhDe.html"
+         data-lv="10" data-k="mệnh đề logic kéo theo tương đương phủ định kết nối tri thức suy luận">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico dp"><i class="fa-solid fa-scale-balanced"></i></span>
+          <span class="c-lv">Toán 10 · Bài 1</span>
+        </div>
+        <h4 class="c-title">Mệnh đề &amp; Mệnh đề chứa biến</h4>
+        <p class="c-desc">Nền móng của mọi suy luận toán học: mệnh đề, phủ định, kéo theo, tương đương và mệnh đề chứa biến — kèm hệ thống bài tập tự chấm.</p>
+        <div class="c-tags"><span class="c-tag">Logic</span><span class="c-tag">Suy luận</span><span class="c-tag">Kết nối tri thức</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiang_SoGanDung.html"
+         data-lv="10" data-k="số gần đúng sai số tuyệt đối tương đối quy tròn độ chính xác thống kê">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico cy"><i class="fa-solid fa-bullseye"></i></span>
+          <span class="c-lv">Toán 10</span>
+        </div>
+        <h4 class="c-title">Số Gần Đúng và Sai Số</h4>
+        <p class="c-desc">Sai số tuyệt đối, sai số tương đối và quy tắc quy tròn, có applet thanh trượt để thấy sai số thay đổi.</p>
+        <div class="c-tags"><span class="c-tag">Thống kê</span><span class="c-tag">Applet</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiang_MoTaDuLieu_lop10.html"
+         data-lv="10" data-k="mô tả biểu diễn dữ liệu bảng biểu đồ cột quạt tần số thống kê">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico cy"><i class="fa-solid fa-chart-column"></i></span>
+          <span class="c-lv">Toán 10 · Bài 2</span>
+        </div>
+        <h4 class="c-title">Mô tả và Biểu diễn Dữ liệu</h4>
+        <p class="c-desc">Đọc bảng số liệu, dựng biểu đồ cột và biểu đồ quạt, nhận ra cách biểu đồ có thể gây hiểu nhầm.</p>
+        <div class="c-tags"><span class="c-tag">Thống kê</span><span class="c-tag">Biểu đồ</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiangElip.html"
+         data-lv="10" data-k="elip đường elip phương trình chính tắc tiêu điểm kepler conic ba đường conic">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico"><i class="fa-solid fa-circle-notch"></i></span>
+          <span class="c-lv">Toán 10 · Conic</span>
+        </div>
+        <h4 class="c-title">Đường Elip</h4>
+        <p class="c-desc">Phương trình chính tắc, tiêu điểm và tâm sai — gắn với quỹ đạo Kepler, kèm applet kéo <em>a</em>, <em>b</em> và điểm M.</p>
+        <div class="c-tags"><span class="c-tag">Conic</span><span class="c-tag">Applet động</span><span class="c-tag">Flashcards</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiangHypebol.html"
+         data-lv="10" data-k="hypebol hyperbol đường hypebol tiệm cận phương trình chính tắc conic sao chổi">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico"><i class="fa-solid fa-wave-square"></i></span>
+          <span class="c-lv">Toán 10 · Conic</span>
+        </div>
+        <h4 class="c-title">Đường Hypebol</h4>
+        <p class="c-desc">Hai nhánh, hai tiệm cận và phương trình chính tắc — minh hoạ bằng quỹ đạo sao chổi và đồ thị động.</p>
+        <div class="c-tags"><span class="c-tag">Conic</span><span class="c-tag">Tiệm cận</span><span class="c-tag">Applet động</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiangParabol.html"
+         data-lv="10" data-k="parabol đường parabol tiêu điểm đường chuẩn anten chảo conic phương trình chính tắc">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico"><i class="fa-solid fa-satellite-dish"></i></span>
+          <span class="c-lv">Toán 10 · Conic</span>
+        </div>
+        <h4 class="c-title">Đường Parabol</h4>
+        <p class="c-desc">Tiêu điểm, đường chuẩn và tham số tiêu — lí giải vì sao anten chảo phải có dạng parabol.</p>
+        <div class="c-tags"><span class="c-tag">Conic</span><span class="c-tag">Ứng dụng thực tế</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+    </div>
+
+    <!-- ---------- TOÁN 11 ---------- -->
+    <div class="grid-title" data-group="11">
+      <h3>Toán 11</h3><span class="badge">5 BÀI</span><span class="ln"></span>
+    </div>
+    <div class="bento" data-group="11">
+
+      <a class="card tile hero-tile" href="BaiGiang_DiemDuongMat.html"
+         data-lv="11" data-k="điểm đường thẳng mặt phẳng không gian hình chóp tứ diện giao tuyến 3d hình học không gian">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico dp"><i class="fa-solid fa-cube"></i></span>
+          <span class="c-lv">Toán 11 · Chương III</span>
+        </div>
+        <h4 class="c-title">Điểm, Đường thẳng &amp; Mặt phẳng trong Không gian</h4>
+        <p class="c-desc">Cánh cửa đầu tiên vào hình học không gian: 6 tính chất thừa nhận, cách xác định mặt phẳng, hình chóp và tứ diện — có trình xem mô hình 3D xoay được bằng chuột.</p>
+        <div class="c-tags"><span class="c-tag">Hình học không gian</span><span class="c-tag">3D Viewer</span><span class="c-tag">Giao tuyến</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiang_2DTSS.html"
+         data-lv="11" data-k="hai đường thẳng song song chéo nhau vị trí tương đối không gian định lí ba đường giao tuyến">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico dp"><i class="fa-solid fa-equals"></i></span>
+          <span class="c-lv">Toán 11</span>
+        </div>
+        <h4 class="c-title">Hai Đường Thẳng Song Song</h4>
+        <p class="c-desc">Vị trí tương đối trong không gian ba chiều, tính chất và định lí — kèm mô hình 3D và bài tập kéo thả.</p>
+        <div class="c-tags"><span class="c-tag">Hình không gian</span><span class="c-tag">Mô hình 3D</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiang_Luythua.html"
+         data-lv="11" data-k="lũy thừa số mũ thực căn bậc n lãi kép tăng trưởng hàm số mũ logarit">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico vi"><i class="fa-solid fa-superscript"></i></span>
+          <span class="c-lv">Toán 11</span>
+        </div>
+        <h4 class="c-title">Lũy Thừa Với Số Mũ Thực</h4>
+        <p class="c-desc">Từ lãi kép ngân hàng đến tăng trưởng dân số — mở rộng lũy thừa ra số mũ hữu tỉ và vô tỉ.</p>
+        <div class="c-tags"><span class="c-tag">Hàm số mũ</span><span class="c-tag">Sơ đồ tư duy</span><span class="c-tag">Kéo thả</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile" href="BaiGiang_PhepTinhLogarit.html"
+         data-lv="11" data-k="phép tính logarit lôgarit richter đổi cơ số công thức tính chất chân trời sáng tạo">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico vi"><i class="fa-solid fa-house-crack"></i></span>
+          <span class="c-lv">Toán 11</span>
+        </div>
+        <h4 class="c-title">Phép tính Lôgarit</h4>
+        <p class="c-desc">Định nghĩa, các công thức biến đổi và đổi cơ số — dẫn dắt từ bài toán thang đo động đất Richter.</p>
+        <div class="c-tags"><span class="c-tag">Lôgarit</span><span class="c-tag">Flashcards</span><span class="c-tag">Ghép nối</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a class="card tile wide" href="BaiGiang_PTMuLoga.html"
+         data-lv="11" data-k="phương trình bất phương trình mũ lôgarit logarit giải khấu hao đồ thị điều kiện xác định">
+        <span class="c-seen" title="Đã xem"><i class="fa-solid fa-check"></i></span>
+        <div class="c-top">
+          <span class="c-ico vi"><i class="fa-solid fa-square-root-variable"></i></span>
+          <span class="c-lv">Toán 11</span>
+        </div>
+        <h4 class="c-title">Phương trình &amp; Bất phương trình Mũ và Lôgarit</h4>
+        <p class="c-desc">Phương pháp giải theo dạng, điều kiện xác định và bẫy thường gặp — kèm đồ thị động, game kéo thả và trắc nghiệm rèn luyện.</p>
+        <div class="c-tags"><span class="c-tag">Giải phương trình</span><span class="c-tag">Đồ thị động</span><span class="c-tag">Trắc nghiệm</span></div>
+        <span class="c-go">Mở bài giảng <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+    </div>
+
+    <div class="empty" id="empty">
+      <i class="fa-regular fa-face-frown"></i>
+      <b>Không tìm thấy bài giảng phù hợp</b>
+      Thử từ khoá ngắn hơn, hoặc chọn lại bộ lọc khối lớp.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GIỚI THIỆU ==================== -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-txt">
+      <div class="rule"></div>
+      <h2>Định hướng sư phạm của bộ học liệu</h2>
+      <p>
+        Bộ học liệu được xây dựng theo hướng <b>phát triển năng lực</b>: mỗi bài mở đầu bằng một tình huống thực tiễn,
+        dẫn học sinh tự khám phá quy luật qua thao tác trực tiếp trước khi hình thức hoá thành định nghĩa và định lí.
+      </p>
+      <p>
+        Về mặt kỹ thuật, mỗi bài là một file HTML độc lập: mở bằng trình duyệt bất kỳ, chiếu lên máy chiếu hoặc gửi cho
+        học sinh tự học ở nhà. Không cần tài khoản, không cần cài phần mềm, không phụ thuộc mạng sau lần tải đầu tiên.
+      </p>
+      <ul class="feat">
+        <li>
+          <span class="fi"><i class="fa-solid fa-book-open-reader"></i></span>
+          <span><b>Bám sát Chương trình GDPT 2018</b><span>Nội dung theo mạch kiến thức Toán 10 &amp; 11, trung lập với bộ sách nên dùng được cho Kết nối tri thức, Chân trời sáng tạo và Cánh diều.</span></span>
+        </li>
+        <li>
+          <span class="fi"><i class="fa-solid fa-sliders"></i></span>
+          <span><b>Trực quan hoá bằng applet &amp; mô hình 3D</b><span>Học sinh kéo tham số để thấy đồ thị biến đổi, xoay hình chóp và tứ diện — hỗ trợ trực tiếp năng lực mô hình hoá và tư duy không gian.</span></span>
+        </li>
+        <li>
+          <span class="fi"><i class="fa-solid fa-clipboard-check"></i></span>
+          <span><b>Đánh giá thường xuyên, phản hồi tức thì</b><span>Trắc nghiệm phân tầng nhận biết – thông hiểu – vận dụng, kèm giải thích ngay sau mỗi câu; thuận tiện cho kiểm tra đầu giờ hoặc củng cố cuối tiết.</span></span>
+        </li>
+        <li>
+          <span class="fi"><i class="fa-solid fa-universal-access"></i></span>
+          <span><b>Bảo đảm khả năng tiếp cận</b><span>Chế độ tương phản cao, điều hướng bằng bàn phím, bố cục đọc tốt trên điện thoại và bản in phiếu bài tập.</span></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="about-art">
+      <span class="mesh" aria-hidden="true"></span>
+      <span class="orb orb1" aria-hidden="true"></span>
+      <span class="orb orb2" aria-hidden="true"></span>
+      <div class="q">
+        <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+        <p>Học sinh không hiểu một khái niệm vì được nghe giảng kỹ hơn, mà vì được tự tay thay đổi tham số và nhìn thấy điều gì giữ nguyên, điều gì biến đổi.</p>
+        <b>Nguyên tắc thiết kế học liệu</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <span class="fbar" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-col">
+        <div class="f-brand">
+          <span class="brand-mark"><i class="fa-solid fa-infinity"></i></span>
+          <b>Học liệu Toán tương tác</b>
+        </div>
+        <p>Bộ bài giảng điện tử môn Toán THPT theo Chương trình Giáo dục phổ thông 2018, phục vụ dạy &amp; học trên lớp và tự học tại nhà.</p>
+      </div>
+      <div class="f-col">
+        <h4>Toán 10</h4>
+        <ul>
+          <li><a href="BaiGiangMenhDe.html"><i class="fa-solid fa-angle-right"></i> Mệnh đề</a></li>
+          <li><a href="BaiGiang_SoGanDung.html"><i class="fa-solid fa-angle-right"></i> Số gần đúng &amp; Sai số</a></li>
+          <li><a href="BaiGiang_MoTaDuLieu_lop10.html"><i class="fa-solid fa-angle-right"></i> Mô tả dữ liệu</a></li>
+          <li><a href="BaiGiangElip.html"><i class="fa-solid fa-angle-right"></i> Đường Elip</a></li>
+          <li><a href="BaiGiangHypebol.html"><i class="fa-solid fa-angle-right"></i> Đường Hypebol</a></li>
+          <li><a href="BaiGiangParabol.html"><i class="fa-solid fa-angle-right"></i> Đường Parabol</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Toán 11</h4>
+        <ul>
+          <li><a href="BaiGiang_DiemDuongMat.html"><i class="fa-solid fa-angle-right"></i> Điểm, đường thẳng, mặt phẳng</a></li>
+          <li><a href="BaiGiang_2DTSS.html"><i class="fa-solid fa-angle-right"></i> Hai đường thẳng song song</a></li>
+          <li><a href="BaiGiang_Luythua.html"><i class="fa-solid fa-angle-right"></i> Lũy thừa số mũ thực</a></li>
+          <li><a href="BaiGiang_PhepTinhLogarit.html"><i class="fa-solid fa-angle-right"></i> Phép tính lôgarit</a></li>
+          <li><a href="BaiGiang_PTMuLoga.html"><i class="fa-solid fa-angle-right"></i> Phương trình mũ &amp; lôgarit</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>Học liệu Toán học tương tác &middot; Chương trình GDPT 2018</span>
+      <span>Xây dựng với sự hỗ trợ của công cụ GenAI</span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" type="button" aria-label="Về đầu trang" title="Về đầu trang"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+(function(){
+  'use strict';
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. CHẾ ĐỘ SÁNG / TỐI ---------- */
+  var root = document.documentElement,
+      themeBtn = document.getElementById('themeBtn'),
+      themeIco = document.getElementById('themeIco'),
+      TKEY = 'hltoan:theme';
+
+  function setTheme(t){
+    root.setAttribute('data-theme', t);
+    themeIco.className = t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    themeBtn.setAttribute('title', t === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối');
+    try { localStorage.setItem(TKEY, t); } catch(e){}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(TKEY); } catch(e){}
+  if (!saved) saved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  setTheme(saved);
+  themeBtn.addEventListener('click', function(){
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- 2. TOP BAR ---------- */
+  var topbar = document.getElementById('topbar'),
+      toTop  = document.getElementById('toTop');
+  function onScroll(){
+    var y = window.scrollY;
+    topbar.classList.toggle('scrolled', y > 8);
+    toTop.classList.toggle('show', y > 520);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  toTop.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior: REDUCE ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- 3. HIỆN THẺ KHI CUỘN TỚI ---------- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  if (REDUCE || !('IntersectionObserver' in window)) {
+    cards.forEach(function(c){ c.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e, i){
+        if (!e.isIntersecting) return;
+        setTimeout(function(){ e.target.classList.add('in'); }, i * 70);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function(c){ io.observe(c); });
+  }
+
+  /* ---------- 4. ĐẾM SỐ LIỆU ---------- */
+  var stats = document.querySelectorAll('.stat b[data-to]');
+  function runCount(el){
+    var to = parseInt(el.dataset.to, 10) || 0,
+        suf = el.dataset.suf || '',
+        dur = 1100, t0 = performance.now();
+    if (REDUCE) { el.textContent = to + suf; return; }
+    (function step(now){
+      var p = Math.min(1, (now - t0) / dur),
+          e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * e) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  if ('IntersectionObserver' in window) {
+    var so = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ runCount(e.target); so.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    stats.forEach(function(s){ so.observe(s); });
+  } else {
+    stats.forEach(runCount);
+  }
+
+  /* ---------- 5. TÌM KIẾM + LỌC ---------- */
+  var q       = document.getElementById('q'),
+      box     = document.getElementById('searchBox'),
+      clrBtn  = document.getElementById('clrBtn'),
+      chips   = Array.prototype.slice.call(document.querySelectorAll('.chip')),
+      countEl = document.getElementById('count'),
+      empty   = document.getElementById('empty'),
+      groups  = Array.prototype.slice.call(document.querySelectorAll('[data-group]')),
+      filter  = 'all',
+      touched = false;   // đã lọc/tìm lần nào chưa
+
+  function norm(s){
+    return (s || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd');
+  }
+
+  function apply(){
+    var term = norm(q.value.trim()), shown = 0;
+    box.classList.toggle('has-val', q.value.length > 0);
+
+    cards.forEach(function(c){
+      var okLv = (filter === 'all') || (c.dataset.lv === filter);
+      var hay  = norm(c.dataset.k + ' ' + c.textContent);
+      var okQ  = !term || hay.indexOf(term) !== -1;
+      var show = okLv && okQ;
+      c.style.display = show ? '' : 'none';
+      // sau lần lọc đầu tiên: thẻ hiện lại phải luôn nhìn thấy được
+      if (show) { if (touched) c.classList.add('in'); shown++; }
+    });
+
+    // ẩn tiêu đề nhóm nếu nhóm đó rỗng
+    groups.forEach(function(g){
+      var lv = g.dataset.group;
+      var any = cards.some(function(c){
+        return c.dataset.lv === lv && c.style.display !== 'none';
+      });
+      g.style.display = any ? '' : 'none';
+    });
+
+    empty.classList.toggle('on', shown === 0);
+    countEl.textContent = shown === 0
+      ? 'Không có kết quả'
+      : shown + (shown === cards.length ? ' bài giảng' : '/' + cards.length + ' bài giảng');
+  }
+
+  q.addEventListener('input', function(){ touched = true; apply(); });
+  clrBtn.addEventListener('click', function(){ touched = true; q.value = ''; apply(); q.focus(); });
+  q.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { touched = true; q.value = ''; apply(); }
+  });
+  chips.forEach(function(ch){
+    ch.addEventListener('click', function(){
+      chips.forEach(function(x){ x.classList.remove('on'); });
+      ch.classList.add('on');
+      filter = ch.dataset.f;
+      touched = true;
+      apply();
+    });
+  });
+  // phím "/" để nhảy vào ô tìm kiếm
+  document.addEventListener('keydown', function(e){
+    if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+  });
+  apply();
+
+  /* ---------- 6. ĐÁNH DẤU BÀI ĐÃ MỞ ---------- */
+  var SKEY = 'hltoan:seen';
+  function readSeen(){
+    try { return JSON.parse(localStorage.getItem(SKEY) || '[]'); } catch(e){ return []; }
+  }
+  var seen = readSeen();
+  cards.forEach(function(c){
+    var href = c.getAttribute('href');
+    if (seen.indexOf(href) !== -1) c.classList.add('seen');
+    c.addEventListener('click', function(){
+      if (seen.indexOf(href) === -1) {
+        seen.push(href);
+        try { localStorage.setItem(SKEY, JSON.stringify(seen)); } catch(e){}
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
