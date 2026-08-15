@@ -1,5 +1,7 @@
 # Học liệu Toán tương tác — THPT
 
+**Trang web: https://hlinhmar.github.io/bgdt_ln/**
+
 Bộ **11 bài giảng điện tử** môn Toán lớp 10 và 11, biên soạn theo Chương trình Giáo dục phổ thông 2018.
 
 Mỗi bài là **một file HTML độc lập**: mở bằng trình duyệt bất kỳ, chiếu lên máy chiếu hoặc gửi cho học sinh tự học. Không cần tài khoản, không cần cài phần mềm, không phụ thuộc mạng sau lần tải đầu tiên.
@@ -47,7 +49,10 @@ Mỗi bài là **một file HTML độc lập**: mở bằng trình duyệt bấ
 ├── BaiGiang*.html          # 11 bài giảng, mỗi file chạy độc lập
 ├── favicon.svg
 ├── og-image.png            # Ảnh xem trước khi chia sẻ link
-├── netlify.toml            # Cấu hình deploy
+├── sitemap.xml             # Danh mục URL cho công cụ tìm kiếm
+├── robots.txt
+├── .nojekyll               # Tắt Jekyll để GitHub Pages phục vụ file nguyên trạng
+├── netlify.toml            # Chỉ dùng nếu chuyển sang Netlify; GitHub Pages bỏ qua file này
 └── _backup/                # Bản gốc trước khi chỉnh — KHÔNG đẩy lên Git (xem .gitignore)
 ```
 

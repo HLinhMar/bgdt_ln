@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Không lập chỉ mục thư mục sao lưu nếu vô tình lọt lên
+Disallow: /bgdt_ln/_backup/
+
+Sitemap: https://hlinhmar.github.io/bgdt_ln/sitemap.xml
