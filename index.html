@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Học liệu Toán tương tác – Thư viện bài giảng điện tử THPT</title>
-<meta name="description" content="Thư viện bài giảng điện tử môn Toán THPT theo Chương trình GDPT 2018: applet động, flashcards, game kéo thả và trắc nghiệm có phản hồi."/>
+<meta name="description" content="11 bài giảng điện tử môn Toán 10 và 11 theo Chương trình GDPT 2018: applet đồ thị động, mô hình 3D, flashcards và trắc nghiệm tự chấm. Mở trực tiếp trên trình duyệt, không cần cài đặt."/>
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -482,6 +482,26 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
   .video-frame,.video-actions{display:none !important}
 }
 </style>
+
+<!-- ---------- Favicon ---------- -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="favicon.svg"/>
+<meta name="theme-color" content="#1553a8"/>
+
+<!-- ---------- Chia sẻ mạng xã hội (Open Graph / Twitter) ---------- -->
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="vi_VN"/>
+<meta property="og:site_name" content="Học liệu Toán tương tác"/>
+<meta property="og:title" content="Học liệu Toán tương tác — Thư viện bài giảng điện tử THPT"/>
+<meta property="og:description" content="11 bài giảng điện tử môn Toán 10 và 11 theo Chương trình GDPT 2018: applet đồ thị động, mô hình 3D, flashcards và trắc nghiệm tự chấm. Mở trực tiếp trên trình duyệt, không cần cài đặt."/>
+<meta property="og:image" content="og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Học liệu Toán tương tác — 11 bài giảng điện tử Toán 10 và 11"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Học liệu Toán tương tác — Thư viện bài giảng điện tử THPT"/>
+<meta name="twitter:description" content="11 bài giảng điện tử môn Toán 10 và 11 theo Chương trình GDPT 2018: applet đồ thị động, mô hình 3D, flashcards và trắc nghiệm tự chấm. Mở trực tiếp trên trình duyệt, không cần cài đặt."/>
+<meta name="twitter:image" content="og-image.png"/>
 </head>
 <body>
 
@@ -562,7 +582,7 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
 
     <!-- ---------- TOÁN 10 ---------- -->
     <div class="grid-title" data-group="10">
-      <h3>Toán 10</h3><span class="badge">6 BÀI</span><span class="ln"></span>
+      <h3>Toán 10</h3><span class="badge" data-badge="10">6 BÀI</span><span class="ln"></span>
     </div>
     <div class="bento" data-group="10">
 
@@ -648,7 +668,7 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
 
     <!-- ---------- TOÁN 11 ---------- -->
     <div class="grid-title" data-group="11">
-      <h3>Toán 11</h3><span class="badge">5 BÀI</span><span class="ln"></span>
+      <h3>Toán 11</h3><span class="badge" data-badge="11">5 BÀI</span><span class="ln"></span>
     </div>
     <div class="bento" data-group="11">
 
@@ -967,13 +987,15 @@ footer .fbar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--
       if (show) { if (touched) c.classList.add('in'); shown++; }
     });
 
-    // ẩn tiêu đề nhóm nếu nhóm đó rỗng
+    // cập nhật số bài từng nhóm + ẩn tiêu đề nếu nhóm rỗng
     groups.forEach(function(g){
       var lv = g.dataset.group;
-      var any = cards.some(function(c){
+      var n = cards.filter(function(c){
         return c.dataset.lv === lv && c.style.display !== 'none';
-      });
-      g.style.display = any ? '' : 'none';
+      }).length;
+      g.style.display = n ? '' : 'none';
+      var badge = g.querySelector('.badge[data-badge]');
+      if (badge) badge.textContent = n + ' BÀI';
     });
 
     empty.classList.toggle('on', shown === 0);

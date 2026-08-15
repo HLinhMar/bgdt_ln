@@ -1,0 +1,43 @@
+# =========================================================
+#  Cấu hình Netlify — trang tĩnh, không cần bước build
+# =========================================================
+
+[build]
+  publish = "."
+  command = ""
+
+# ---------- Header bảo mật cho toàn site ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+# ---------- Bộ nhớ đệm ----------
+# HTML luôn kiểm tra bản mới để giáo viên sửa bài là học sinh thấy ngay
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Ảnh và icon ít đổi nên cho đệm lâu
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# ---------- Chặn truy cập thư mục sao lưu ----------
+# .gitignore đã loại _backup/ khỏi repo. Đây là lớp chặn thứ hai,
+# phòng trường hợp thư mục lọt lên bằng cách nào đó.
+[[redirects]]
+  from = "/_backup/*"
+  to = "/404.html"
+  status = 404
+  force = true

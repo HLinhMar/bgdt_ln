@@ -1,0 +1,38 @@
+# ==========================================================
+#  KHÔNG ĐẨY LÊN GITHUB
+# ==========================================================
+
+# Thư mục sao lưu bản gốc — CHỈ giữ trên máy.
+# Các file trong này vẫn còn tên tác giả và ghi chú phiên bản cũ,
+# tuyệt đối không để lọt lên repo công khai hay bản deploy Netlify.
+_backup/
+*_backup/
+*.bak
+*.orig
+
+# Bản nháp, file tạm
+_draft/
+_tmp/
+*.tmp
+~$*
+
+# Rác hệ điều hành
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Trình soạn thảo
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (nếu sau này dùng công cụ build)
+node_modules/
+package-lock.json
+.env
+.env.*
+
+# Netlify
+.netlify/
